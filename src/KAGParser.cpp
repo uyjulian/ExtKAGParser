@@ -1279,7 +1279,8 @@ void tTJSNI_KAGParser::GoToStorageAndLabel(const ttstr &storage,
 void tTJSNI_KAGParser::CallLabel(const ttstr &name)
 {
 	// for extra conductor or so
-	PushCallStack(tTJSVariant(false), tTJSDic());
+	tTJSDic tmp;
+	PushCallStack(tTJSVariant(false), tmp);
 	GoToLabel(name);
 }
 //---------------------------------------------------------------------------
@@ -2045,15 +2046,24 @@ void tTJSNI_KAGParser::PushLocalVariables(const tTJSVariant &copyvar, tTJSDic &d
 	// one or creating new one, switched by "copyvar" parameter in the tags.
 
 	if(copyvar.Type() == tvtVoid)
-		LocalVariables.Push(tTJSDic()); // push new one
+	{
+		tTJSDic tmp;
+		LocalVariables.Push(tmp); // push new one
+	}
 	else
 	{
 		tTJSVariant v;
 		SWITCH_TVPEXECUTEEXPRESSION(ttstr(copyvar), Owner, &v);
 		if(v.operator bool())
-			LocalVariables.Push(tTJSDic(LocalVariables.GetLast())); // push copyed one
+		{
+			tTJSDic tmp = (tTJSDic)LocalVariables.GetLast();
+			LocalVariables.Push(tmp); // push copyed one
+		}
 		else
-			LocalVariables.Push(tTJSDic()); // push new one
+		{
+			tTJSDic tmp;
+			LocalVariables.Push(tmp); // push new one
+		}
 	}
 
 	CopyDicToCurrentLocalVariables(dicobj);
@@ -2113,7 +2123,8 @@ void tTJSNI_KAGParser::CopyDicToCurrentLocalVariables(tTJSDic &dic)
 	// Note:this includes tagname, sometimes also storage/target.
 	// What to do here is "LocalVariables.GetLast().AddDic(dicobj);", 
 	// isn't this a bad coding to convert instance from tTJSVariant to tTJSDic?
-	((tTJSDic*)&LocalVariables.GetLast())->AddDic(dic);
+	tTJSVariant tmp = LocalVariables.GetLast();
+	((tTJSDic*)&tmp)->AddDic(dic);
 }
 
 	
@@ -2328,7 +2339,10 @@ parse_start:
 			tagname = GetAttributeValue(ldelim); // for [&embval]
 
 		// register tagname into DicObj as "tagname" => tagname
-		DicObj.SetProp(__tag_name, tTJSVariant(tagname));
+		{
+			tTJSVariant tmp(tagname);
+			DicObj.SetProp(__tag_name, tmp);
+		}
 
 		// check special control tags
 		enum tSpecialTags
@@ -3201,7 +3215,10 @@ parse_start:
 			// ensure macro arguments are to be popped
 
 			// register macro
-			Macros.SetProp(RecordingMacroName, tTJSVariant(RecordingMacroStr));
+			{
+				tTJSVariant tmp(RecordingMacroStr);
+				Macros.SetProp(RecordingMacroName, tmp);
+			}
 
 			goto tag_last; // last check and go to next tag
 		}

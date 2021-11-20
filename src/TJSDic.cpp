@@ -61,7 +61,7 @@ tTJSDic::tTJSDic(iTJSDispatch2 *srcdic) : tTJSVariant()
 }
 #endif
 
-tTJSDic::tTJSDic(tTJSVariant &srcdic) : tTJSVariant()
+tTJSDic::tTJSDic(const tTJSVariant &srcdic) : tTJSVariant()
 {
 	if (srcdic.Type() == tvtVoid)
 		TVPThrowExceptionMessage(TJS_W("tTJSDic::tTJSDic(tTJSVariant&) is invoked with void dic"));
@@ -69,7 +69,7 @@ tTJSDic::tTJSDic(tTJSVariant &srcdic) : tTJSVariant()
 	Assign(srcdic);
 }
 
-tTJSDic::tTJSDic(tTJSDic &srcdic) : tTJSVariant()
+tTJSDic::tTJSDic(const tTJSDic &srcdic) : tTJSVariant()
 {
 	if (srcdic.Type() == tvtVoid)
 		TVPThrowExceptionMessage(TJS_W("tTJSDic::tTJSDic(tTJSDic&) is invoked with void dic"));
@@ -107,7 +107,7 @@ tTJSDic& tTJSDic::Assign(iTJSDispatch2 *srcdic)
 	return Assign(src);
 }
 
-tTJSDic& tTJSDic::Assign(tTJSVariant &srcdic)
+tTJSDic& tTJSDic::Assign(const tTJSVariant &srcdic)
 {
 	if (srcdic.Type() != tvtObject)
 		TVPThrowExceptionMessage(TJS_W("tTJSDic::Assign(tTJSVariant&) is invoked with non tvtObject"));
@@ -117,7 +117,7 @@ tTJSDic& tTJSDic::Assign(tTJSVariant &srcdic)
 	return *this;
 }
 
-tTJSDic& tTJSDic::Assign(tTJSDic &srcdic)
+tTJSDic& tTJSDic::Assign(const tTJSDic &srcdic)
 {
 	if (srcdic.Type() == tvtVoid)
 		TVPThrowExceptionMessage(TJS_W("tTJSDic::Assign(tTJSDic&) is invoked with non tvtObject"));
@@ -182,7 +182,10 @@ void tTJSDic::AddDic(tTJSDic &sdic)
 	for (tjs_int i = 0; i < keyary.GetSize(); i++)
 	{
 		ttstr key(keyary.GetProp(i));
-		SetProp(key, sdic.GetProp(key));
+		{
+			tTJSVariant tmp = sdic.GetProp(key);
+			SetProp(key, tmp);
+		}
 	}
 }
 

@@ -36,8 +36,8 @@ public:
 	// constructors
 	tTJSDic();
 //	tTJSDic(iTJSDispatch2 *srcdic);
-	tTJSDic(tTJSVariant &srcdic);
-	tTJSDic(tTJSDic &src);
+	tTJSDic(const tTJSVariant &srcdic);
+	tTJSDic(const tTJSDic &src);
 
 	// destructor
 	// ~tTJSDic();
@@ -48,8 +48,8 @@ public:
 	void Empty(); // Clear() has been reserved by tTJSVariant
 
 	tTJSDic& Assign(iTJSDispatch2 *srcdic);
-	tTJSDic& Assign(tTJSVariant &srcdic);
-	tTJSDic& Assign(tTJSDic &srcdic);
+	tTJSDic& Assign(const tTJSVariant &srcdic);
+	tTJSDic& Assign(const tTJSDic &srcdic);
 
 	void SetProp(const ttstr &name, tTJSVariant &value);
 

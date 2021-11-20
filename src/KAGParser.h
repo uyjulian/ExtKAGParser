@@ -357,7 +357,7 @@ private:
 	void PopLocalVariablesBeforeTheLatestCallStack();
 	void CopyDicToCurrentLocalVariables(tTJSDic &dic);
 	// Note: ClearLocalVariables() pushes one vars at least.
-	void ClearLocalVariables() { LocalVariables.Empty(); LocalVariables.Push(tTJSDic()); }
+	void ClearLocalVariables() { LocalVariables.Empty(); tTJSDic tmp; LocalVariables.Push(tmp); }
 
 	// For MultiLine extends
 	void AddMultiLine();
