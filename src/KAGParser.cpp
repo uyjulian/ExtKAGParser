@@ -32,26 +32,26 @@
 
 #define TVPCurPosErrorString (TJS_W("CurPos = ")+ttstr(CurPos)+TJS_W(", CurLineStr = \"")+ttstr(CurLineStr)+TJS_W("\""))
 
-const tjs_char* TVPKAGNoLine = TJS_W("ì«Ç›çûÇ‡Ç§Ç∆ÇµÇΩÉVÉiÉäÉIÉtÉ@ÉCÉã %1 ÇÕãÛÇ≈Ç∑");
-const tjs_char* TVPKAGCannotOmmitFirstLabelName = TJS_W("ÉVÉiÉäÉIÉtÉ@ÉCÉãÇÃç≈èâÇÃÉâÉxÉãñºÇÕè»ó™Ç≈Ç´Ç‹ÇπÇÒ");
-const tjs_char* TVPInternalError = TJS_W("ì‡ïîÉGÉâÅ[Ç™î≠ê∂ÇµÇ‹ÇµÇΩ: at %1 line %2");
-const tjs_char* TVPKAGMalformedSaveData = TJS_W("ûxÉfÅ[É^Ç™àŸèÌÇ≈Ç∑ÅBÉfÅ[É^Ç™îjëπÇµÇƒÇ¢ÇÈâ¬î\ê´Ç™Ç†ÇËÇ‹Ç∑");
-const tjs_char* TVPKAGLabelNotFound = TJS_W("ÉVÉiÉäÉIÉtÉ@ÉCÉã %1 ì‡Ç…ÉâÉxÉã %2 Ç™å©Ç¬Ç©ÇËÇ‹ÇπÇÒ");
-const tjs_char* TVPLabelInMacro = TJS_W("ÉâÉxÉãÇÕÉ}ÉNÉçíÜÇ…ãLèqÇ≈Ç´Ç‹ÇπÇÒ");
-const tjs_char* TVPKAGInlineScriptNotEnd = TJS_W("[endscript] Ç‹ÇΩÇÕ @endscript Ç™å©Ç¬Ç©ÇËÇ‹ÇπÇÒ");
-const tjs_char* TVPKAGSyntaxError = TJS_W("É^ÉOÇÃï∂ñ@ÉGÉâÅ[Ç≈Ç∑ÅB'[' Ç‚ ']' ÇÃëŒâûÅA\" Ç∆ \" ÇÃëŒâûÅAÉXÉyÅ[ÉXÇÃì¸ÇÍñYÇÍÅAó]ï™Ç»â¸çsÅAmacro Å` endmacro ÇÃëŒâûÅAïKóvÇ»ëÆê´ÇÃïsë´Ç»Ç«ÇämîFÇµÇƒÇ≠ÇæÇ≥Ç¢\n\n%1\n%2");
-const tjs_char* TVPKAGCallStackUnderflow = TJS_W("return É^ÉOÇ™ call É^ÉOÇ∆ëŒâûÇµÇƒÇ¢Ç‹ÇπÇÒ ( return É^ÉOÇ™ëΩÇ¢ )");
-const tjs_char* TVPKAGReturnLostSync = TJS_W("ÉVÉiÉäÉIÉtÉ@ÉCÉãÇ…ïœçXÇ™Ç†Ç¡ÇΩÇΩÇﬂ return ÇÃñﬂÇËêÊà íuÇì¡íËÇ≈Ç´Ç‹ÇπÇÒ");
-const tjs_char* TVPKAGSpecifyKAGParser = TJS_W("KAGParser ÉNÉâÉXÇÃÉIÉuÉWÉFÉNÉgÇéwíËÇµÇƒÇ≠ÇæÇ≥Ç¢");
-const tjs_char* TVPUnknownMacroName = TJS_W("É}ÉNÉç \"%1\" ÇÕìoò^Ç≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ");
-const tjs_char* TVPKAGWhileStackUnderflow = TJS_W("endwhile/continue/break É^ÉOÇ™ while É^ÉOÇ∆ëŒâûÇµÇƒÇ¢Ç‹ÇπÇÒ");
-const tjs_char* TVPKAGWhileLostSync = TJS_W("ÉVÉiÉäÉIÉtÉ@ÉCÉãÇ…ïœçXÇ™Ç†Ç¡ÇΩÇΩÇﬂ endwhile ÇÃñﬂÇËêÊà íuÇì¡íËÇ≈Ç´Ç‹ÇπÇÒ");
-const tjs_char* TVPKAGLabelInConditionScope = TJS_W("ÉâÉxÉã %1 Ç™ if/ignore/while/pushlocalvar ÉXÉRÅ[ÉvíÜÇ…ë∂ç›ÇµÇƒÇ¢Ç‹Ç∑");
-const tjs_char* TVPKAGIfStackUnderflow = TJS_W("else, endif, endignore É^ÉOÇ™ if, ignore É^ÉOÇ∆ëŒâûÇµÇƒÇ¢Ç‹ÇπÇÒ");
-const tjs_char* TVPKAGWrongAttrOutOfMacro = TJS_W("É}ÉNÉçäOÇ≈É^ÉOÇÃëÆê´Ç… '*' Ç‚ arg=%val Ç™éwíËÇ≥ÇÍÇƒÇ¢Ç‹Ç∑");
-const tjs_char* TVPKAGMultiLineDisabled = TJS_W("É^ÉOì‡Ç…ï°êîçsÉ^ÉOÇé¶Ç∑ '\' Ç™ë∂ç›ÇµÇ‹Ç∑Ç™ÅAmultiLineTagEnabled Ç™ true Ç≈ÇÕÇ†ÇËÇ‹ÇπÇÒ");
-const tjs_char* TVPNoStorageAndLabelAtJump = TJS_W("call/jump É^ÉOÇ… storage Ç∆ label Ç™óºï˚éwíËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ");
-const tjs_char* TVPLocalVaiablesUnderFlow = TJS_W("poplocalvar É^ÉOÇ™ pushlocalvar É^ÉOÇ∆ëŒâûÇµÇƒÇ¢Ç‹ÇπÇÒ");
+const tjs_char* TVPKAGNoLine = TJS_W("Ë™≠„ÅøËæº„ÇÇ„ÅÜ„Å®„Åó„Åü„Ç∑„Éä„É™„Ç™„Éï„Ç°„Ç§„É´ %1 „ÅØÁ©∫„Åß„Åô");
+const tjs_char* TVPKAGCannotOmmitFirstLabelName = TJS_W("„Ç∑„Éä„É™„Ç™„Éï„Ç°„Ç§„É´„ÅÆÊúÄÂàù„ÅÆ„É©„Éô„É´Âêç„ÅØÁúÅÁï•„Åß„Åç„Åæ„Åõ„Çì");
+const tjs_char* TVPInternalError = TJS_W("ÂÜÖÈÉ®„Ç®„É©„Éº„ÅåÁô∫Áîü„Åó„Åæ„Åó„Åü: at %1 line %2");
+const tjs_char* TVPKAGMalformedSaveData = TJS_W("Ê†û„Éá„Éº„Çø„ÅåÁï∞Â∏∏„Åß„Åô„ÄÇ„Éá„Éº„Çø„ÅåÁ†¥Êêç„Åó„Å¶„ÅÑ„ÇãÂèØËÉΩÊÄß„Åå„ÅÇ„Çä„Åæ„Åô");
+const tjs_char* TVPKAGLabelNotFound = TJS_W("„Ç∑„Éä„É™„Ç™„Éï„Ç°„Ç§„É´ %1 ÂÜÖ„Å´„É©„Éô„É´ %2 „ÅåË¶ã„Å§„Åã„Çä„Åæ„Åõ„Çì");
+const tjs_char* TVPLabelInMacro = TJS_W("„É©„Éô„É´„ÅØ„Éû„ÇØ„É≠‰∏≠„Å´Ë®òËø∞„Åß„Åç„Åæ„Åõ„Çì");
+const tjs_char* TVPKAGInlineScriptNotEnd = TJS_W("[endscript] „Åæ„Åü„ÅØ @endscript „ÅåË¶ã„Å§„Åã„Çä„Åæ„Åõ„Çì");
+const tjs_char* TVPKAGSyntaxError = TJS_W("„Çø„Ç∞„ÅÆÊñáÊ≥ï„Ç®„É©„Éº„Åß„Åô„ÄÇ'[' „ÇÑ ']' „ÅÆÂØæÂøú„ÄÅ\" „Å® \" „ÅÆÂØæÂøú„ÄÅ„Çπ„Éö„Éº„Çπ„ÅÆÂÖ•„ÇåÂøò„Çå„ÄÅ‰ΩôÂàÜ„Å™ÊîπË°å„ÄÅmacro „Äú endmacro „ÅÆÂØæÂøú„ÄÅÂøÖË¶Å„Å™Â±ûÊÄß„ÅÆ‰∏çË∂≥„Å™„Å©„ÇíÁ¢∫Ë™ç„Åó„Å¶„Åè„Å†„Åï„ÅÑ\n\n%1\n%2");
+const tjs_char* TVPKAGCallStackUnderflow = TJS_W("return „Çø„Ç∞„Åå call „Çø„Ç∞„Å®ÂØæÂøú„Åó„Å¶„ÅÑ„Åæ„Åõ„Çì ( return „Çø„Ç∞„ÅåÂ§ö„ÅÑ )");
+const tjs_char* TVPKAGReturnLostSync = TJS_W("„Ç∑„Éä„É™„Ç™„Éï„Ç°„Ç§„É´„Å´Â§âÊõ¥„Åå„ÅÇ„Å£„Åü„Åü„ÇÅ return „ÅÆÊàª„ÇäÂÖà‰ΩçÁΩÆ„ÇíÁâπÂÆö„Åß„Åç„Åæ„Åõ„Çì");
+const tjs_char* TVPKAGSpecifyKAGParser = TJS_W("KAGParser „ÇØ„É©„Çπ„ÅÆ„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà„ÇíÊåáÂÆö„Åó„Å¶„Åè„Å†„Åï„ÅÑ");
+const tjs_char* TVPUnknownMacroName = TJS_W("„Éû„ÇØ„É≠ \"%1\" „ÅØÁôªÈå≤„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì");
+const tjs_char* TVPKAGWhileStackUnderflow = TJS_W("endwhile/continue/break „Çø„Ç∞„Åå while „Çø„Ç∞„Å®ÂØæÂøú„Åó„Å¶„ÅÑ„Åæ„Åõ„Çì");
+const tjs_char* TVPKAGWhileLostSync = TJS_W("„Ç∑„Éä„É™„Ç™„Éï„Ç°„Ç§„É´„Å´Â§âÊõ¥„Åå„ÅÇ„Å£„Åü„Åü„ÇÅ endwhile „ÅÆÊàª„ÇäÂÖà‰ΩçÁΩÆ„ÇíÁâπÂÆö„Åß„Åç„Åæ„Åõ„Çì");
+const tjs_char* TVPKAGLabelInConditionScope = TJS_W("„É©„Éô„É´ %1 „Åå if/ignore/while/pushlocalvar „Çπ„Ç≥„Éº„Éó‰∏≠„Å´Â≠òÂú®„Åó„Å¶„ÅÑ„Åæ„Åô");
+const tjs_char* TVPKAGIfStackUnderflow = TJS_W("else, endif, endignore „Çø„Ç∞„Åå if, ignore „Çø„Ç∞„Å®ÂØæÂøú„Åó„Å¶„ÅÑ„Åæ„Åõ„Çì");
+const tjs_char* TVPKAGWrongAttrOutOfMacro = TJS_W("„Éû„ÇØ„É≠Â§ñ„Åß„Çø„Ç∞„ÅÆÂ±ûÊÄß„Å´ '*' „ÇÑ arg=%val „ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åô");
+const tjs_char* TVPKAGMultiLineDisabled = TJS_W("„Çø„Ç∞ÂÜÖ„Å´Ë§áÊï∞Ë°å„Çø„Ç∞„ÇíÁ§∫„Åô '\' „ÅåÂ≠òÂú®„Åó„Åæ„Åô„Åå„ÄÅmultiLineTagEnabled „Åå true „Åß„ÅØ„ÅÇ„Çä„Åæ„Åõ„Çì");
+const tjs_char* TVPNoStorageAndLabelAtJump = TJS_W("call/jump „Çø„Ç∞„Å´ storage „Å® label „Åå‰∏°ÊñπÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì");
+const tjs_char* TVPLocalVaiablesUnderFlow = TJS_W("poplocalvar „Çø„Ç∞„Åå pushlocalvar „Çø„Ç∞„Å®ÂØæÂøú„Åó„Å¶„ÅÑ„Åæ„Åõ„Çì");
 
 
 
@@ -1435,7 +1435,7 @@ ttstr tTJSNI_KAGParser::GetTagName(const tjs_char ldelim)
 {
 	SkipWhiteSpace();
 	if(IsEndOfLine() || GetCurChar() == ldelim)
-		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("É^ÉOñºÇ™éÊìæÇ≈Ç´Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("„Çø„Ç∞Âêç„ÅåÂèñÂæó„Åß„Åç„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 
 	const tjs_char *tagnamestart = CurLineStr + CurPos;
 	while(!IsEndOfLine() && !IsWhiteSpace(GetCurChar()) &&
@@ -1443,7 +1443,7 @@ ttstr tTJSNI_KAGParser::GetTagName(const tjs_char ldelim)
 			CurPos++;
 
 	if(tagnamestart == CurLineStr + CurPos)
-		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("É^ÉOñºÇ™éwíËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("„Çø„Ç∞Âêç„ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 
 	const tjs_char *tagnameend = CurLineStr + CurPos;
 
@@ -1458,7 +1458,7 @@ ttstr tTJSNI_KAGParser::GetAttributeName(const tjs_char ldelim)
 {
 	SkipWhiteSpace();
 	if(IsEndOfLine() || GetCurChar() == ldelim)
-		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("É^ÉOÇÃëÆê´ñºÇ™éÊìæÇ≈Ç´Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("„Çø„Ç∞„ÅÆÂ±ûÊÄßÂêç„ÅåÂèñÂæó„Åß„Åç„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 
 	const tjs_char *attribnamestart = CurLineStr + CurPos;
 	while(!IsEndOfLine() && !IsWhiteSpace(GetCurChar()) &&
@@ -1480,7 +1480,7 @@ ttstr tTJSNI_KAGParser::GetAttributeValue(const tjs_char ldelim)
 	// pick up the value string from the tag string onto "ttstr value"
 	SkipWhiteSpace();	
 	if(IsEndOfLine() || GetCurChar() == ldelim)
-		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("É^ÉOÇÃëÆê´ílÇ™éÊìæÇ≈Ç´Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("„Çø„Ç∞„ÅÆÂ±ûÊÄßÂÄ§„ÅåÂèñÂæó„Åß„Åç„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 
 	// attribute value which will be returned
 	ttstr value(TJS_W(""));
@@ -1510,14 +1510,14 @@ ttstr tTJSNI_KAGParser::GetAttributeValue(const tjs_char ldelim)
 			// escaped with '`'
 			CurPos++;
 			if(IsEndOfLine())
-				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("'`'(ÉoÉbÉNÉNÉHÅ[Ég)íºå„Ç™çsññÇ≈Ç∑"), TVPCurPosErrorString);
+				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("'`'(„Éê„ÉÉ„ÇØ„ÇØ„Ç©„Éº„Éà)Áõ¥Âæå„ÅåË°åÊú´„Åß„Åô"), TVPCurPosErrorString);
 			ch = GetCurChar();
 		}
 		value += ch;
 		CurPos++;
 	}
 	if((ldelim != 0 || (vdelim && GetCurChar() != vdelim)) && IsEndOfLine())
-		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("ëÆê´ílÇ™ñ≥Ç¢Ç©ÅA\' Ç‚ \" ÇÃëŒâûÇ™ä‘à·Ç¡ÇƒÇ¢Ç‹Ç∑"), TVPCurPosErrorString);
+		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("Â±ûÊÄßÂÄ§„ÅåÁÑ°„ÅÑ„Åã„ÄÅ\' „ÇÑ \" „ÅÆÂØæÂøú„ÅåÈñìÈÅï„Å£„Å¶„ÅÑ„Åæ„Åô"), TVPCurPosErrorString);
 
 	if(vdelim)
 		CurPos++;
@@ -1599,7 +1599,7 @@ void tTJSNI_KAGParser::PushMacroArgs(tTJSDic &args)
 void tTJSNI_KAGParser::PopMacroArgs()
 {
 	if(MacroArgStackDepth == 0)
-		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("É}ÉNÉçÉXÉ^ÉbÉNÇ™ãÛÇÃÇΩÇﬂÅAPopMacroArg() Ç™é¿çsÇ≈Ç´Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+		TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("„Éû„ÇØ„É≠„Çπ„Çø„ÉÉ„ÇØ„ÅåÁ©∫„ÅÆ„Åü„ÇÅ„ÄÅPopMacroArg() „ÅåÂÆüË°å„Åß„Åç„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 	MacroArgStackDepth--;
 }
 //---------------------------------------------------------------------------
@@ -2441,7 +2441,7 @@ parse_start:
 					TVPThrowExceptionMessage(TVPKAGMultiLineDisabled);
 				// Do NOT invoke GoToNextLine() to avoid clearing CurLinStr/CurPos
 				if(++CurLine >= LineCount)
-					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("ï°êîçsÉ^ÉO(çsññ \\)Ç™ÉXÉNÉäÉvÉgññîˆÇ…Ç†ÇËÇ‹Ç∑"), TVPCurPosErrorString);
+					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("Ë§áÊï∞Ë°å„Çø„Ç∞(Ë°åÊú´ \\)„Åå„Çπ„ÇØ„É™„Éó„ÉàÊú´Â∞æ„Å´„ÅÇ„Çä„Åæ„Åô"), TVPCurPosErrorString);
 				// combine multilines to CurLineStr with removing the
 				// last '\' of CurLineStr.
 				AddMultiLine();
@@ -2449,7 +2449,7 @@ parse_start:
 			}
 
 			if(IsEndOfLine())
-				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("É^ÉOìríÜÇ≈çsññÇ…íBÇµÇ‹ÇµÇΩ"), TVPCurPosErrorString);
+				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("„Çø„Ç∞ÈÄî‰∏≠„ÅßË°åÊú´„Å´ÈÅî„Åó„Åæ„Åó„Åü"), TVPCurPosErrorString);
 
 			ttstr attribname(GetAttributeName(ldelim));
 			// now attribname is the attribution name, as "attr1" in [tagname attr1=value1]
@@ -2646,7 +2646,7 @@ parse_start:
 				tTJSVariant val = DicObj[__exp_name];
 
 				if(ttstr(val) == TJS_W(""))
-					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("if/ignore É^ÉOÇ… exp= Ç™éwíËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("if/ignore „Çø„Ç∞„Å´ exp= „ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 				SWITCH_TVPEXECUTEEXPRESSION(val, Owner, &val);
 
 				bool cond = val.operator bool();
@@ -2681,7 +2681,7 @@ parse_start:
 
 				//const std::string s = exp.AsStdString();
 				if(exp == TJS_W(""))
-					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("elsif É^ÉOÇÃ exp= Ç™éwíËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("elsif „Çø„Ç∞„ÅÆ exp= „ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 				SWITCH_TVPEXECUTEEXPRESSION(exp, Owner, &val);
 
 				bool cond = val.operator bool();
@@ -2757,7 +2757,7 @@ parse_start:
 				// read the "exp=" string for [endwhile] and [break]
 				WhileLevelExp = DicObj[__exp_name.c_str()];
 				if (WhileLevelExp == TJS_W(""))
-					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("while É^ÉOÇ… exp= Ç™éwíËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+					TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("while „Çø„Ç∞„Å´ exp= „ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 
 				// read the "each=" string for [endwhile]
 				WhileLevelEach = DicObj[TJS_W("each")];
@@ -2871,7 +2871,7 @@ parse_start:
 				exp = tagname.c_str()+1;
 			}
 			if(exp == TJS_W(""))
-				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("emb/& É^ÉOÇ… exp= Ç™éwíËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("emb/& „Çø„Ç∞„Å´ exp= „ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 			SWITCH_TVPEXECUTEEXPRESSION(exp, Owner, &val);
 			exp = val;
 
@@ -3145,7 +3145,7 @@ parse_start:
 			RecordingMacroName = DicObj[__name];
 			RecordingMacroName.ToLowerCase();
 			if(RecordingMacroName == TJS_W(""))
-				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("macro É^ÉOÇ… name= Ç™éwíËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ"), TVPCurPosErrorString);
+				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("macro „Çø„Ç∞„Å´ name= „ÅåÊåáÂÆö„Åï„Çå„Å¶„ÅÑ„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 					// missing macro name
 			RecordingMacro = true; // start recording macro
 			RecordingMacroStr.Clear();
@@ -3189,7 +3189,7 @@ parse_start:
 		{
 			// end recording macro
 			if(!RecordingMacro)
-				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("macro É^ÉOÇ»ÇµÇ… endmacro É^ÉOÇ™égópÇ≥ÇÍÇ‹ÇµÇΩ"), TVPCurPosErrorString);
+				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("macro „Çø„Ç∞„Å™„Åó„Å´ endmacro „Çø„Ç∞„Åå‰ΩøÁî®„Åï„Çå„Åæ„Åó„Åü"), TVPCurPosErrorString);
 			RecordingMacro = false;
 			if(DebugLevel >= tkdlVerbose)
 			{
@@ -3226,7 +3226,7 @@ parse_start:
 			tTJSDic pmacrodic(DicObj);
 			tTJSVariant pmacroname = pmacrodic[__name];
 			if (pmacroname.Type() == tvtVoid)
-				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("pmacro É^ÉOÇ… name= Ç™Ç†ÇËÇ‹ÇπÇÒ"), TVPCurPosErrorString);
+				TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("pmacro „Çø„Ç∞„Å´ name= „Åå„ÅÇ„Çä„Åæ„Åõ„Çì"), TVPCurPosErrorString);
 			pmacrodic.DelProp(__name);
 			pmacrodic.DelProp(__tag_name);
 			ParamMacros.SetProp(pmacroname.AsStringNoAddRef(), pmacrodic);
@@ -3260,7 +3260,7 @@ parse_start:
 		// But just for more strict error check...
 		else
 		{
-			TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("ñ¢ímÇÃÉGÉâÅ[Ç≈Ç∑ tagkind=")+ttstr(tagkind), TVPCurPosErrorString);
+			TVPThrowExceptionMessage(TVPKAGSyntaxError, TJS_W("Êú™Áü•„ÅÆ„Ç®„É©„Éº„Åß„Åô tagkind=")+ttstr(tagkind), TVPCurPosErrorString);
 		}
 
 tag_last:

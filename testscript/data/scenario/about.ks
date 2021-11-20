@@ -1,4 +1,4 @@
-@title name="‚±‚Ìƒ\ƒtƒg‚É‚Â‚¢‚Ä"
+@title name="ã“ã®ã‚½ãƒ•ãƒˆã«ã¤ã„ã¦"
 @rclick enabled=false
 @clickskip enabled=false
 @position left=0 top=0 width=320 height=240 color=0xffffff opacity=255 marginl=0 margint=0 marginr=0 marginb=0
@@ -8,8 +8,8 @@
 @nowait
 @backlay
 @current page=back
-‹g—¢‹g—¢‚Q
-@[emb exp="System.versionString"]
+å‰é‡Œå‰é‡Œï¼’
+ã€€[emb exp="System.versionString"]
 @r
 @trans method=crossfade time=500
 @wt
@@ -19,7 +19,7 @@ KAG3
 @r
 @trans method=crossfade time=500
 @wt
-[link target=*exit]•Â‚¶‚é[endlink]
+[link target=*exit]é–‰ã˜ã‚‹[endlink]
 @r
 @trans method=crossfade time=500
 @wt

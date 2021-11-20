@@ -1,12 +1,12 @@
-// KAGLayer.tjs - KAG ‚ÌƒŒƒCƒ„‚ÌŠî–{ƒNƒ‰ƒX
-// Copyright (C)2001-2009, W.Dee and contributors  ‰ü•ÏE”z•z‚Í©—R‚Å‚·
+// KAGLayer.tjs - KAG ã®ãƒ¬ã‚¤ãƒ¤ã®åŸºæœ¬ã‚¯ãƒ©ã‚¹
+// Copyright (C)2001-2009, W.Dee and contributors  æ”¹å¤‰ãƒ»é…å¸ƒã¯è‡ªç”±ã§ã™
 
 /*
- ƒŒƒCƒ„ŠÖ˜A‚ÌƒNƒ‰ƒXŠK‘w
+ ãƒ¬ã‚¤ãƒ¤é–¢é€£ã®ã‚¯ãƒ©ã‚¹éšå±¤
 
- Layer ( ‹g—¢‹g—¢ƒlƒCƒeƒBƒ”ƒNƒ‰ƒX )
+ Layer ( å‰é‡Œå‰é‡Œãƒã‚¤ãƒ†ã‚£ãƒ´ã‚¯ãƒ©ã‚¹ )
   |
-  +-- KAGLayer ( ‚±‚Ìƒtƒ@ƒCƒ‹ )
+  +-- KAGLayer ( ã“ã®ãƒ•ã‚¡ã‚¤ãƒ« )
        |
        +-- AnimationLayer ( AnimationLayer.tjs )
        |    |
@@ -36,62 +36,62 @@
 */
 
 /*
-@‚¿‚å‚Á‚Æ‚í‚©‚è‚Ã‚ç‚¢Aƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“I—¹‚Ì“®ì‚É‚Â‚¢‚ÄŠo‚¦‘‚«
+ã€€ã¡ã‚‡ã£ã¨ã‚ã‹ã‚Šã¥ã‚‰ã„ã€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚ã®å‹•ä½œã«ã¤ã„ã¦è¦šãˆæ›¸ã
 
-@‹g—¢‹g—¢‚Íƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“I—¹‚ÉAƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³(src=‘Šè)‚ª‚ ‚éê‡‚ÍA
-qƒŒƒCƒ„‚ğŠÜ‚Ş(children=true)ê‡‚Í‘Šè‚ÆƒcƒŠ[‚²‚Æ©•ª©g‚ÌƒŒƒCƒ„‚ğŒğŠ·‚µA
-qƒŒƒCƒ„‚ğŠÜ‚Ü‚È‚¢(children=false)ê‡‚ÍAq‚Ìâ‘Î“I‚ÈƒcƒŠ[ã‚ÌˆÊ’u‚Í‚»‚Ì
-‚Ü‚Ü‚É‚µ‚Ä‘Šè‚Æ“ü‚ê‘Ö‚í‚éB
+ã€€å‰é‡Œå‰é‡Œã¯ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚ã«ã€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒ(src=ç›¸æ‰‹)ãŒã‚ã‚‹å ´åˆã¯ã€
+å­ãƒ¬ã‚¤ãƒ¤ã‚’å«ã‚€(children=true)å ´åˆã¯ç›¸æ‰‹ã¨ãƒ„ãƒªãƒ¼ã”ã¨è‡ªåˆ†è‡ªèº«ã®ãƒ¬ã‚¤ãƒ¤ã‚’äº¤æ›ã—ã€
+å­ãƒ¬ã‚¤ãƒ¤ã‚’å«ã¾ãªã„(children=false)å ´åˆã¯ã€å­ã®çµ¶å¯¾çš„ãªãƒ„ãƒªãƒ¼ä¸Šã®ä½ç½®ã¯ãã®
+ã¾ã¾ã«ã—ã¦ç›¸æ‰‹ã¨å…¥ã‚Œæ›¿ã‚ã‚‹ã€‚
 
-@qƒŒƒCƒ„‚ğŠÜ‚Ü‚È‚¢ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ğs‚¦‚é‚Ì‚Í”wŒiƒŒƒCƒ„‚Ì‚İB
+ã€€å­ãƒ¬ã‚¤ãƒ¤ã‚’å«ã¾ãªã„ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚’è¡Œãˆã‚‹ã®ã¯èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ã®ã¿ã€‚
 
-ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ğs‚¤‚ÆAã‹L‚É‚¨‚¯‚éu“ü‚ê‘Ö‚¦v‚ğs‚¤‚ªA‹g—¢‹g—¢–{‘Ì‚Ì
-“ü‚ê‘Ö‚¦A‚Í name ‚È‚Ç‚Ìd—v‚Èî•ñ‚à“ü‚ê‘Ö‚¦‚Ä‚µ‚Ü‚¤‚Ì‚ÅA
-GraphicLayer.exchangeInfo ‚Å“à—e‚ğŒğŠ·‚·‚éB
+ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚’è¡Œã†ã¨ã€ä¸Šè¨˜ã«ãŠã‘ã‚‹ã€Œå…¥ã‚Œæ›¿ãˆã€ã‚’è¡Œã†ãŒã€å‰é‡Œå‰é‡Œæœ¬ä½“ã®
+å…¥ã‚Œæ›¿ãˆã€ã¯ name ãªã©ã®é‡è¦ãªæƒ…å ±ã‚‚å…¥ã‚Œæ›¿ãˆã¦ã—ã¾ã†ã®ã§ã€
+GraphicLayer.exchangeInfo ã§å†…å®¹ã‚’äº¤æ›ã™ã‚‹ã€‚
 
-‚Ü‚½Atrans ‘®«‚Å exchange=true ‚ªw’è‚³‚ê‚½ê‡‚ÍA—¼Ò‚ÌƒŒƒCƒ„‚Í“ü‚ê‘Ö‚í
-‚é‚ªAexchange=false (ƒfƒtƒHƒ‹ƒg) ‚ªw’è‚³‚ê‚½ê‡‚ÍAƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³(src)
-‚©‚çƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“æ‚Ö‚Ìî•ñ‚ÌƒRƒs[‚ğs‚í‚È‚¢‚Æ‚È‚ç‚È‚¢B
+ã¾ãŸã€trans å±æ€§ã§ exchange=true ãŒæŒ‡å®šã•ã‚ŒãŸå ´åˆã¯ã€ä¸¡è€…ã®ãƒ¬ã‚¤ãƒ¤ã¯å…¥ã‚Œæ›¿ã‚
+ã‚‹ãŒã€exchange=false (ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ) ãŒæŒ‡å®šã•ã‚ŒãŸå ´åˆã¯ã€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒ(src)
+ã‹ã‚‰ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ˆã¸ã®æƒ…å ±ã®ã‚³ãƒ”ãƒ¼ã‚’è¡Œã‚ãªã„ã¨ãªã‚‰ãªã„ã€‚
 
-src‚È‚µ ‚Ì‚ÍƒŒƒCƒ„’P“Æ‚Å‚Ìƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ªs‚í‚ê‚é‚Ì‚Å‚±‚ê‚ç‚Ìl—¶‚Í
-•K—v‚È‚¢‚ªAI—¹‚É‚ÍqƒŒƒCƒ„‚ª‚·‚×‚Ä”ñ•\¦‚É‚È‚éB
+srcãªã— ã®æ™‚ã¯ãƒ¬ã‚¤ãƒ¤å˜ç‹¬ã§ã®ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ãŒè¡Œã‚ã‚Œã‚‹ã®ã§ã“ã‚Œã‚‰ã®è€ƒæ…®ã¯
+å¿…è¦ãªã„ãŒã€çµ‚äº†æ™‚ã«ã¯å­ãƒ¬ã‚¤ãƒ¤ãŒã™ã¹ã¦éè¡¨ç¤ºã«ãªã‚‹ã€‚
 
-EƒƒbƒZ[ƒWƒŒƒCƒ„A‘OŒiƒŒƒCƒ„‚ªAsrc‚È‚µ‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“ (children=true)
-@‰½‚à‚µ‚È‚­‚Ä‚æ‚¢‚ªAI—¹Œã‚»‚ê‚ç‚ÌqƒŒƒCƒ„‚Í©“®“I‚É”ñ•\¦‚É‚È‚éB
+ãƒ»ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¬ã‚¤ãƒ¤ã€å‰æ™¯ãƒ¬ã‚¤ãƒ¤ãŒã€srcãªã—ã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ (children=true)
+ã€€ä½•ã‚‚ã—ãªãã¦ã‚ˆã„ãŒã€çµ‚äº†å¾Œãã‚Œã‚‰ã®å­ãƒ¬ã‚¤ãƒ¤ã¯è‡ªå‹•çš„ã«éè¡¨ç¤ºã«ãªã‚‹ã€‚
 
-EƒƒbƒZ[ƒWƒŒƒCƒ„A‘OŒiƒŒƒCƒ„‚ªAsrc‚ ‚è‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“ (children=true)
-@d—v‚Èî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚ÆŒğŠ·Aexchange=false ‚Ìê‡‚Í‚³‚ç‚É
-@ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚Ìî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“æ‚ÉƒRƒs[B‚½‚¾‚µA‚±‚ÌƒRƒs[‚ÌÛ‚É
-@ƒEƒBƒ“ƒhƒE‚Ì‰Â‹E•s‰Â‹‚Ìî•ñ‚ÍƒRƒs[‚µ‚È‚¢B
+ãƒ»ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¬ã‚¤ãƒ¤ã€å‰æ™¯ãƒ¬ã‚¤ãƒ¤ãŒã€srcã‚ã‚Šã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ (children=true)
+ã€€é‡è¦ãªæƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã¨äº¤æ›ã€exchange=false ã®å ´åˆã¯ã•ã‚‰ã«
+ã€€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã®æƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ˆã«ã‚³ãƒ”ãƒ¼ã€‚ãŸã ã—ã€ã“ã®ã‚³ãƒ”ãƒ¼ã®éš›ã«
+ã€€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¯è¦–ãƒ»ä¸å¯è¦–ã®æƒ…å ±ã¯ã‚³ãƒ”ãƒ¼ã—ãªã„ã€‚
 
-E”wŒiƒŒƒCƒ„‚ªsrc‚È‚µ‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=true)
-@‰½‚à‚µ‚È‚­‚Ä‚æ‚¢‚ªAI—¹‚ÉqƒŒƒCƒ„‚Í”ñ•\¦‚É‚È‚éB
+ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcãªã—ã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=true)
+ã€€ä½•ã‚‚ã—ãªãã¦ã‚ˆã„ãŒã€çµ‚äº†æ™‚ã«å­ãƒ¬ã‚¤ãƒ¤ã¯éè¡¨ç¤ºã«ãªã‚‹ã€‚
 
-E”wŒiƒŒƒCƒ„‚ªsrc‚È‚µ‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=false)
-@–{“–‚É‰½‚à‚µ‚È‚¢B
+ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcãªã—ã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=false)
+ã€€æœ¬å½“ã«ä½•ã‚‚ã—ãªã„ã€‚
 
-E”wŒiƒŒƒCƒ„‚ªsrc‚ ‚è‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=true)
-@d—v‚Èî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚ÆŒğŠ·A‚µ‚©‚àqƒŒƒCƒ„‚É‘Î‚µ‚Ä‚à‚±‚Ì
-@ud—v‚Èî•ñ‚ğ‘Šè‚ÆŒğŠ·v‚Ìw¦‚ğo‚·Bexchange=false ‚Ìê‡‚Í‚³‚ç‚É
-@ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚Ìî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“æ‚ÉƒRƒs[B‚±‚ê‚àAqƒŒƒCƒ„‚·‚×‚Ä
-@‚É‘Î‚µ‚Ä‚àw¦‚·‚éB
+ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcã‚ã‚Šã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=true)
+ã€€é‡è¦ãªæƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã¨äº¤æ›ã€ã—ã‹ã‚‚å­ãƒ¬ã‚¤ãƒ¤ã«å¯¾ã—ã¦ã‚‚ã“ã®
+ã€€ã€Œé‡è¦ãªæƒ…å ±ã‚’ç›¸æ‰‹ã¨äº¤æ›ã€ã®æŒ‡ç¤ºã‚’å‡ºã™ã€‚exchange=false ã®å ´åˆã¯ã•ã‚‰ã«
+ã€€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã®æƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ˆã«ã‚³ãƒ”ãƒ¼ã€‚ã“ã‚Œã‚‚ã€å­ãƒ¬ã‚¤ãƒ¤ã™ã¹ã¦
+ã€€ã«å¯¾ã—ã¦ã‚‚æŒ‡ç¤ºã™ã‚‹ã€‚
 
-E”wŒiƒŒƒCƒ„‚ªsrc‚ ‚è‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=false)
-@d—v‚Èî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚ÆŒğŠ·BqƒŒƒCƒ„‚É‘Î‚µ‚Ä‚Í
-@ud—v‚Èî•ñ‚ğ‘Šè‚ÆŒğŠ·v‚Ìw¦‚ğ‚¾‚³‚È‚¢Bexchange=false ‚Ìê‡‚Í
-@‚³‚ç‚Éƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚Ìî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“æ‚ÉƒRƒs[B
-@‚±‚ê‚àqƒŒƒCƒ„‚É‘Î‚µ‚Ä‚Íw¦‚µ‚È‚¢B
+ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcã‚ã‚Šã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=false)
+ã€€é‡è¦ãªæƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã¨äº¤æ›ã€‚å­ãƒ¬ã‚¤ãƒ¤ã«å¯¾ã—ã¦ã¯
+ã€€ã€Œé‡è¦ãªæƒ…å ±ã‚’ç›¸æ‰‹ã¨äº¤æ›ã€ã®æŒ‡ç¤ºã‚’ã ã•ãªã„ã€‚exchange=false ã®å ´åˆã¯
+ã€€ã•ã‚‰ã«ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã®æƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ˆã«ã‚³ãƒ”ãƒ¼ã€‚
+ã€€ã“ã‚Œã‚‚å­ãƒ¬ã‚¤ãƒ¤ã«å¯¾ã—ã¦ã¯æŒ‡ç¤ºã—ãªã„ã€‚
 
 */
 
 class KAGLayer extends Layer
 {
-	// KAG ‚Å—p‚¢‚é”wŒi/‘OŒiƒŒƒCƒ„AƒƒbƒZ[ƒWƒŒƒCƒ„Aƒ{ƒ^ƒ“ƒŒƒCƒ„‚È‚Ç‚ÌŠî–{ƒNƒ‰ƒX
-	var inTransition = false; // ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“’†‚©
-	var transExchange = false; // ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“I—¹‚É“ü‚ê‘Ö‚¦‚ğs‚¤‚©
-	var transWithChildren = false; // ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ÍqƒŒƒCƒ„‚àŠÜ‚ß‚Äs‚¤‚©
+	// KAG ã§ç”¨ã„ã‚‹èƒŒæ™¯/å‰æ™¯ãƒ¬ã‚¤ãƒ¤ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¬ã‚¤ãƒ¤ã€ãƒœã‚¿ãƒ³ãƒ¬ã‚¤ãƒ¤ãªã©ã®åŸºæœ¬ã‚¯ãƒ©ã‚¹
+	var inTransition = false; // ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ä¸­ã‹
+	var transExchange = false; // ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚ã«å…¥ã‚Œæ›¿ãˆã‚’è¡Œã†ã‹
+	var transWithChildren = false; // ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã¯å­ãƒ¬ã‚¤ãƒ¤ã‚‚å«ã‚ã¦è¡Œã†ã‹
 
-	var moveObject; // Œ»İis’†‚Ì©“®ˆÚ“®—pƒIƒuƒWƒFƒNƒg(is‚µ‚Ä‚¢‚È‚¢‚Æ‚«‚Ívoid)
+	var moveObject; // ç¾åœ¨é€²è¡Œä¸­ã®è‡ªå‹•ç§»å‹•ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(é€²è¡Œã—ã¦ã„ãªã„ã¨ãã¯void)
 
 	function KAGLayer(win, par)
 	{
@@ -106,7 +106,7 @@ class KAGLayer extends Layer
 
 	function setOptions(elm)
 	{
-		// elm ‚É]‚Á‚ÄƒŒƒCƒ„‚ÌƒIƒvƒVƒ‡ƒ“‚ğİ’è
+		// elm ã«å¾“ã£ã¦ãƒ¬ã‚¤ãƒ¤ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’è¨­å®š
 		visible = +elm.visible if elm.visible !== void;
 		left = +elm.left if elm.left !== void;
 		top = +elm.top if elm.top !== void;
@@ -124,14 +124,14 @@ class KAGLayer extends Layer
 
 	function loadImages(storage, key)
 	{
-		// loadImages ƒI[ƒo[ƒ‰ƒCƒh
+		// loadImages ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		key = adjustColorKey(key);
 		return super.loadImages(storage, key);
 	}
 
 	function adjustColorKey(key)
 	{
-		// •¶š—ñ‚Å—^‚¦‚ç‚ê‚½ƒJƒ‰[ƒL[‚Ì•ÏŠ·
+		// æ–‡å­—åˆ—ã§ä¸ãˆã‚‰ã‚ŒãŸã‚«ãƒ©ãƒ¼ã‚­ãƒ¼ã®å¤‰æ›
 		if(key === void)
 			key = clNone;
 		else if(typeof key == "String")
@@ -143,7 +143,7 @@ class KAGLayer extends Layer
 				if(key.length >= 7)
 					key = +key;
 				else
-					key = +key + 0x3000000; // 0x3000000 = ƒpƒŒƒbƒgƒCƒ“ƒfƒbƒNƒX‚É‚æ‚éw’è
+					key = +key + 0x3000000; // 0x3000000 = ãƒ‘ãƒ¬ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«ã‚ˆã‚‹æŒ‡å®š
 			}
 		}
 		return key;
@@ -151,16 +151,16 @@ class KAGLayer extends Layer
 
 	function assignImages(src, copyvisiblestate = false)
 	{
-		// assignImages ƒI[ƒo[ƒ‰ƒCƒh
-		// src ‚Ìu–Ú‚ÉŒ©‚¦‚évî•ñ‚ğ‚±‚ÌƒŒƒCƒ„‚ÉƒRƒs[‚·‚é
-		// ƒRƒs[‚³‚ê‚é“à—e‚ÍA
-		// E“§–¾“x
-		// EˆÊ’u
-		// E•\¦ƒTƒCƒY
-		// EƒŒƒCƒ„“à‰æ‘œ•\¦ˆÊ’u(imageLeft, imageTop)
-		//  ( ã‹L‚R‚Â‚Í copyvisiblestate = true ‚Ì‚Î‚ ‚¢ )
-		// E‰æ‘œƒTƒCƒY
-		// EƒŒƒCƒ„‰æ‘œA—Ìˆæ‰æ‘œ
+		// assignImages ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+		// src ã®ã€Œç›®ã«è¦‹ãˆã‚‹ã€æƒ…å ±ã‚’ã“ã®ãƒ¬ã‚¤ãƒ¤ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹
+		// ã‚³ãƒ”ãƒ¼ã•ã‚Œã‚‹å†…å®¹ã¯ã€
+		// ãƒ»é€æ˜åº¦
+		// ãƒ»ä½ç½®
+		// ãƒ»è¡¨ç¤ºã‚µã‚¤ã‚º
+		// ãƒ»ãƒ¬ã‚¤ãƒ¤å†…ç”»åƒè¡¨ç¤ºä½ç½®(imageLeft, imageTop)
+		//  ( ä¸Šè¨˜ï¼“ã¤ã¯ copyvisiblestate = true ã®ã°ã‚ã„ )
+		// ãƒ»ç”»åƒã‚µã‚¤ã‚º
+		// ãƒ»ãƒ¬ã‚¤ãƒ¤ç”»åƒã€é ˜åŸŸç”»åƒ
 		super.assignImages(src);
 		if(copyvisiblestate)
 		{
@@ -176,8 +176,8 @@ class KAGLayer extends Layer
 
 	function assignVisibleState(src)
 	{
-		// src ‚©‚çã‹L assignImages ‚Ì‚¤‚¿Acopyvisiblestate = true ‚É
-		// ‚µ‚½‚Æ‚«‚¾‚¯‚ÉƒRƒs[‚³‚ê‚éî•ñ‚ğƒRƒs[
+		// src ã‹ã‚‰ä¸Šè¨˜ assignImages ã®ã†ã¡ã€copyvisiblestate = true ã«
+		// ã—ãŸã¨ãã ã‘ã«ã‚³ãƒ”ãƒ¼ã•ã‚Œã‚‹æƒ…å ±ã‚’ã‚³ãƒ”ãƒ¼
 		visible = src.visible;
 		opacity = src.opacity;
 		absolute = src.absolute if !src.isPrimary && src.parent.absoluteOrderMode;
@@ -188,24 +188,24 @@ class KAGLayer extends Layer
 
 	function beginTransition(elm, src)
 	{
-		// beginTransition ƒI[ƒo[ƒ‰ƒCƒh
-		// elm ‚É]‚¢Aƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ğŠJn‚·‚é
-		// src ‚É‚Íƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚Ì‘Šè‚ğw’è
-//		stopTransition(); // Œ»İ‚Ìƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚Í’â~
+		// beginTransition ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+		// elm ã«å¾“ã„ã€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
+		// src ã«ã¯ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã®ç›¸æ‰‹ã‚’æŒ‡å®š
+//		stopTransition(); // ç¾åœ¨ã®ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã¯åœæ­¢
 
 		if(elm.exchange !== void) transExchange = +elm.exchange; else transExchange = false;
 		var method = elm.method;
 		if(elm.time !== void)
 		{
-			elm.time = 1 if +elm.time == 0; // ŠÔ‚É 0 ‚Íw’è‚Å‚«‚È‚¢‚Ì‚Å
+			elm.time = 1 if +elm.time == 0; // æ™‚é–“ã« 0 ã¯æŒ‡å®šã§ããªã„ã®ã§
 		}
 		if(method === void)
 		{
-			method = 'universal'; // ƒfƒtƒHƒ‹ƒg‚Åƒ†ƒjƒo[ƒTƒ‹
+			method = 'universal'; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ãƒ¦ãƒ‹ãƒãƒ¼ã‚µãƒ«
 		}
 		else if(method == 'scroll')
 		{
-			// ƒpƒ‰ƒ[ƒ^‚Ì•ÏŠ·
+			// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å¤‰æ›
 			switch(elm.from)
 			{
 			case 'left': elm.from = sttLeft; break;
@@ -228,7 +228,7 @@ class KAGLayer extends Layer
 			withchildren = +withchildren;
 		transWithChildren = withchildren;
 		inTransition = true;
-		window.transCount++; // is’†‚Ìƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚Ì”‚ğ‘‚â‚·
+		window.transCount++; // é€²è¡Œä¸­ã®ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã®æ•°ã‚’å¢—ã‚„ã™
 		super.beginTransition(method, withchildren, src, elm);
 	}
 
@@ -238,7 +238,7 @@ class KAGLayer extends Layer
 		if(window != null)
 		{
 			inTransition = false;
-			window.transCount--; // is’†‚Ìƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚Ì”‚ğŒ¸‚ç‚·
+			window.transCount--; // é€²è¡Œä¸­ã®ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã®æ•°ã‚’æ¸›ã‚‰ã™
 			atEndOfTransition(src, transWithChildren, transExchange);
 			window.onLayerTransitionCompleted(this, dest, src);
 		}
@@ -246,39 +246,39 @@ class KAGLayer extends Layer
 
 	function atEndOfTransition(src, withchildren, exchange)
 	{
-		// •K—v‚É‰‚¶‚Ä ƒI[ƒo[ƒ‰ƒCƒh‚·‚é‚±‚Æ
-		// ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ªI—¹‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éB
-		// ƒŒƒCƒ„’P“Æ‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ªs‚í‚ê‚½ê‡‚Í src ‚Í null ‚É‚È‚éB
-		// ‚»‚¤‚Å‚È‚¢ê‡Aexchange ‚ª true ‚Ì‚ÍAsrc ‚Æ ©•ª‚Ì“à—e
-		// ‚ğæ‚è‘Ö‚¦A‚»‚¤‚Å‚È‚¯‚ê‚Î src ‚É©•ª‚Ì“à—e
-		// ‚ğƒRƒs[B
-		// qƒŒƒCƒ„‚àŠÜ‚ß‚Äƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ªs‚í‚ê‚½ê‡‚Í withchildren ‚ª
-		// true ‚É‚È‚éB
-		// root ‚ÍAƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚Ì‘å–{‚É‘Î‚µ‚ÄŒÄ‚Î‚ê‚é‚Æ‚«‚É true ‚É‚È‚éB
+		// å¿…è¦ã«å¿œã˜ã¦ ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã“ã¨
+		// ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ãŒçµ‚äº†ã—ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã€‚
+		// ãƒ¬ã‚¤ãƒ¤å˜ç‹¬ã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ãŒè¡Œã‚ã‚ŒãŸå ´åˆã¯ src ã¯ null ã«ãªã‚‹ã€‚
+		// ãã†ã§ãªã„å ´åˆã€exchange ãŒ true ã®æ™‚ã¯ã€src ã¨ è‡ªåˆ†ã®å†…å®¹
+		// ã‚’å–ã‚Šæ›¿ãˆã€ãã†ã§ãªã‘ã‚Œã° src ã«è‡ªåˆ†ã®å†…å®¹
+		// ã‚’ã‚³ãƒ”ãƒ¼ã€‚
+		// å­ãƒ¬ã‚¤ãƒ¤ã‚‚å«ã‚ã¦ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ãŒè¡Œã‚ã‚ŒãŸå ´åˆã¯ withchildren ãŒ
+		// true ã«ãªã‚‹ã€‚
+		// root ã¯ã€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã®å¤§æœ¬ã«å¯¾ã—ã¦å‘¼ã°ã‚Œã‚‹ã¨ãã« true ã«ãªã‚‹ã€‚
 	}
 
 	function beginMove(elm)
 	{
-		// elm ‚É]‚¢©“®ˆÚ“®‚ğŠJn‚·‚é
+		// elm ã«å¾“ã„è‡ªå‹•ç§»å‹•ã‚’é–‹å§‹ã™ã‚‹
 		stopMove();
 
-		// path ‚Ì•ª‰ğ
+		// path ã®åˆ†è§£
 		var array = [].split("(), ", elm.path, , true);
 		for(var i = array.count-1; i>=0; i--) array[i+3] = +array[i];
 		array[0] = left;
 		array[1] = top;
 		array[2] = opacity;
 
-		// ˆÚ“®—pƒIƒuƒWƒFƒNƒg‚Ìì¬
+		// ç§»å‹•ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 		if(elm.spline !== void && +elm.spline)
 		{
-			// ƒXƒvƒ‰ƒCƒ“•âŠÔ
+			// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³è£œé–“
 			moveObject = new SplineMover(this, array, +elm.time,
 				elm.accel === void ? 0 : +elm.accel, moveFinalFunction);
 		}
 		else
 		{
-			// ’¼ü•âŠÔ
+			// ç›´ç·šè£œé–“
 			moveObject = new LinearMover(this, array, +elm.time,
 				elm.accel === void ? 0 : +elm.accel, moveFinalFunction);
 		}
@@ -288,7 +288,7 @@ class KAGLayer extends Layer
 
 	function moveFinalFunction()
 	{
-		// ©“®ˆÚ“®‚ªI—¹‚·‚é‚Æ‚«‚ÉŒÄ‚Î‚ê‚éŠÖ”
+		// è‡ªå‹•ç§»å‹•ãŒçµ‚äº†ã™ã‚‹ã¨ãã«å‘¼ã°ã‚Œã‚‹é–¢æ•°
 		window.moveCount--;
 		window.onLayerMoveStop();
 	}
@@ -298,17 +298,17 @@ class KAGLayer extends Layer
 		if(moveObject !== void) invalidate moveObject, moveObject = void;
 	}
 
-	// ƒtƒŒ[ƒ€”Ô†‚ğw’è‚µ‚½move
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚’æŒ‡å®šã—ãŸmove
 	function beginFrameMove(elm)
 	{
-		// elm ‚É]‚¢©“®ˆÚ“®‚ğŠJn‚·‚é
+		// elm ã«å¾“ã„è‡ªå‹•ç§»å‹•ã‚’é–‹å§‹ã™ã‚‹
 		stopMove();
 
 		var ox = elm.ox === void ? 0 : +elm.ox;
 		var oy = elm.oy === void ? 0 : +elm.oy;
 		var fps = elm.fps === void ? 30 : +elm.fps;
 
-		// path ‚Ì•ª‰ğ
+		// path ã®åˆ†è§£
 		var array = [].split("(), ", elm.path, , true);
 		for(var i = array.count-1; i>=0; i--) array[i+4] = +array[i];
 		array[0] = 0;
@@ -316,7 +316,7 @@ class KAGLayer extends Layer
 		array[2] = top - oy;
 		array[3] = opacity;
 
-		// ˆÚ“®—pƒIƒuƒWƒFƒNƒg‚Ìì¬
+		// ç§»å‹•ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 		moveObject = new LinearFrameMover(this, array, fps, moveFinalFunction, ox, oy );
 
 		window.moveCount++;
@@ -325,7 +325,7 @@ class KAGLayer extends Layer
 
 	function store()
 	{
-		// «‘”z—ñ‚ÉŒ»İ‚Ìó‘Ô‚ğ•Û‘¶‚·‚é
+		// è¾æ›¸é…åˆ—ã«ç¾åœ¨ã®çŠ¶æ…‹ã‚’ä¿å­˜ã™ã‚‹
 		var dic = %[];
 		dic.left = left;
 		dic.top = top;
@@ -344,7 +344,7 @@ class KAGLayer extends Layer
 
 	function restore(dic)
 	{
-		// «‘”z—ñ dic ‚©‚çî•ñ‚ğ“Ç‚İo‚µA‚±‚ÌƒŒƒCƒ„‚Éİ’è‚·‚é
+		// è¾æ›¸é…åˆ— dic ã‹ã‚‰æƒ…å ±ã‚’èª­ã¿å‡ºã—ã€ã“ã®ãƒ¬ã‚¤ãƒ¤ã«è¨­å®šã™ã‚‹
 		setImageSize(dic.imageWidth, dic.imageHeight);
 		setPos(dic.left, dic.top, dic.width, dic.height);
 		setImagePos(dic.imageLeft, dic.imageTop);
@@ -355,21 +355,21 @@ class KAGLayer extends Layer
 	}
 
 	/**
-	 * ƒŒƒCƒ„‚Ö‚ÌF”½‰fˆ—
+	 * ãƒ¬ã‚¤ãƒ¤ã¸ã®è‰²åæ˜ å‡¦ç†
 	 * @param left
 	 * @param top
 	 * @param width
 	 * @param height
-	 * @param color “h‚è‚Â‚Ô‚·F(ƒ}ƒXƒN’l‚ğŠÜ‚Şj
-	 * @param mode ‡¬ƒ‚[ƒh
+	 * @param color å¡—ã‚Šã¤ã¶ã™è‰²(ãƒã‚¹ã‚¯å€¤ã‚’å«ã‚€ï¼‰
+	 * @param mode åˆæˆãƒ¢ãƒ¼ãƒ‰
 	 */
 	function fillOperateRect(left, top, width, height, color, mode)
 	{
 		var tw = 128;
 		var th = 64;
 		var fillLayer = new global.Layer(window, this);
-		// Œ³X‹g—¢‹g—¢‚Ì‚à‚Ì‚È‚çA•s“§–¾‚ÌˆêFƒŒƒCƒ„[‚ğA•s“§–¾“x‚ğw’è‚µ‚Ä•`‰æB
-		// PhotoShop€‹’‚Ì‚à‚Ì‚È‚çA”¼“§–¾‚ÌˆêFƒŒƒCƒ„[‚ğA“§–¾“x‚ğw’è‚¹‚¸(opacity=255)‚É•`‰æB
+		// å…ƒã€…å‰é‡Œå‰é‡Œã®ã‚‚ã®ãªã‚‰ã€ä¸é€æ˜ã®ä¸€è‰²ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã€ä¸é€æ˜åº¦ã‚’æŒ‡å®šã—ã¦æç”»ã€‚
+		// PhotoShopæº–æ‹ ã®ã‚‚ã®ãªã‚‰ã€åŠé€æ˜ã®ä¸€è‰²ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã€é€æ˜åº¦ã‚’æŒ‡å®šã›ãš(opacity=255)ã«æç”»ã€‚
 		var orgmodes	= %[ltOpaque=>1,ltAlpha=>1,ltAddAlpha=>1,ltAdditive=>1,ltSubtractive=>1,ltMultiplicative=>1,ltDodge=>1,ltLighten=>1,ltDarken=>1,ltScreen=>1];
 		fillLayer.setSize(tw, th);
 		var opacity	= 255;
@@ -395,48 +395,48 @@ class KAGLayer extends Layer
 			y += th;
 		}
 		face = lastface, holdAlpha = lastha;
-		// Œã•Ğ•t‚¯
+		// å¾Œç‰‡ä»˜ã‘
 		invalidate fillLayer;
 	}
 
 	/**
-	 * ‰e‚ğ’Ç‰Á‚·‚é
-	 * @param dx ‰e‚ÌXˆÚ“®—Ê (‰E‚Éƒvƒ‰ƒX)
-	 * @param dy ‰e‚ÌYˆÚ“®—Ê (‰º‚Éƒvƒ‰ƒX)
-	 * @param blur ‚Ú‚©‚µ—Ê
-	 * @param shadowColor ‰e‚ÌF
-	 * @param shadoAlpha ‰e‚Ì•s“§–¾“x
+	 * å½±ã‚’è¿½åŠ ã™ã‚‹
+	 * @param dx å½±ã®Xç§»å‹•é‡ (å³ã«ãƒ—ãƒ©ã‚¹)
+	 * @param dy å½±ã®Yç§»å‹•é‡ (ä¸‹ã«ãƒ—ãƒ©ã‚¹)
+	 * @param blur ã¼ã‹ã—é‡
+	 * @param shadowColor å½±ã®è‰²
+	 * @param shadoAlpha å½±ã®ä¸é€æ˜åº¦
 	 */
 	function doDropShadow(dx=10, dy=10, blur=3, shadowColor=0x000000, shadowOpacity=200)
 	{
 		var THIS = global.Layer;
 		
-		// ì‹Æ—pƒŒƒCƒ„
+		// ä½œæ¥­ç”¨ãƒ¬ã‚¤ãƒ¤
 		var work = new THIS(window, parent);
 		work.setImagePos(THIS.imageLeft, THIS.imageTop);
 		work.setImageSize(THIS.imageWidth, THIS.imageHeight);
 		
-		// ‰e¶¬ˆ—
+		// å½±ç”Ÿæˆå‡¦ç†
 		var shadow = new THIS(window, parent);
 		shadow.assignImages(this);
-		// “h‚è‚Â‚Ô‚µ
+		// å¡—ã‚Šã¤ã¶ã—
 		shadow.face = dfMain;
 		shadow.holdAlpha = true;
 		shadow.fillRect(THIS.imageLeft, THIS.imageTop, THIS.imageWidth, THIS.imageHeight, shadowColor);
 		shadow.face = dfBoth;
 		shadow.holdAlpha = false;
-		// ‚Ú‚©‚·
+		// ã¼ã‹ã™
 		shadow.doBoxBlur(blur, blur);
 		
-		// ‰e‚ğƒRƒs[
+		// å½±ã‚’ã‚³ãƒ”ãƒ¼
 		work.operateRect(THIS.imageLeft + dx, THIS.imageTop + dy, shadow, THIS.imageLeft, THIS.imageTop, THIS.imageWidth, THIS.imageHeight, ltPsNormal, shadowOpacity);
-		// ©•ª‚ğƒRƒs[
+		// è‡ªåˆ†ã‚’ã‚³ãƒ”ãƒ¼
 		work.operateRect(THIS.imageLeft, THIS.imageTop, this, THIS.imageLeft, THIS.imageTop, THIS.imageWidth, THIS.imageHeight, ltPsNormal, 255);
 		
-		// ‰æ‘œ‚³‚µ‚©‚¦
+		// ç”»åƒã•ã—ã‹ãˆ
 		THIS.assignImages(work);
 		
-		// Œã•Ğ•t‚¯
+		// å¾Œç‰‡ä»˜ã‘
 		invalidate work;
 		invalidate shadow;
 	};

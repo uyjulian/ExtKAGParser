@@ -1,44 +1,44 @@
-���������[�N�̌������킩��Ȃ��̂ŁA�\�[�X�ǂ�ł킩������
-�����Ă�����������B
+メモリリークの原因がわからないので、ソース読んでわかったら
+教えてください是非。
 
-���́u��������Γ�������Ƃ����̂��킩���Ă��邩��������
-����v����ǁA�{���͂������ׂ��ł͂Ȃ��̂ŁB
+今は「こうすれば逃げられるというのがわかっているから回避して
+いる」けれど、本来はそうすべきではないので。
 
-��̓I�ɂ́ATJSAry.h(��TJSAry.cpp) �ŁA���̓R�����g�A�E�g
-����Ă���R���X�g���N�^
+具体的には、TJSAry.h(とTJSAry.cpp) で、今はコメントアウト
+されているコンストラクタ
 tTJSAry(tTJSDispatch2 *srcary);
-��L���ɂ���ƁAKAGParser.cpp 3132�s�������
+を有効にすると、KAGParser.cpp 3132行あたりの
 tTJSAry ary(DicObj.GetKeys());
-�Ő���ȃ��������[�N�ɂȂ�B�L���ɂ��ăR���p�C��������A�ȉ���
-�X�N���v�g�𗬂��ƁAkrkr.exe �̃T�C�Y���b��50MB���炢��
-�C�L�I�C�ő����Ă�������킩��B
+で盛大なメモリリークになる。有効にしてコンパイルした後、以下の
+スクリプトを流すと、krkr.exe のサイズが秒間50MBくらいの
+イキオイで増えていくからわかる。
 @macro name=a
 @eval exp=1
 @endmacro
 *aaa
 @a
 @jump target=*aaa
-���s���鎞�́A�^�X�N�}�l�[�W�������炩���ߊJ���Ă����āA
-���o�����Ȃ炷������krkr.exe���E����悤�ɂ��Ă����̂�
-�����߂���B
+実行する時は、タスクマネージャをあらかじめ開いておいて、
+ヤバそうならすかさずkrkr.exeを殺せるようにしておくのを
+お勧めする。
 
-�����́A
+原因は、
 tTJSAry ary(tTJSAry());
-�̎��ɁAary ���R���X�g���N�^ tTJSAry(iTJSDispatch2* p) �ŏ�����
-����A���̎��_�� p->RefCount�� +1 ����Ă��邱�Ƃ̖͗l�B���̂��߁A
-�ꎞ�ϐ��������鎞�ɂ����̕ϐ����Q�Ƃ��Ă���̈悪�c���Ă��܂��A
-���������[�N�ƂȂ��Ă���悤�Ɍ�����B
-�d���Ȃ��̂ŁA���݂̓R���X�g���N�^ tTJSAry(iTJSDispatch2* p) ��
-�폜���ĉ�����Ă���B��������ƁAary �� tTJSAry(tTJSVariant&) ��
-����������(������Ӑ}���Ă��Ȃ�����)�A���������[�N�ɂ͂Ȃ�Ȃ��B
+の時に、ary がコンストラクタ tTJSAry(iTJSDispatch2* p) で初期化
+され、この時点で p->RefCountが +1 されていることの模様。そのため、
+一時変数が消える時にもこの変数が参照している領域が残ってしまい、
+メモリリークとなっているように見える。
+仕方ないので、現在はコンストラクタ tTJSAry(iTJSDispatch2* p) を
+削除して回避している。そうすると、ary は tTJSAry(tTJSVariant&) で
+初期化され(それも意図していないけど)、メモリリークにはならない。
 
-�^��_�͓�B
+疑問点は二つ。
 
-A.�R���X�g���N�^ tTJSAry(tTJSAry&) ������̂ɁA�Ȃ������炪
-�@�Ă΂�Ȃ��̂��H�@tTJSAry(const tTJSAry&)���Ȃ����炩�H
-B.�ǂ������o�H�� tTJSAry(iTJSDispatch2* p)���Ă΂�A���̎��Ȃ�
-�@p->RefCount �� +1 ����Ă���̂��H
+A.コンストラクタ tTJSAry(tTJSAry&) があるのに、なぜこちらが
+　呼ばれないのか？　tTJSAry(const tTJSAry&)がないからか？
+B.どういう経路で tTJSAry(iTJSDispatch2* p)が呼ばれ、その時なぜ
+　p->RefCount が +1 されているのか？
 
-�Ȃ��A�R�s�[�R���X�g���N�^ tTJSAry(const tTJSAry&) �͍쐬�ł��Ȃ��B
-tTJSAry������������ "assign" ���g��(���� &(&src)���g��) �̂�
-const �C���ł��Ȃ����߁B
+なお、コピーコンストラクタ tTJSAry(const tTJSAry&) は作成できない。
+tTJSAryが初期化時に "assign" を使う(時に &(&src)を使う) ので
+const 修飾できないため。

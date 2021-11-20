@@ -1,80 +1,80 @@
---- ExtKAGParser.dll �e�X�g�̂��肢 ---
+--- ExtKAGParser.dll テストのお願い ---
 
-ExtKAGParser.dll�̓����[�X����܂������A���т��s�����Ă��܂��B
-���̂��߁A�e�X�g���Ă��������������ɕ�W���ł��B
-
-
-[�V�K�e�X�g���@]
-���ʂ̋g���g��/KAG3(krkr.exe��2.32���]�܂���)��shoukai
-�e���v���[�g���쐬������ŁAExtKAGParser.dll �̊g���q��
-.tpm �ɕύX���āA�Q�[���f�B���N�g��(krkr.exe�����݂���
-�f�B���N�g��)�ɃR�s�[���Ă��������B
-���Ƃ͍D���� data/scenario/first.ks ��ҏW���A
-krkr.exe���N�����Ă��������B
+ExtKAGParser.dllはリリースされましたが、実績が不足しています。
+そのため、テストしていただける方を常に募集中です。
 
 
-[���Ȃ�������������̃Q�[���ł̃e�X�g���@]
-�܂��A�����̃Z�[�u�f�[�^(�ʏ��savedata�f�B���N�g��)���폜����
-���������BExtKAGParser�͈ꕔ�f�[�^�Ɍ݊������Ȃ����߂ł��B
-
-���̌�A����KAGParser*.dll�������p�łȂ���(���ʂ͂����ł�)�́A
-ExtKAGParser.dll �̊g���q�� tpm �ɕύX���āA�������̃Q�[��
-�f�B���N�g��(krkr.exe�����݂���f�B���N�g��)�ɃR�s�[����
-���������B
-KAGParserEx.dll�Ȃǂ������p�̕��́A����KAGParser�̊g���@�\��
-���p���Ă��Ȃ��̂ł���΁A�Q�[����startup.tjs��Override.tjs
-�Ȃǂ̒��Ł@�A����KAGParser�̑����ExtKAGParser.dll��
-Plugins.link("ExtKAGParser.dll")�œǂݍ���ł��������B
-����KAGParser�ŗL�̊g���@�\�𗘗p���Ă���ꍇ�́c���߂Ă���
-�����B
+[新規テスト方法]
+普通の吉里吉里/KAG3(krkr.exeは2.32が望ましい)のshoukai
+テンプレートを作成した上で、ExtKAGParser.dll の拡張子を
+.tpm に変更して、ゲームディレクトリ(krkr.exeが存在する
+ディレクトリ)にコピーしてください。
+あとは好きに data/scenario/first.ks を編集しつつ、
+krkr.exeを起動してください。
 
 
-���ꂾ���ŁA���̃Q�[����ExtKAGParser.dll�𗘗p���N��
-���܂��B���Ƃ͒ʏ�ʂ�v���C���A��肪�N����Ȃ���΃n�b�s�[
-�ł�(��y��)�B
-�{����ExtKAGParser.dll���g�p���Ă��邩�H�Ƃ����̂��m�F
-����ɂ́AShift+F4�Ȃǂŕ\�������R���\�[���ŉ��i�ɁA
+[あなたが作った既存のゲームでのテスト方法]
+まず、既存のセーブデータ(通常はsavedataディレクトリ)を削除して
+ください。ExtKAGParserは一部データに互換性がないためです。
+
+その後、他のKAGParser*.dllをご利用でない方(普通はそうです)は、
+ExtKAGParser.dll の拡張子を tpm に変更して、ご自分のゲーム
+ディレクトリ(krkr.exeが存在するディレクトリ)にコピーして
+ください。
+KAGParserEx.dllなどをご利用の方は、そのKAGParserの拡張機能を
+利用していないのであれば、ゲームのstartup.tjsやOverride.tjs
+などの中で　、そのKAGParserの代わりにExtKAGParser.dllを
+Plugins.link("ExtKAGParser.dll")で読み込んでください。
+そのKAGParser固有の拡張機能を利用している場合は…諦めてくだ
+さい。
+
+
+これだけで、そのゲームはExtKAGParser.dllを利用しつつ起動
+します。あとは通常通りプレイし、問題が起こらなければハッピー
+です(我輩が)。
+本当にExtKAGParser.dllを使用しているか？というのを確認
+するには、Shift+F4などで表示されるコンソール最下段に、
 kag.conductor.lf
-�Ɠ��͂��Ă݂Ă��������B���ꂪ void �łȂ���΁A
-ExtKAGParser.dll���g�p����Ă��܂��B���ꂪ void �ł����
-�f�t�H���g��KAGParser���g�p����Ă���̂ŁA��̎菇��
-�Ċm�F���Ă݂Ă��������B
+と入力してみてください。これが void でなければ、
+ExtKAGParser.dllが使用されています。これが void であれば
+デフォルトのKAGParserが使用されているので、上の手順を
+再確認してみてください。
 
-�����N�����Ɂu�v���O�C������֐� xxx ��v������܂������A
-���̊֐��͖{�̓��ɑ��݂��܂���B�v���O�C���Ɩ{�̂̃o�[�W������
-�������Ή����Ă��邩�m�F���Ă��������v�ƕ\�����ꂽ���́A
-krkr.exe ���Â����邱�Ƃ������Ȃ̂ŁAkrkr.exe ��V��������
-�݂Ă��������B�������A���ꂾ�ƍ��x�͂��Ȃ��̃Q�[��������
-���Ȃ����Ƃ�����A���̏ꍇ�̓e�X�g�͒��߂Ă��������c�B
+もし起動時に「プラグインから関数 xxx を要求されましたが、
+その関数は本体内に存在しません。プラグインと本体のバージョンが
+正しく対応しているか確認してください」と表示された時は、
+krkr.exe が古すぎることが原因なので、krkr.exe を新しくして
+みてください。ただし、それだと今度はあなたのゲームが動作
+しないことがあり、その場合はテストは諦めてください…。
 
 
-[�G���[���o���肨�������ȂƎv������]
-first.ks�擪�Ɉȉ��̈�s��ǋL���ă��O���擾���Ă��������B
+[エラーが出たりおかしいなと思ったら]
+first.ks先頭に以下の一行を追記してログを取得してください。
 [eval exp="kag.mainConductor.debugLevel = 4"]
-����ŁA���[�J���ϐ���While�X�^�b�N�Ȃǂ̕ω������O�ɋL�^
-�����悤�ɂȂ�܂��B���̏�ԂŁA�����Č������A�ȉ���
-���� KAICHO �܂Œ񋟂��Ă��������B
+これで、ローカル変数やWhileスタックなどの変化がログに記録
+されるようになります。その状態で、問題を再現させ、以下の
+情報を KAICHO まで提供してください。
 
-1.���̏ڍׁF�����ǂ̂悤�ɂȂ�̂���肩�A�{���ǂ�����ׂ���
+1.問題の詳細：何がどのようになるのが問題か、本来どうあるべきか
 2.savedata/krkr.console.log
-3.�Č����@�F�ȈՓI�ȃX�N���v�g�ōČ��ł���Ȃ炻�̕��@�𖾎�
-4.�Č����F�\�Ȃ�񋟂��Ă��������B���R�A���̃f�[�^����
-�@�@�@�@�@�@�e�X�g������K���폜���܂�
+3.再現方法：簡易的なスクリプトで再現できるならその方法を明示
+4.再現環境：可能なら提供してください。当然、中のデータ等は
+　　　　　　テスト完了後必ず削除します
 
-�Č���������΁A�قڊm���ɖ����������邱�Ƃ��\�Ȃ��߁A
-�Č�����񋟂���������ƂƂĂ�������܂��B���̒񋟂ɂ́A
-http://firestorage.jp/ �Ȃǂ�ʂ��ăp�X���[�h�ی삵��
-�t�@�C����񋟂����������Ƃ������߂��܂��B
+再現環境があれば、ほぼ確実に問題を解決することが可能なため、
+再現環境を提供いただけるととても助かります。環境の提供には、
+http://firestorage.jp/ などを通してパスワード保護した
+ファイルを提供いただくことをお勧めします。
 
 
-�g���Ē�����̂͂��肪�����̂ł����A�P���Ɂu���܂��������Ȃ��v
-�Ƃ����c�C�[�g����Ȃǂ̍s�ׂ́A(���Ȃ��̂������鎩�R��N�Q
-����킯�ł͂���܂��񂪁A)���̉����ɂ��Ȃ�Ȃ��Ƃ������R��
-��߂Ē��������ł��B
-���߂āA������Ƃ�������ɕs��̌����������ł���悤�Ȍ`��
-�����o���Ă���������΁A��y��������������ɂȂ�Ƃ�������
-�݂悤�Ǝ��݂܂��B����΁A���Ȃ������ł͂Ȃ��A���̃v���O�C����
-�g���S�Ă̐l���n�b�s�[�ɂȂ�܂��B���񐥔�F�l(�Ɖ�y)��
-�n�b�s�[�ɁA�����͂����肢���܂��B
+使って頂けるのはありがたいのですが、単純に「うまくうごかない」
+とだけツイートするなどの行為は、(あなたのそうする自由を侵害
+するわけではありませんが、)何の解決にもならないという理由で
+やめて頂きたいです。
+せめて、それをとっかかりに不具合の原因究明ができるような形で
+情報を出していただければ、我輩がそれを見た時になんとか直して
+みようと試みます。直れば、あなただけではなく、このプラグインを
+使う全ての人がハッピーになれます。是非是非皆様(と我輩)の
+ハッピーに、ご協力をお願いします。
 
 KAICHO

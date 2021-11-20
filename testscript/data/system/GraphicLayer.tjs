@@ -1,9 +1,9 @@
-// GraphicLayer.tjs - ƒOƒ‰ƒtƒBƒbƒNŒnƒŒƒCƒ„(”wŒi,ƒLƒƒƒ‰ƒNƒ^)
-// Copyright (C)2001-2009, W.Dee and contributors  ‰ü•ÏE”z•z‚Í©—R‚Å‚·
+// GraphicLayer.tjs - ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ç³»ãƒ¬ã‚¤ãƒ¤(èƒŒæ™¯,ã‚­ãƒ£ãƒ©ã‚¯ã‚¿)
+// Copyright (C)2001-2009, W.Dee and contributors  æ”¹å¤‰ãƒ»é…å¸ƒã¯è‡ªç”±ã§ã™
 
 class ProvinceContext
 {
-	// —ÌˆæƒAƒNƒVƒ‡ƒ“—pƒRƒ“ƒeƒLƒXƒg
+	// é ˜åŸŸã‚¢ã‚¯ã‚·ãƒ§ãƒ³ç”¨ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 	var target;
 	var storage;
 	var onenter;
@@ -20,29 +20,29 @@ class ProvinceContext
 
 class GraphicLayer extends AnimationLayer
 {
-	// ”wŒi/‘OŒiƒŒƒCƒ„‚ÌŠî–{ƒNƒ‰ƒX
+	// èƒŒæ™¯/å‰æ™¯ãƒ¬ã‚¤ãƒ¤ã®åŸºæœ¬ã‚¯ãƒ©ã‚¹
 
-	var comp; // ‘Î‚ÌƒŒƒCƒ„
+	var comp; // å¯¾ã®ãƒ¬ã‚¤ãƒ¤
 	var id; // ID
-	var provinceActions = void; // ƒNƒŠƒbƒJƒuƒ‹ƒ}ƒbƒv‚Ì—Ìˆæ‚²‚Æ‚ÌƒAƒNƒVƒ‡ƒ“’è‹`
-	var pointingProvince = 0; // Œ»İw‚µ¦‚µ‚Ä‚¢‚é—Ìˆæ”Ô†
-	var loadedProvinceImage = ""; // loadImages Œã‚É“Ç‚İ‚Ü‚ê‚½—Ìˆæ‰æ‘œ
-	var loadedProvinceActions = ""; // loadImages Œã‚É“Ç‚İ‚Ü‚ê‚½—ÌˆæƒAƒNƒVƒ‡ƒ“
-	var defaultCursor = crDefault; // ƒfƒtƒHƒ‹ƒg‚ÌƒJ[ƒ\ƒ‹
-	var lastMouseDownX; // ÅŒã‚Éƒ}ƒEƒX‚ªƒNƒŠƒbƒN‚³‚ê‚½ X À•W
-	var lastMouseDownY; // ÅŒã‚Éƒ}ƒEƒX‚ªƒNƒŠƒbƒN‚³‚ê‚½ Y À•W
+	var provinceActions = void; // ã‚¯ãƒªãƒƒã‚«ãƒ–ãƒ«ãƒãƒƒãƒ—ã®é ˜åŸŸã”ã¨ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³å®šç¾©
+	var pointingProvince = 0; // ç¾åœ¨æŒ‡ã—ç¤ºã—ã¦ã„ã‚‹é ˜åŸŸç•ªå·
+	var loadedProvinceImage = ""; // loadImages å¾Œã«èª­ã¿è¾¼ã¾ã‚ŒãŸé ˜åŸŸç”»åƒ
+	var loadedProvinceActions = ""; // loadImages å¾Œã«èª­ã¿è¾¼ã¾ã‚ŒãŸé ˜åŸŸã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	var defaultCursor = crDefault; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚«ãƒ¼ã‚½ãƒ«
+	var lastMouseDownX; // æœ€å¾Œã«ãƒã‚¦ã‚¹ãŒã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸ X åº§æ¨™
+	var lastMouseDownY; // æœ€å¾Œã«ãƒã‚¦ã‚¹ãŒã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸ Y åº§æ¨™
 
 	function GraphicLayer(win, par, name, id)
 	{
-		// GraphicLayer ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		// win    : ƒEƒBƒ“ƒhƒEƒIƒuƒWƒFƒNƒg
-		// par    : eƒŒƒCƒ„
-		// name   : ƒŒƒCƒ„‚Ì–¼‘O
+		// GraphicLayer ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		// win    : ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		// par    : è¦ªãƒ¬ã‚¤ãƒ¤
+		// name   : ãƒ¬ã‚¤ãƒ¤ã®åå‰
 		super.AnimationLayer(win, par);
 
 		this.name = name;
 		this.id = id;
-		/* ‘Î‚ÌƒŒƒCƒ„ ‚ÍA‚±‚ÌƒIƒuƒWƒFƒNƒg‚ğì¬Œã‚É setCompLayer ‚Åİ’è‚·‚é‚±‚Æ */
+		/* å¯¾ã®ãƒ¬ã‚¤ãƒ¤ ã¯ã€ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆå¾Œã« setCompLayer ã§è¨­å®šã™ã‚‹ã“ã¨ */
 	}
 
 	function finalize()
@@ -60,22 +60,22 @@ class GraphicLayer extends AnimationLayer
 
 	function loadImages(elm)
 	{
-		// elm ‚É‹Lq‚³‚ê‚Ä‚¢‚é“à—e‚É]‚Á‚Ä‚±‚ÌƒŒƒCƒ„‚É‰æ‘œ‚ğ“Ç‚İ‚Ş
+		// elm ã«è¨˜è¿°ã•ã‚Œã¦ã„ã‚‹å†…å®¹ã«å¾“ã£ã¦ã“ã®ãƒ¬ã‚¤ãƒ¤ã«ç”»åƒã‚’èª­ã¿è¾¼ã‚€
 		clearProvinceActions();
 		loadedProvinceImage = "";
 		super.loadImages(elm);
 		if(elm !== void)
 		{
-			if(elm.mapimage !== void) super.loadProvinceImage(elm.mapimage); // —Ìˆæ‰æ‘œ‚ğ“Ç‚Ş
+			if(elm.mapimage !== void) super.loadProvinceImage(elm.mapimage); // é ˜åŸŸç”»åƒã‚’èª­ã‚€
 			if(elm.mapaction !== void)
 			{
-				internalLoadProvinceActions(elm.mapaction); // —ÌˆæƒAƒNƒVƒ‡ƒ“‚ğ“Ç‚Ş
+				internalLoadProvinceActions(elm.mapaction); // é ˜åŸŸã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’èª­ã‚€
 			}
 			else
 			{
 				var name;
 				var storage = Storages.getPlacedPath(
-					name = (Storages.chopStorageExt(elm.storage) + ".ma")); // Šg’£q‚ª .ma ‚Ìƒtƒ@ƒCƒ‹
+					name = (Storages.chopStorageExt(elm.storage) + ".ma")); // æ‹¡å¼µå­ãŒ .ma ã®ãƒ•ã‚¡ã‚¤ãƒ«
 				if(storage != '')
 					loadProvinceActions(name);
 			}
@@ -84,14 +84,14 @@ class GraphicLayer extends AnimationLayer
 
 	function loadProvinceImage(fn)
 	{
-		// —Ìˆæ‰æ‘œ fn ‚ğ“Ç‚İ‚Ş
+		// é ˜åŸŸç”»åƒ fn ã‚’èª­ã¿è¾¼ã‚€
 		super.loadProvinceImage(fn);
 		loadedProvinceImage = fn;
 	}
 
 	function assignComp()
 	{
-		// ‘Î‚É‚È‚éƒŒƒCƒ„‚Ì“à—e‚ğƒRƒs[
+		// å¯¾ã«ãªã‚‹ãƒ¬ã‚¤ãƒ¤ã®å†…å®¹ã‚’ã‚³ãƒ”ãƒ¼
 		assign(comp);
 	}
 
@@ -119,17 +119,17 @@ class GraphicLayer extends AnimationLayer
 
 	function beginTransition(elm)
 	{
-		// elm ‚É]‚Á‚Äƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚ğs‚¤
-		comp.stopTransition(); // comp ‚Ås‚í‚ê‚Ä‚¢‚½ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚à’â~
+		// elm ã«å¾“ã£ã¦ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚’è¡Œã†
+		comp.stopTransition(); // comp ã§è¡Œã‚ã‚Œã¦ã„ãŸãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚‚åœæ­¢
 		super.beginTransition(elm, comp);
 	}
 
 	function exchangeInfo()
 	{
-		// comp ‚Æî•ñ‚ğæ‚è‘Ö‚¦‚é
-		// ‚·‚Å‚É ‰æ‘œ‚Ì“à—eAƒcƒŠ[\‘¢‚Íæ‚è•Ï‚í‚Á‚Ä‚¢‚é‚Ì‚Å
-		// –¼‘O‚È‚Ç‚ğæ‚è‘Ö‚¦‚é
-		// ‚Ü‚½AƒEƒBƒ“ƒhƒE‚ÌŠÇ—î•ñ‚àXV‚·‚é‚æ‚¤‚É‚·‚é
+		// comp ã¨æƒ…å ±ã‚’å–ã‚Šæ›¿ãˆã‚‹
+		// ã™ã§ã« ç”»åƒã®å†…å®¹ã€ãƒ„ãƒªãƒ¼æ§‹é€ ã¯å–ã‚Šå¤‰ã‚ã£ã¦ã„ã‚‹ã®ã§
+		// åå‰ãªã©ã‚’å–ã‚Šæ›¿ãˆã‚‹
+		// ã¾ãŸã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç®¡ç†æƒ…å ±ã‚‚æ›´æ–°ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹
 		var src = comp;
 		var tmp = src.name;
 		src.name = name;
@@ -141,7 +141,7 @@ class GraphicLayer extends AnimationLayer
 
 	function clearImage(process = true)
 	{
-		// AnimationLayer.clearImage ƒI[ƒo[ƒ‰ƒCƒh
+		// AnimationLayer.clearImage ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.clearImage(process);
 		loadedProvinceImage = "";
 		clearProvinceActions();
@@ -164,14 +164,14 @@ class GraphicLayer extends AnimationLayer
 
 	function internalLoadProvinceActions(fn)
 	{
-		// ƒtƒ@ƒCƒ‹–¼ fn ‚ğ—ÌˆæƒAƒNƒVƒ‡ƒ“’è‹`ƒtƒ@ƒCƒ‹‚Æ‚µ‚Ä“Ç‚İ‚Ş
+		// ãƒ•ã‚¡ã‚¤ãƒ«å fn ã‚’é ˜åŸŸã‚¢ã‚¯ã‚·ãƒ§ãƒ³å®šç¾©ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦èª­ã¿è¾¼ã‚€
 		clearProvinceActions();
 
 		var file = [];
 		file.load(fn);
 		var filelines = file.count;
 
-		// ƒtƒ@ƒCƒ‹‚É]‚Á‚ÄƒXƒNƒŠƒvƒg‚ğ“®“I‚É¶¬
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã«å¾“ã£ã¦ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å‹•çš„ã«ç”Ÿæˆ
 		var body = "function { var a = provinceActions; \n";
 		for(var i = 0; i<filelines; i++)
 		{
@@ -185,7 +185,7 @@ class GraphicLayer extends AnimationLayer
 		body += "}\n";
 
 		provinceActions = [];
-		(Scripts.eval(body) incontextof this) (); // body ‚ÌƒRƒ“ƒpƒCƒ‹‚ğ‚µ‚Ä‚±‚ÌƒRƒ“ƒeƒLƒXƒgã‚ÅÀs
+		(Scripts.eval(body) incontextof this) (); // body ã®ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚’ã—ã¦ã“ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆä¸Šã§å®Ÿè¡Œ
 
 		window.enableMouseKey();
 	}
@@ -198,15 +198,15 @@ class GraphicLayer extends AnimationLayer
 
 	function queryProvinceAction(n, checkzero = true)
 	{
-		// —Ìˆæ”Ô† n ‚ÉŠÖ‚·‚éƒAƒNƒVƒ‡ƒ“‚ğ•Ô‚·
-		// ƒAƒNƒVƒ‡ƒ“‚ª‚È‚É‚à’è‹`‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î void ‚ğ•Ô‚·
+		// é ˜åŸŸç•ªå· n ã«é–¢ã™ã‚‹ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’è¿”ã™
+		// ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãŒãªã«ã‚‚å®šç¾©ã•ã‚Œã¦ã„ãªã‘ã‚Œã° void ã‚’è¿”ã™
 //		dm(n, provinceActions, provinceActions[n]);
 		if(provinceActions === void) return void;
 		if(checkzero) { if(n == 0) return void; }
 		var action = provinceActions[n];
 		if(action === void) return void;
 		var ar = new ProvinceContext();
-		(action incontextof ar) (); // ar ‚ÌƒRƒ“ƒeƒLƒXƒgã‚ÅƒAƒNƒVƒ‡ƒ“‚ğÀs
+		(action incontextof ar) (); // ar ã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆä¸Šã§ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’å®Ÿè¡Œ
 		if(ar.target === void && ar.storage === void && ar.onenter === void &&
 			ar.onleave === void && ar.hint === void && ar.exp === void &&
 			ar.cursor === void && ar.countpage === void && ar.autodisable === void)
@@ -216,14 +216,14 @@ class GraphicLayer extends AnimationLayer
 
 	function onMouseMove(x, y)
 	{
-		// onMouseMove ƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
+		// onMouseMove ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©
 		super.onMouseMove(...);
 		if(provinceActions !== void)
 		{
 			var n = window.messageLayerHiding ? 0 : getProvincePixel(x - imageLeft, y - imageTop);
 			if(n != pointingProvince)
 			{
-				// ˆÙ‚È‚é—Ìˆæ‚Ìã‚ğ“®‚¢‚½ê‡
+				// ç•°ãªã‚‹é ˜åŸŸã®ä¸Šã‚’å‹•ã„ãŸå ´åˆ
 				if(pointingProvince != 0) onProvinceLeave(pointingProvince);
 				if(n != 0) onProvinceEnter(n);
 				pointingProvince = n;
@@ -239,7 +239,7 @@ class GraphicLayer extends AnimationLayer
 
 	function onMouseLeave()
 	{
-		// onMouseLeave ƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
+		// onMouseLeave ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©
 		super.onMouseLeave(...);
 		if(pointingProvince != 0)
 		{
@@ -250,14 +250,14 @@ class GraphicLayer extends AnimationLayer
 
 	function onProvinceEnter(n)
 	{
-		// —Ìˆæ”Ô† n ‚Éƒ}ƒEƒX‚ªˆÚ“®‚µ‚½
+		// é ˜åŸŸç•ªå· n ã«ãƒã‚¦ã‚¹ãŒç§»å‹•ã—ãŸ
 		var action = queryProvinceAction(n);
 		if(action !== void)
 		{
 			if(action.onenter !== void) Scripts.eval(action.onenter);
 			if(action.hint !== void) hint = action.hint;
 			if(action.cursor !== void)
-				cursor = action.cursor; // ƒJ[ƒ\ƒ‹w’è‚Ì•û–@‚É’ˆÓ(&‚Í‚Â‚¯‚È‚¢)
+				cursor = action.cursor; // ã‚«ãƒ¼ã‚½ãƒ«æŒ‡å®šã®æ–¹æ³•ã«æ³¨æ„(&ã¯ã¤ã‘ãªã„)
 			else
 				cursor = window.cursorPointed;
 		}
@@ -271,7 +271,7 @@ class GraphicLayer extends AnimationLayer
 
 	function onProvinceLeave(n)
 	{
-		// —Ìˆæ”Ô† n ‚©‚çƒ}ƒEƒX‚ª—£‚ê‚½
+		// é ˜åŸŸç•ªå· n ã‹ã‚‰ãƒã‚¦ã‚¹ãŒé›¢ã‚ŒãŸ
 		var action = queryProvinceAction(n);
 		if(action !== void && action.onleave !== void) Scripts.eval(action.onleave);
 		hint = "";
@@ -280,8 +280,8 @@ class GraphicLayer extends AnimationLayer
 
 	function processProvince(x, y)
 	{
-		// x, y ˆÊ’u‚Ì—Ìˆæ‚Åw’è‚³‚ê‚½ƒVƒiƒŠƒI‚ÉƒWƒƒƒ“ƒv‚·‚é
-		// ˆ—‚³‚ê‚½ê‡‚Í true, ‚³‚ê‚È‚©‚Á‚½ê‡‚Í false ‚ğ•Ô‚·
+		// x, y ä½ç½®ã®é ˜åŸŸã§æŒ‡å®šã•ã‚ŒãŸã‚·ãƒŠãƒªã‚ªã«ã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹
+		// å‡¦ç†ã•ã‚ŒãŸå ´åˆã¯ true, ã•ã‚Œãªã‹ã£ãŸå ´åˆã¯ false ã‚’è¿”ã™
 		var n = window.messageLayerHiding ? 0 : getProvincePixel(x - imageLeft, y - imageTop);
 		var action = queryProvinceAction(n);
 		if(action === void) return false;
@@ -304,7 +304,7 @@ class GraphicLayer extends AnimationLayer
 
 	function store()
 	{
-		// î•ñ‚ğ«‘”z—ñ‚É‹L˜^
+		// æƒ…å ±ã‚’è¾æ›¸é…åˆ—ã«è¨˜éŒ²
 		var dic = super.store();
 		dic.loadedProvinceImage = loadedProvinceImage;
 		dic.loadedProvinceActions = loadedProvinceActions;
@@ -313,7 +313,7 @@ class GraphicLayer extends AnimationLayer
 
 	function restore(dic)
 	{
-		// dic ‚©‚çî•ñ‚ğ“Ç‚İo‚·
+		// dic ã‹ã‚‰æƒ…å ±ã‚’èª­ã¿å‡ºã™
 		super.restore(dic);
 		if(dic.loadedProvinceImage !== void && dic.loadedProvinceImage !== '')
 			loadProvinceImage(dic.loadedProvinceImage);
@@ -328,7 +328,7 @@ class GraphicLayer extends AnimationLayer
 
 class BaseLayer extends GraphicLayer
 {
-	// ”wŒiƒŒƒCƒ„
+	// èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤
 
 	function BaseLayer(win, par, name, id)
 	{
@@ -345,23 +345,23 @@ class BaseLayer extends GraphicLayer
 
 	function assign(src)
 	{
-		// assign ƒI[ƒo[ƒ‰ƒCƒh
+		// assign ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.assign(src);
-		// eƒNƒ‰ƒX‚Ì assign ‚Í‰Â‹E•s‰Â‹‚È‚Ç‚ğƒRƒs[‚µ‚È‚¢‚ªA
-		// ”wŒiƒŒƒCƒ„‚È‚Ì‚Å‚»‚ê‚Å‚æ‚¢
+		// è¦ªã‚¯ãƒ©ã‚¹ã® assign ã¯å¯è¦–ãƒ»ä¸å¯è¦–ãªã©ã‚’ã‚³ãƒ”ãƒ¼ã—ãªã„ãŒã€
+		// èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãªã®ã§ãã‚Œã§ã‚ˆã„
 	}
 
 	function loadImages(elm)
 	{
-		// loadImages ƒI[ƒo[ƒ‰ƒCƒh
+		// loadImages ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		if(elm !== void)
 		{
-			elm.mode = "opaque"; // ƒŒƒCƒ„ƒ‚[ƒh‚ğ•Ï‚¦‚ç‚ê‚é‚Æ¢‚é‚Ì‚Å
-			delete elm.index; // ƒCƒ“ƒfƒbƒNƒX‚ğ•Ï‚¦‚ç‚ê‚é‚Æ¢‚é‚Ì‚Å
+			elm.mode = "opaque"; // ãƒ¬ã‚¤ãƒ¤ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰ãˆã‚‰ã‚Œã‚‹ã¨å›°ã‚‹ã®ã§
+			delete elm.index; // ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å¤‰ãˆã‚‰ã‚Œã‚‹ã¨å›°ã‚‹ã®ã§
 
 			if(elm.visible !== void)
 			{
-				// visible ‚Ìó‘Ô‚ğ•Ï‚¦‚ç‚ê‚é‚Æ¢‚é‚Ì‚Å
+				// visible ã®çŠ¶æ…‹ã‚’å¤‰ãˆã‚‰ã‚Œã‚‹ã¨å›°ã‚‹ã®ã§
 				if(isPrimary) elm.visible = true; else elm.visible = false;
 			}
 		}
@@ -370,7 +370,7 @@ class BaseLayer extends GraphicLayer
 
 	function restore(dic)
 	{
-		// restore ƒI[ƒo[ƒ‰ƒCƒh
+		// restore ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		if(isPrimary) dic.visible = true; else dic.visible = false;
 		dic.absolute = 0;
 		super.restore(dic);
@@ -378,7 +378,7 @@ class BaseLayer extends GraphicLayer
 
 	function setOptions(elm)
 	{
-		// setOptions ƒI[ƒo[ƒ‰ƒCƒh
+		// setOptions ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		if(elm.visible !== void)
 		{
 			if(isPrimary) elm.visible = true; else elm.visible = false;
@@ -388,34 +388,34 @@ class BaseLayer extends GraphicLayer
 
 	function internalOnMouseDown(x, y, button, processprovince = true)
 	{
-		// “à•”ŠÖ”
+		// å†…éƒ¨é–¢æ•°
 		var provinceprocessed = false;
 		if(button == mbLeft && processprovince && !window.messageLayerHiding)
 			provinceprocessed = processProvince(x, y);
 		if(button == mbLeft && !provinceprocessed)
 		{
-			// ©g‚ªƒvƒ‰ƒCƒ}ƒŠƒŒƒCƒ„‚È‚ç‚ÎAƒEƒBƒ“ƒhƒE‚Ì
-			// onPrimaryClick ‚ğŒÄ‚Ô
+			// è‡ªèº«ãŒãƒ—ãƒ©ã‚¤ãƒãƒªãƒ¬ã‚¤ãƒ¤ãªã‚‰ã°ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®
+			// onPrimaryClick ã‚’å‘¼ã¶
 			if(isPrimary) window.onPrimaryClick();
 		}
 		else if(button == mbRight)
 		{
-			// ©g‚ªƒvƒ‰ƒCƒ}ƒŠƒŒƒCƒ„‚È‚ç‚ÎAƒEƒBƒ“ƒhƒE‚Ì
-			// onPrimaryRightClick ‚ğŒÄ‚Ô
+			// è‡ªèº«ãŒãƒ—ãƒ©ã‚¤ãƒãƒªãƒ¬ã‚¤ãƒ¤ãªã‚‰ã°ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®
+			// onPrimaryRightClick ã‚’å‘¼ã¶
 			if(isPrimary) window.onPrimaryRightClick();
 		}
 	}
 
 	function onMouseDown(x, y, button)
 	{
-		// ƒ}ƒEƒX‚ª‰Ÿ‚³‚ê‚½
+		// ãƒã‚¦ã‚¹ãŒæŠ¼ã•ã‚ŒãŸ
 		super.onMouseDown(...);
 		internalOnMouseDown(x, y, button);
 	}
 
 	function clearImage()
 	{
-		// GraphicLayer.clearImage ƒI[ƒo[ƒ‰ƒCƒh
+		// GraphicLayer.clearImage ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.clearImage(false);
 		setImageSize(window.scWidth, window.scHeight);
 		setSizeToImageSize();
@@ -425,24 +425,24 @@ class BaseLayer extends GraphicLayer
 
 	function atEndOfTransition(src, withchildren, exchange)
 	{
-		// atEndOfTransition ƒI[ƒo[ƒ‰ƒCƒh
+		// atEndOfTransition ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.atEndOfTransition(...);
 		if(src == null)
 		{
-			//E”wŒiƒŒƒCƒ„‚ªsrc‚È‚µ‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=true)
-			//@‰½‚à‚µ‚È‚­‚Ä‚æ‚¢‚ªAI—¹‚ÉqƒŒƒCƒ„‚Í”ñ•\¦‚É‚È‚éB
-			//E”wŒiƒŒƒCƒ„‚ªsrc‚È‚µ‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=false)
-			//@–{“–‚É‰½‚à‚µ‚È‚¢B
+			//ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcãªã—ã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=true)
+			//ã€€ä½•ã‚‚ã—ãªãã¦ã‚ˆã„ãŒã€çµ‚äº†æ™‚ã«å­ãƒ¬ã‚¤ãƒ¤ã¯éè¡¨ç¤ºã«ãªã‚‹ã€‚
+			//ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcãªã—ã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=false)
+			//ã€€æœ¬å½“ã«ä½•ã‚‚ã—ãªã„ã€‚
 		}
 		else
 		{
 			if(withchildren)
 			{
-				//E”wŒiƒŒƒCƒ„‚ªsrc‚ ‚è‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=true)
-				//@d—v‚Èî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚ÆŒğŠ·A‚µ‚©‚àqƒŒƒCƒ„‚É‘Î‚µ‚Ä‚à‚±‚Ì
-				//@ud—v‚Èî•ñ‚ğ‘Šè‚ÆŒğŠ·v‚Ìw¦‚ğo‚·Bexchange=false ‚Ìê‡‚Í‚³‚ç‚É
-				//@ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚Ìî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“æ‚ÉƒRƒs[B‚±‚ê‚àAqƒŒƒCƒ„‚·‚×‚Ä
-				//@‚É‘Î‚µ‚Ä‚àw¦‚·‚éB
+				//ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcã‚ã‚Šã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=true)
+				//ã€€é‡è¦ãªæƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã¨äº¤æ›ã€ã—ã‹ã‚‚å­ãƒ¬ã‚¤ãƒ¤ã«å¯¾ã—ã¦ã‚‚ã“ã®
+				//ã€€ã€Œé‡è¦ãªæƒ…å ±ã‚’ç›¸æ‰‹ã¨äº¤æ›ã€ã®æŒ‡ç¤ºã‚’å‡ºã™ã€‚exchange=false ã®å ´åˆã¯ã•ã‚‰ã«
+				//ã€€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã®æƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ˆã«ã‚³ãƒ”ãƒ¼ã€‚ã“ã‚Œã‚‚ã€å­ãƒ¬ã‚¤ãƒ¤ã™ã¹ã¦
+				//ã€€ã«å¯¾ã—ã¦ã‚‚æŒ‡ç¤ºã™ã‚‹ã€‚
 				if(!exchange)
 				{
 					assign(src);
@@ -454,11 +454,11 @@ class BaseLayer extends GraphicLayer
 			}
 			else
 			{
-				//E”wŒiƒŒƒCƒ„‚ªsrc‚ ‚è‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“(children=false)
-				//@d—v‚Èî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚ÆŒğŠ·BqƒŒƒCƒ„‚É‘Î‚µ‚Ä‚Í
-				//@ud—v‚Èî•ñ‚ğ‘Šè‚ÆŒğŠ·v‚Ìw¦‚ğ‚¾‚³‚È‚¢Bexchange=false ‚Ìê‡‚Í
-				//@‚³‚ç‚Éƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚Ìî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“æ‚ÉƒRƒs[B
-				//@‚±‚ê‚àqƒŒƒCƒ„‚É‘Î‚µ‚Ä‚Íw¦‚µ‚È‚¢B
+				//ãƒ»èƒŒæ™¯ãƒ¬ã‚¤ãƒ¤ãŒsrcã‚ã‚Šã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³(children=false)
+				//ã€€é‡è¦ãªæƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã¨äº¤æ›ã€‚å­ãƒ¬ã‚¤ãƒ¤ã«å¯¾ã—ã¦ã¯
+				//ã€€ã€Œé‡è¦ãªæƒ…å ±ã‚’ç›¸æ‰‹ã¨äº¤æ›ã€ã®æŒ‡ç¤ºã‚’ã ã•ãªã„ã€‚exchange=false ã®å ´åˆã¯
+				//ã€€ã•ã‚‰ã«ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã®æƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ˆã«ã‚³ãƒ”ãƒ¼ã€‚
+				//ã€€ã“ã‚Œã‚‚å­ãƒ¬ã‚¤ãƒ¤ã«å¯¾ã—ã¦ã¯æŒ‡ç¤ºã—ãªã„ã€‚
 				if(!exchange)
 				{
 					assign(src);
@@ -470,7 +470,7 @@ class BaseLayer extends GraphicLayer
 
 	function exchangeInfo()
 	{
-		// exchangeInfo ƒI[ƒo[ƒ‰ƒCƒh
+		// exchangeInfo ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.exchangeInfo();
 		window.swapBaseLayer();
 	}
@@ -484,9 +484,9 @@ class BaseLayer extends GraphicLayer
 
 class CharacterLayer extends GraphicLayer
 {
-	// ‘OŒiƒŒƒCƒ„
-	var autoHide = false; // ƒƒbƒZ[ƒWƒŒƒCƒ„‚Æˆê‚É‰B‚ê‚é‚±‚Æ‚ª‚Å‚«‚é‚©
-	var invisibleByUser = false; // ƒ†[ƒU‚É‚æ‚èˆê“I‚É•s‰Â‹
+	// å‰æ™¯ãƒ¬ã‚¤ãƒ¤
+	var autoHide = false; // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¬ã‚¤ãƒ¤ã¨ä¸€ç·’ã«éš ã‚Œã‚‹ã“ã¨ãŒã§ãã‚‹ã‹
+	var invisibleByUser = false; // ãƒ¦ãƒ¼ã‚¶ã«ã‚ˆã‚Šä¸€æ™‚çš„ã«ä¸å¯è¦–
 	var visibleBeforeUserInvisible  = false;
 
 	function CharacterLayer(win, par, name, id)
@@ -505,15 +505,15 @@ class CharacterLayer extends GraphicLayer
 
 	function onHitTest(x, y, hit)
 	{
-		// onHitTest ƒI[ƒo[ƒ‰ƒCƒh
+		// onHitTest ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		if(!hit || provinceActions === void)
 		{
-			// hit==false ‚Ü‚½‚Í—ÌˆæƒAƒNƒVƒ‡ƒ“‚ª’è‹`‚³‚ê‚Ä‚¢‚È‚¢ê‡
+			// hit==false ã¾ãŸã¯é ˜åŸŸã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãŒå®šç¾©ã•ã‚Œã¦ã„ãªã„å ´åˆ
 			super.onHitTest(x, y, false);
 		}
 		else
 		{
-			// hit==true ‚©‚Â —ÌˆæƒAƒNƒVƒ‡ƒ“‚ª’è‹`‚³‚ê‚Ä‚¢‚éê‡
+			// hit==true ã‹ã¤ é ˜åŸŸã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãŒå®šç¾©ã•ã‚Œã¦ã„ã‚‹å ´åˆ
 			super.onHitTest(x, y, !window.messageLayerHiding);
 		}
 		return;
@@ -521,36 +521,36 @@ class CharacterLayer extends GraphicLayer
 
 	function assign(src)
 	{
-		// assign ƒI[ƒo[ƒ‰ƒCƒh
+		// assign ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.assign(src);
 		assignVisibleState(src);
-		// eƒNƒ‰ƒX‚Ì assign ‚Í‰Â‹E•s‰Â‹‚È‚Ç‚Ìî•ñ‚ğƒRƒs[‚µ‚È‚¢‚½‚ß
-		// ‚±‚±‚Å assignVisibleState ‚ğŒÄ‚Ô•K—v‚ª‚ ‚é
+		// è¦ªã‚¯ãƒ©ã‚¹ã® assign ã¯å¯è¦–ãƒ»ä¸å¯è¦–ãªã©ã®æƒ…å ±ã‚’ã‚³ãƒ”ãƒ¼ã—ãªã„ãŸã‚
+		// ã“ã“ã§ assignVisibleState ã‚’å‘¼ã¶å¿…è¦ãŒã‚ã‚‹
 		autoHide = src.autoHide;
 	}
 
 	function setOptions(elm)
 	{
-		// setOptions ƒI[ƒo[ƒ‰ƒCƒh
+		// setOptions ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.setOptions(elm);
 		autoHide = +elm.autohide if elm.autohide !== void;
 	}
 
 	function atEndOfTransition(src, withchildren, exchange)
 	{
-		// atEndOfTransition ƒI[ƒo[ƒ‰ƒCƒh
+		// atEndOfTransition ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.atEndOfTransition(...);
 		if(src == null)
 		{
-			//EƒƒbƒZ[ƒWƒŒƒCƒ„A‘OŒiƒŒƒCƒ„‚ªAsrc‚È‚µ‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“ (children=true)
-			//@‰½‚à‚µ‚È‚­‚Ä‚æ‚¢‚ªAI—¹Œã‚»‚ê‚ç‚ÌqƒŒƒCƒ„‚Í©“®“I‚É”ñ•\¦‚É‚È‚éB
+			//ãƒ»ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¬ã‚¤ãƒ¤ã€å‰æ™¯ãƒ¬ã‚¤ãƒ¤ãŒã€srcãªã—ã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ (children=true)
+			//ã€€ä½•ã‚‚ã—ãªãã¦ã‚ˆã„ãŒã€çµ‚äº†å¾Œãã‚Œã‚‰ã®å­ãƒ¬ã‚¤ãƒ¤ã¯è‡ªå‹•çš„ã«éè¡¨ç¤ºã«ãªã‚‹ã€‚
 		}
 		else
 		{
-			//EƒƒbƒZ[ƒWƒŒƒCƒ„A‘OŒiƒŒƒCƒ„‚ªAsrc‚ ‚è‚Åƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“ (children=true)
-			//@d—v‚Èî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚ÆŒğŠ·Aexchange=false ‚Ìê‡‚Í‚³‚ç‚É
-			//@ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“Œ³‚Ìî•ñ‚ğƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“æ‚ÉƒRƒs[B‚½‚¾‚µA‚±‚ÌƒRƒs[‚ÌÛ‚É
-			//@ƒEƒBƒ“ƒhƒE‚Ì‰Â‹E•s‰Â‹‚Ìî•ñ‚ÍƒRƒs[‚µ‚È‚¢B
+			//ãƒ»ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¬ã‚¤ãƒ¤ã€å‰æ™¯ãƒ¬ã‚¤ãƒ¤ãŒã€srcã‚ã‚Šã§ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ (children=true)
+			//ã€€é‡è¦ãªæƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã¨äº¤æ›ã€exchange=false ã®å ´åˆã¯ã•ã‚‰ã«
+			//ã€€ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ƒã®æƒ…å ±ã‚’ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³å…ˆã«ã‚³ãƒ”ãƒ¼ã€‚ãŸã ã—ã€ã“ã®ã‚³ãƒ”ãƒ¼ã®éš›ã«
+			//ã€€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¯è¦–ãƒ»ä¸å¯è¦–ã®æƒ…å ±ã¯ã‚³ãƒ”ãƒ¼ã—ãªã„ã€‚
 			super.assign(src);
 			exchangeInfo();
 			window.swapCharacterLayer(id);
@@ -559,25 +559,25 @@ class CharacterLayer extends GraphicLayer
 
 	function assignTransSrc()
 	{
-		// ƒgƒ‰ƒ“ƒWƒVƒ‡ƒ“‚à‚Æ(comp)‚ğƒRƒs[‚·‚é
+		// ãƒˆãƒ©ãƒ³ã‚¸ã‚·ãƒ§ãƒ³ã‚‚ã¨(comp)ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
 		assign(comp);
 	}
 
 	function setHiddenStateByUser(b)
 	{
-		// ƒ†[ƒU‚ª‰EƒNƒŠƒbƒN‚È‚Ç‚ÅƒƒbƒZ[ƒWƒŒƒCƒ„‚ğˆê“I‚É‰B‚·‚Æ‚«‚É
-		// ŒÄ‚Î‚ê‚é
+		// ãƒ¦ãƒ¼ã‚¶ãŒå³ã‚¯ãƒªãƒƒã‚¯ãªã©ã§ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¬ã‚¤ãƒ¤ã‚’ä¸€æ™‚çš„ã«éš ã™ã¨ãã«
+		// å‘¼ã°ã‚Œã‚‹
 		if(autoHide)
 		{
 			if(b)
 			{
 				visibleBeforeUserInvisible = visible;
-				invisibleByUser = true; // ƒ†[ƒU‚É‚æ‚èˆê“I‚É•s‰Â‹
+				invisibleByUser = true; // ãƒ¦ãƒ¼ã‚¶ã«ã‚ˆã‚Šä¸€æ™‚çš„ã«ä¸å¯è¦–
 				visible = false;
 			}
 			else
 			{
-				invisibleByUser = false; // ‰Â‹
+				invisibleByUser = false; // å¯è¦–
 				visible = visibleBeforeUserInvisible;
 			}
 		}
@@ -585,18 +585,18 @@ class CharacterLayer extends GraphicLayer
 
 	function onMouseDown(x, y, button)
 	{
-		// ƒ}ƒEƒX‚ª‰Ÿ‚³‚ê‚½
+		// ãƒã‚¦ã‚¹ãŒæŠ¼ã•ã‚ŒãŸ
 		super.onMouseDown(...);
 		if(button == mbLeft)
 			processProvince(x, y);
 		else if(button == mbRight)
 			window.onPrimaryRightClick();
-			// ‰Eƒ{ƒ^ƒ“‚Í window.onPrimaryRightClick() ‚ğŒÄ‚Ô
+			// å³ãƒœã‚¿ãƒ³ã¯ window.onPrimaryRightClick() ã‚’å‘¼ã¶
 	}
 
 	function store()
 	{
-		// store ƒI[ƒo[ƒ‰ƒCƒh
+		// store ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		var dic = super.store();
 		dic.autoHide = autoHide;
 		return dic;
@@ -604,7 +604,7 @@ class CharacterLayer extends GraphicLayer
 
 	function restore(dic)
 	{
-		// restore ƒI[ƒo[ƒ‰ƒCƒh
+		// restore ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		autoHide = +dic.autoHide if dic.autoHide !== void;
 		super.restore(dic);
 	}

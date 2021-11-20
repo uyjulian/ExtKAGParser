@@ -8,7 +8,7 @@
 class tTJSAry;
 
 
-// TJSの辞書をC++から簡単に使えるようにするクラス
+// TJS縺ｮ霎樊嶌繧辰++縺九ｉ邁｡蜊倥↓菴ｿ縺医ｋ繧医≧縺ｫ縺吶ｋ繧ｯ繝ｩ繧ｹ
 
 
 class tTJSDic : public tTJSVariant {

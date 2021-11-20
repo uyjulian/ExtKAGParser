@@ -1,8 +1,8 @@
-// HistoryLayer.tjs - ƒƒbƒZ[ƒW—š—ğƒŒƒCƒ„
-// Copyright (C)2001-2009, W.Dee and contributors  ‰ü•ÏE”z•z‚Í©—R‚Å‚·
+// HistoryLayer.tjs - ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å±¥æ­´ãƒ¬ã‚¤ãƒ¤
+// Copyright (C)2001-2009, W.Dee and contributors  æ”¹å¤‰ãƒ»é…å¸ƒã¯è‡ªç”±ã§ã™
 
 class LButtonLayer extends ButtonLayer
-	// parent ‚É onClick ƒCƒxƒ“ƒg‚ğ‘—‚é‚æ‚¤‚É‚µ‚½ƒ{ƒ^ƒ“ƒŒƒCƒ„
+	// parent ã« onClick ã‚¤ãƒ™ãƒ³ãƒˆã‚’é€ã‚‹ã‚ˆã†ã«ã—ãŸãƒœã‚¿ãƒ³ãƒ¬ã‚¤ãƒ¤
 {
 	function LButtonLayer(window, parent)
 	{
@@ -35,43 +35,43 @@ class HistoryLayer extends Layer
 	var nextPageButton = void;
 	var closeButton = void;
 
-	var antialiased = true; // ƒAƒ“ƒ`ƒGƒCƒŠƒAƒX•¶š•`‰æ‚ğs‚¤‚©
-	var verticalView = false; // c‘‚«‚©‚Ç‚¤‚©
-	var everypage = false;	// ƒy[ƒW–ˆ‚Ì—š—ğ•\¦‚ğs‚È‚¤‚©
-	var autoReturn = true; // ©“®“I‚É‰üs‚·‚é‚©‚Ç‚¤‚©
-	var maxLines = 2000; // Å‘å•Ûs”
+	var antialiased = true; // ã‚¢ãƒ³ãƒã‚¨ã‚¤ãƒªã‚¢ã‚¹æ–‡å­—æç”»ã‚’è¡Œã†ã‹
+	var verticalView = false; // ç¸¦æ›¸ãã‹ã©ã†ã‹
+	var everypage = false;	// ãƒšãƒ¼ã‚¸æ¯ã®å±¥æ­´è¡¨ç¤ºã‚’è¡Œãªã†ã‹
+	var autoReturn = true; // è‡ªå‹•çš„ã«æ”¹è¡Œã™ã‚‹ã‹ã©ã†ã‹
+	var maxLines = 2000; // æœ€å¤§ä¿æŒè¡Œæ•°
 
-	var data = []; // sƒf[ƒ^ ( ƒŠƒ“ƒOƒoƒbƒtƒ@ )
-	var lineStart = []; // s•\¦ŠJnˆÊ’u ( ƒŠƒ“ƒOƒoƒbƒtƒ@ )
-	var actionInfo = []; // —š—ğƒNƒŠƒbƒNî•ñ ( ƒŠƒ“ƒOƒoƒbƒtƒ@ )
-	var dataStart = 0; // ƒf[ƒ^‚ÌŠJnˆÊ’u
-	var dataLines = 0; // ƒf[ƒ^’†‚ÉŠÜ‚Ü‚ê‚és” < maxLines -1
-	var dataPos = 0; // ƒf[ƒ^‘‚«‚İˆÊ’u
+	var data = []; // è¡Œãƒ‡ãƒ¼ã‚¿ ( ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ )
+	var lineStart = []; // è¡Œè¡¨ç¤ºé–‹å§‹ä½ç½® ( ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ )
+	var actionInfo = []; // å±¥æ­´ã‚¯ãƒªãƒƒã‚¯æƒ…å ± ( ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ )
+	var dataStart = 0; // ãƒ‡ãƒ¼ã‚¿ã®é–‹å§‹ä½ç½®
+	var dataLines = 0; // ãƒ‡ãƒ¼ã‚¿ä¸­ã«å«ã¾ã‚Œã‚‹è¡Œæ•° < maxLines -1
+	var dataPos = 0; // ãƒ‡ãƒ¼ã‚¿æ›¸ãè¾¼ã¿ä½ç½®
 
-		// ƒy[ƒW’PˆÊ‚Å‚Ì‰{——‹@”\‚ÌƒR[ƒh‚Í kiyobee ‚©‚ç’¸‚«‚Ü‚µ‚½B
-		// ‚±‚Ìê‚ğØ‚è‚Ä‚¨—ç\‚µã‚°‚Ü‚·B
+		// ãƒšãƒ¼ã‚¸å˜ä½ã§ã®é–²è¦§æ©Ÿèƒ½ã®ã‚³ãƒ¼ãƒ‰ã¯ kiyobee æ°ã‹ã‚‰é ‚ãã¾ã—ãŸã€‚
+		// ã“ã®å ´ã‚’å€Ÿã‚Šã¦ãŠç¤¼ç”³ã—ä¸Šã’ã¾ã™ã€‚
 
-	//	"ƒy[ƒW–ˆ"‚Ì‚ÍAdata, lineStart, actionInfo ‚ğ2ŸŒ³‚Ég‚Á‚Ä‚¢‚éB
-	var maxPages = 100;	//	Å‘åƒy[ƒW”
-	var dataPages = 0;	//	ƒf[ƒ^’†‚Ì—LŒø‚Èƒy[ƒW”
-	var dataPage = 0;//	Œ»İ‘‚«‚ñ‚Å‚¢‚éƒy[ƒW
+	//	"ãƒšãƒ¼ã‚¸æ¯"ã®æ™‚ã¯ã€data, lineStart, actionInfo ã‚’2æ¬¡å…ƒã«ä½¿ã£ã¦ã„ã‚‹ã€‚
+	var maxPages = 100;	//	æœ€å¤§ãƒšãƒ¼ã‚¸æ•°
+	var dataPages = 0;	//	ãƒ‡ãƒ¼ã‚¿ä¸­ã®æœ‰åŠ¹ãªãƒšãƒ¼ã‚¸æ•°
+	var dataPage = 0;//	ç¾åœ¨æ›¸ãè¾¼ã‚“ã§ã„ã‚‹ãƒšãƒ¼ã‚¸
 
 	var marginL = 12;
 	var marginR = 12;
 	var marginT = 12;
 	var marginB = 12;
-	var fontName = "‚l‚r ‚o–¾’©";
+	var fontName = "ï¼­ï¼³ ï¼°æ˜æœ";
 	var fontBold = false;
 	var fontHeight = 24;
 	var lineHeight = 26;
-	var relinePos_org = 0; // ‰üsˆÊ’u
-	var limitPos_org = 0; // ‰æ–Ê‚Ì’[‚Á‚±ˆÊ’u
-	var relinePos = 0; // ‰üsˆÊ’u
-	var limitPos = 0; // ‰æ–Ê‚Ì’[‚Á‚±ˆÊ’u
-	var indentPos = 0; // ƒCƒ“ƒfƒ“ƒgˆÊ’u
-	var repageLine = 0;	//	‰üƒy[ƒWs”
+	var relinePos_org = 0; // æ”¹è¡Œä½ç½®
+	var limitPos_org = 0; // ç”»é¢ã®ç«¯ã£ã“ä½ç½®
+	var relinePos = 0; // æ”¹è¡Œä½ç½®
+	var limitPos = 0; // ç”»é¢ã®ç«¯ã£ã“ä½ç½®
+	var indentPos = 0; // ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆä½ç½®
+	var repageLine = 0;	//	æ”¹ãƒšãƒ¼ã‚¸è¡Œæ•°
 
-	var historyColor = 0xffffff;	//	—š—ğ•¶šF
+	var historyColor = 0xffffff;	//	å±¥æ­´æ–‡å­—è‰²
 
 	var controlHeight = 20;
 
@@ -87,16 +87,16 @@ class HistoryLayer extends Layer
 
 	var lastHighlightedActionID = 0;
 
-	var lastWheelTick; // ÅŒã‚ÉƒzƒC[ƒ‹‚ğ‘€ì‚µ‚½ tick count
+	var lastWheelTick; // æœ€å¾Œã«ãƒ›ã‚¤ãƒ¼ãƒ«ã‚’æ“ä½œã—ãŸ tick count
 
-	var storeState = false; // ó‘Ô‚ğx‚É•Û‘¶‚·‚é‚©
+	var storeState = false; // çŠ¶æ…‹ã‚’æ ã«ä¿å­˜ã™ã‚‹ã‹
 
-	//	‹Ö‘¥•¶š
-	var wwFollowing = "%),:;]}¡£ŞßBCADFGJKRST"
-                "UXfhjlnprtvxz‹Œ‘“ñ"; // s“ª‹Ö‘¥•¶š
-	var wwFollowingWeak="!.?¤¥§¨©ª«¬­®¯°EHI[‚Ÿ‚¡‚£‚¥‚§‚Á‚á‚ã‚å‚ìƒ@ƒB"
-                "ƒDƒFƒHƒbƒƒƒ…ƒ‡ƒƒ•ƒ–"; // s“ª(ã)‹Ö‘¥•¶š
-	var wwLeading="\\$([{¢egikmoqsuwy’"; // s––‹Ö‘¥•¶š
+	//	ç¦å‰‡æ–‡å­—
+	var wwFollowing = "%),:;]}ï½¡ï½£ï¾ï¾Ÿã€‚ï¼Œã€ï¼ï¼šï¼›ã‚›ã‚œãƒ½ãƒ¾ã‚"
+                "ã‚ã€…â€™â€ï¼‰ã€•ï¼½ï½ã€‰ã€‹ã€ã€ã€‘Â°â€²â€³â„ƒÂ¢ï¼…â€°"; // è¡Œé ­ç¦å‰‡æ–‡å­—
+	var wwFollowingWeak="!.?ï½¤ï½¥ï½§ï½¨ï½©ï½ªï½«ï½¬ï½­ï½®ï½¯ï½°ãƒ»ï¼Ÿï¼ãƒ¼ããƒã…ã‡ã‰ã£ã‚ƒã‚…ã‚‡ã‚ã‚¡ã‚£"
+                "ã‚¥ã‚§ã‚©ãƒƒãƒ£ãƒ¥ãƒ§ãƒ®ãƒµãƒ¶"; // è¡Œé ­(å¼±)ç¦å‰‡æ–‡å­—
+	var wwLeading="\\$([{ï½¢â€˜â€œï¼ˆã€”ï¼»ï½›ã€ˆã€Šã€Œã€ã€ï¿¥ï¼„Â£"; // è¡Œæœ«ç¦å‰‡æ–‡å­—
 
 	wwFollowing += wwFollowingWeak;
 
@@ -107,7 +107,7 @@ class HistoryLayer extends Layer
 		(HistoryLayer_config_override incontextof this)()
 			if typeof global.HistoryLayer_config_override != "undefined";
 
-		name = "ƒƒbƒZ[ƒW—š—ğƒŒƒCƒ„";
+		name = "ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å±¥æ­´ãƒ¬ã‚¤ãƒ¤";
 
 		setImageSize(parent.width, parent.height);
 		setSizeToImageSize();
@@ -145,7 +145,7 @@ class HistoryLayer extends Layer
 
 	function clear()
 	{
-		// “à—e‚ÌƒNƒŠƒA
+		// å†…å®¹ã®ã‚¯ãƒªã‚¢
 		lineStart = [];
 		actionInfo = [];
 		dataStart = 0;
@@ -176,8 +176,8 @@ class HistoryLayer extends Layer
 	}
 
 	function save() {
-		// —š—ğ‚Ìx‚Ö‚Ì•Û‘¶‚ÌƒR[ƒh‚Í ‚ä‚ñ‚©‚ç‚¢‚½‚¾‚«‚Ü‚µ‚½B
-		// ‚±‚Ìê‚ğØ‚è‚Ä‚¨—ç\‚µã‚°‚Ü‚·B
+		// å±¥æ­´ã®æ ã¸ã®ä¿å­˜ã®ã‚³ãƒ¼ãƒ‰ã¯ ã‚†ã‚“æ°ã‹ã‚‰ã„ãŸã ãã¾ã—ãŸã€‚
+		// ã“ã®å ´ã‚’å€Ÿã‚Šã¦ãŠç¤¼ç”³ã—ä¸Šã’ã¾ã™ã€‚
 		if(!storeState) return void;
 		var dic = %[];
 		if(everypage)
@@ -235,7 +235,7 @@ class HistoryLayer extends Layer
 		else
 		{
 			relinePos = relinePos_org = width - marginL - marginR;
-			//	‰üƒy[ƒW‚ÌŠî€‚Æ‚È‚és”‚ğŒvZ
+			//	æ”¹ãƒšãƒ¼ã‚¸ã®åŸºæº–ã¨ãªã‚‹è¡Œæ•°ã‚’è¨ˆç®—
 			limitPos = limitPos_org = width - marginL;
 			repageLine	= (height - marginT - marginB - controlHeight) \ lineHeight;
 		}
@@ -243,14 +243,14 @@ class HistoryLayer extends Layer
 
 	function setOptions(elm)
 	{
-		// ƒIƒvƒVƒ‡ƒ“‚ğİ’è
+		// ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’è¨­å®š
 		if(elm.autoreturn !== void)
 			autoReturn = +elm.autoreturn;
 	}
 
 	function makeButtons()
 	{
-		if(prevPageButton !== void) return; // ‚·‚Å‚Éì¬‚³‚ê‚Ä‚¢‚é
+		if(prevPageButton !== void) return; // ã™ã§ã«ä½œæˆã•ã‚Œã¦ã„ã‚‹
 
 		prevPageButton = new LButtonLayer(window, this);
 		nextPageButton = new LButtonLayer(window, this);
@@ -262,7 +262,7 @@ class HistoryLayer extends Layer
 			nextPageButton.top     = 0;
 			nextPageButton.width   = (width-controlHeight) \ 2;
 			nextPageButton.height  = controlHeight-2;
-			nextPageButton.caption = "á Ÿƒy[ƒW ";
+			nextPageButton.caption = "â‰ª æ¬¡ãƒšãƒ¼ã‚¸ ";
 			nextPageButton.color   = 0x808080;
 			nextPageButton.visible = true;
 
@@ -270,7 +270,7 @@ class HistoryLayer extends Layer
 			prevPageButton.top     = 0;
 			prevPageButton.width   = nextPageButton.width;
 			prevPageButton.height  = controlHeight-2;
-			prevPageButton.caption = " ‘Oƒy[ƒW â";
+			prevPageButton.caption = " å‰ãƒšãƒ¼ã‚¸ â‰«";
 			prevPageButton.color   = 0x808080;
 			prevPageButton.visible = true;
 		}
@@ -280,7 +280,7 @@ class HistoryLayer extends Layer
 			prevPageButton.top     = 0;
 			prevPageButton.width   = (width-controlHeight) \ 2;
 			prevPageButton.height  = controlHeight-2;
-			prevPageButton.caption = "á ‘Oƒy[ƒW ";
+			prevPageButton.caption = "â‰ª å‰ãƒšãƒ¼ã‚¸ ";
 			prevPageButton.color   = 0x808080;
 			prevPageButton.visible = true;
 
@@ -288,7 +288,7 @@ class HistoryLayer extends Layer
 			nextPageButton.top     = 0;
 			nextPageButton.width   = prevPageButton.width;
 			nextPageButton.height  = controlHeight-2;
-			nextPageButton.caption = " Ÿƒy[ƒW â";
+			nextPageButton.caption = " æ¬¡ãƒšãƒ¼ã‚¸ â‰«";
 			nextPageButton.color   = 0x808080;
 			nextPageButton.visible = true;
 		}
@@ -297,11 +297,11 @@ class HistoryLayer extends Layer
 		closeButton.top       = 0;
 		closeButton.width     = controlHeight;
 		closeButton.height    = controlHeight-2;
-		closeButton.caption   = "~";
+		closeButton.caption   = "Ã—";
 		closeButton.captionColor= 0xffffff;
 		closeButton.color     = 0x707090;
 		closeButton.visible   = true;
-		closeButton.hint      = "ƒƒbƒZ[ƒW—š—ğ‚ğ•Â‚¶‚é";
+		closeButton.hint      = "ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å±¥æ­´ã‚’é–‰ã˜ã‚‹";
 
 	}
 
@@ -345,7 +345,7 @@ class HistoryLayer extends Layer
 
 	function getLine(n)
 	{
-		// n ”Ô–Ú‚Ìs‚ğ“¾‚é
+		// n ç•ªç›®ã®è¡Œã‚’å¾—ã‚‹
 		n += dataStart;
 		if(n >= maxLines) n -= maxLines;
 		return data[n];
@@ -353,7 +353,7 @@ class HistoryLayer extends Layer
 
 	function getPage(n)
 	{
-		// n ”Ô–Ú‚Ìƒy[ƒW‚ğ“¾‚é
+		// n ç•ªç›®ã®ãƒšãƒ¼ã‚¸ã‚’å¾—ã‚‹
 		n += dataStart;
 		if(n >= maxPages) n -= maxPages;
 		return data[n];
@@ -361,7 +361,7 @@ class HistoryLayer extends Layer
 
 	function getLineStart(n)
 	{
-		// n ”Ô–Ú‚Ìs‚Ì•\¦ŠJnˆÊ’u‚ğ“¾‚é
+		// n ç•ªç›®ã®è¡Œã®è¡¨ç¤ºé–‹å§‹ä½ç½®ã‚’å¾—ã‚‹
 		n += dataStart;
 		if(n >= maxLines) n -= maxLines;
 		return lineStart[n];
@@ -369,7 +369,7 @@ class HistoryLayer extends Layer
 
 	function getLineStart2(n, m)
 	{
-		// n ƒy[ƒW–Ú‚ÌAm s–Ú‚Ì•\¦ŠJnˆÊ’u‚ğ“¾‚é
+		// n ãƒšãƒ¼ã‚¸ç›®ã®ã€m è¡Œç›®ã®è¡¨ç¤ºé–‹å§‹ä½ç½®ã‚’å¾—ã‚‹
 		n += dataStart;
 		if(n >= maxPages) n -= maxPages;
 		return lineStart[n][m];
@@ -377,7 +377,7 @@ class HistoryLayer extends Layer
 
 	function getActionInfo(n)
 	{
-		// n ”Ô–Ú‚ÌƒAƒNƒVƒ‡ƒ“î•ñ‚ğ“¾‚é
+		// n ç•ªç›®ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’å¾—ã‚‹
 		n += dataStart;
 		if(n >= maxLines) n -= maxLines;
 		return actionInfo[n];
@@ -385,7 +385,7 @@ class HistoryLayer extends Layer
 
 	function getActionInfo2(n, m)
 	{
-		// n ƒy[ƒW–Ú‚ÌAm s–Ú‚ÌƒAƒNƒVƒ‡ƒ“î•ñ‚ğ“¾‚é
+		// n ãƒšãƒ¼ã‚¸ç›®ã®ã€m è¡Œç›®ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’å¾—ã‚‹
 		n += dataStart;
 		if(n >= maxPages) n -= maxPages;
 		return actionInfo[n][m];
@@ -395,7 +395,7 @@ class HistoryLayer extends Layer
 	{
 		if(currentAction !== void)
 		{
-			// Œ»İ‚ÌƒAƒNƒVƒ‡ƒ“‚ª‚·‚Å‚É‚ ‚éê‡
+			// ç¾åœ¨ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãŒã™ã§ã«ã‚ã‚‹å ´åˆ
 			var ca = currentAction;
 			var last = ca[ca.count - 1];
 			last.end = font.getTextWidth(currentLine);
@@ -404,7 +404,7 @@ class HistoryLayer extends Layer
 
 	function setNewAction(action)
 	{
-		// ƒAƒNƒVƒ‡ƒ“‚ğV‹K‚Éİ’è‚·‚é
+		// ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’æ–°è¦ã«è¨­å®šã™ã‚‹
 		if(action == "") action = void;
 		if(action === void) return;
 		endAction();
@@ -436,12 +436,12 @@ class HistoryLayer extends Layer
 	{
 		if(!autoReturn)
 		{
-			// ©“®‰üs‚ğs‚í‚È‚¢ê‡
+			// è‡ªå‹•æ”¹è¡Œã‚’è¡Œã‚ãªã„å ´åˆ
 			currentLine += ch;
 		}
 		else
 		{
-			// ©“®‰üs‚ğs‚¤ê‡
+			// è‡ªå‹•æ”¹è¡Œã‚’è¡Œã†å ´åˆ
 			var len;
 			if((len = font.getTextWidth(currentLine += ch)) >= relinePos)
 			{
@@ -453,15 +453,15 @@ class HistoryLayer extends Layer
 					(lastch!='' && wwFollowingWeak.indexOf(lastch)!=-1 &&
 						wwFollowingWeak.indexOf(ch)!=-1) || len > limitPos)
 				{
-					// ÅŒã‚É•`‰æ‚µ‚½‚Ì‚ªs––‹Ö‘¥•¶š‚Å‚È‚¢ê‡
-					// ‚µ‚©‚à‚±‚ê‚©‚ç•`‰æ‚·‚é‚Ì‚ªs“ª‹Ö‘¥•¶š‚Å‚È‚¢
-					// ê‡
-					// ‚Ü‚½‚Íã‹Ö‘¥•¶š‚ª˜A‘±‚µ‚Ä‚¢‚È‚¢ê‡
-					// ‚Í‚½‚Ü‚½‚±‚ê‚©‚ç•`‰æ‚·‚é‚Ì‚ª‹­‹Ö‘¥•¶š‚Å‚Í‚È‚­‚ÄA
-					// ŠmÀ‚É ‰E’[‚ğ‰z‚¦‚éê‡
-					// ( ‚±‚Ìê‡‚Í—]”’‚Íl‚¦‚È‚¢ )
+					// æœ€å¾Œã«æç”»ã—ãŸã®ãŒè¡Œæœ«ç¦å‰‡æ–‡å­—ã§ãªã„å ´åˆ
+					// ã—ã‹ã‚‚ã“ã‚Œã‹ã‚‰æç”»ã™ã‚‹ã®ãŒè¡Œé ­ç¦å‰‡æ–‡å­—ã§ãªã„
+					// å ´åˆ
+					// ã¾ãŸã¯å¼±ç¦å‰‡æ–‡å­—ãŒé€£ç¶šã—ã¦ã„ãªã„å ´åˆ
+					// ã¯ãŸã¾ãŸã“ã‚Œã‹ã‚‰æç”»ã™ã‚‹ã®ãŒå¼·ç¦å‰‡æ–‡å­—ã§ã¯ãªãã¦ã€
+					// ç¢ºå®Ÿã« å³ç«¯ã‚’è¶Šãˆã‚‹å ´åˆ
+					// ( ã“ã®å ´åˆã¯ä½™ç™½ã¯è€ƒãˆãªã„ )
 					currentLine=
-						currentLine.substring(0, currentLine.length - ch.length);	//	’Ç‰Á‚µ‚½•¶š‚ğæ‚èœ‚­
+						currentLine.substring(0, currentLine.length - ch.length);	//	è¿½åŠ ã—ãŸæ–‡å­—ã‚’å–ã‚Šé™¤ã
 					reline();
 					currentLine = ch;
 				}
@@ -471,10 +471,10 @@ class HistoryLayer extends Layer
 
 	function repage()
 	{
-		//	‰üƒy[ƒW
+		//	æ”¹ãƒšãƒ¼ã‚¸
 		if(!everypage) return;
 
-		if(dataPos == 0 && currentLine == "") return; // ‰½‚àƒf[ƒ^‚ª“ü‚Á‚Ä‚¢‚È‚¢ê‡A‚È‚É‚à‚µ‚È‚¢
+		if(dataPos == 0 && currentLine == "") return; // ä½•ã‚‚ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã£ã¦ã„ãªã„å ´åˆã€ãªã«ã‚‚ã—ãªã„
 
 		endAction();
 		lastLine	= currentLine;
@@ -499,13 +499,13 @@ class HistoryLayer extends Layer
 
 	function reline()
 	{
-		// ‰üs
+		// æ”¹è¡Œ
 
 		if(everypage)
 		{
 			if(dataPos + 1 >= repageLine)
 			{
-				//	‰üƒy[ƒW‚·‚×‚«s”‚É‚È‚Á‚½‚Æ‚«
+				//	æ”¹ãƒšãƒ¼ã‚¸ã™ã¹ãè¡Œæ•°ã«ãªã£ãŸã¨ã
 				repage();
 			}
 			else
@@ -549,19 +549,19 @@ class HistoryLayer extends Layer
 
 	function beginIndent()
 	{
-		// Œ»İˆÊ’u‚ÉƒCƒ“ƒfƒ“ƒg‚ğİ’è
+		// ç¾åœ¨ä½ç½®ã«ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã‚’è¨­å®š
 		indentPos = font.getTextWidth(currentLine);
 	}
 
 	function endIndent()
 	{
-		// ƒCƒ“ƒfƒ“ƒg‚ğ‰ğœ
+		// ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã‚’è§£é™¤
 		indentPos = 0;
 	}
 
 	function clearBack(n)
 	{
-		// ”wŒi‚ğ“h‚è‚Â‚Ô‚·
+		// èƒŒæ™¯ã‚’å¡—ã‚Šã¤ã¶ã™
 		if(n === void)
 		{
 			face = dfAlpha;
@@ -580,8 +580,8 @@ class HistoryLayer extends Layer
 
 	function dispInit()
 	{
-		// ‘S•”Ä•`‰æ‚Æ‰Šúİ’è
-		makeButtons(); // ƒ{ƒ^ƒ“‚ğì¬
+		// å…¨éƒ¨å†æç”»ã¨åˆæœŸè¨­å®š
+		makeButtons(); // ãƒœã‚¿ãƒ³ã‚’ä½œæˆ
 
 		lastLine = currentLine;
 		endAction();
@@ -613,7 +613,7 @@ class HistoryLayer extends Layer
 
 			if(dataLines <= dispLines)
 			{
-				// •\¦‰Â”\”ÍˆÍ“à‚Éû‚Ü‚é
+				// è¡¨ç¤ºå¯èƒ½ç¯„å›²å†…ã«åã¾ã‚‹
 				canScroll = false;
 				dispStart = 0;
 				var i;
@@ -622,7 +622,7 @@ class HistoryLayer extends Layer
 			}
 			else
 			{
-				// •\¦‰Â”\”ÍˆÍ“à‚Éû‚Ü‚ç‚È‚¢
+				// è¡¨ç¤ºå¯èƒ½ç¯„å›²å†…ã«åã¾ã‚‰ãªã„
 				canScroll = true;
 				dispStart = dataLines - dispLines;
 				var i;
@@ -642,14 +642,14 @@ class HistoryLayer extends Layer
 
 	function dispUninit()
 	{
-		// window ‚©‚çŒÄ‚Î‚ê‚é
+		// window ã‹ã‚‰å‘¼ã°ã‚Œã‚‹
 		removeMode();
 		visible = false;
 	}
 
 	function drawLine(n)
 	{
-		// •\¦s n ‚ğ•`‰æ‚·‚é
+		// è¡¨ç¤ºè¡Œ n ã‚’æç”»ã™ã‚‹
 		var line = everypage?getPage(dispStart)[n]:getLine(n + dispStart);
 		if(everypage && line=="") return;
 		var linestart = everypage?getLineStart2(dispStart, n):getLineStart(n + dispStart);
@@ -695,14 +695,14 @@ class HistoryLayer extends Layer
 
 	function getActionInfoFromPos(x, y)
 	{
-		// x,y ˆÊ’u‚ÌƒAƒNƒVƒ‡ƒ“ ID ‚ğ“¾‚é
+		// x,y ä½ç½®ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ ID ã‚’å¾—ã‚‹
 		var line;
 		if(verticalView)
 			line = -(x - width + marginR) \ lineHeight;
 		else
 			line = (y - controlHeight - marginT) \ lineHeight;
 		if(line < 0) return void;
-		if(!everypage && dataLines <= dispLines && line >= dataLines) return void; // ‚Í‚İo‚Ä‚¢‚é
+		if(!everypage && dataLines <= dispLines && line >= dataLines) return void; // ã¯ã¿å‡ºã¦ã„ã‚‹
 		var ai;
 		if(everypage)
 		{
@@ -713,7 +713,7 @@ class HistoryLayer extends Layer
 			line += dispStart;
 			ai = getActionInfo(line);
 		}
-		if(ai === void) return void; // î•ñ‚ª‚È‚¢
+		if(ai === void) return void; // æƒ…å ±ãŒãªã„
 		var p = verticalView ? (y - marginT - controlHeight) : (x - marginL);
 		p -= everypage ? getLineStart2(dispStart, line) : getLineStart(line);
 		for(var i = ai.count - 1; i >= 0; i--)
@@ -726,7 +726,7 @@ class HistoryLayer extends Layer
 
 	function highlightAction(id)
 	{
-		// ‰æ–Êã‚É‚ ‚é ID ‚Å¦‚³‚ê‚½ ID ‚ğ‚·‚×‚Ä ƒnƒCƒ‰ƒCƒg‚·‚é
+		// ç”»é¢ä¸Šã«ã‚ã‚‹ ID ã§ç¤ºã•ã‚ŒãŸ ID ã‚’ã™ã¹ã¦ ãƒã‚¤ãƒ©ã‚¤ãƒˆã™ã‚‹
 		lastHighlightedActionID = id;
 		if(id == 0) return;
 		var max = everypage ? repageLine : ((dataLines <= dispLines) ? dataLines : dispLines);
@@ -759,8 +759,8 @@ class HistoryLayer extends Layer
 
 	function clearActionHighlights()
 	{
-		// ‰æ–Êã‚É‚ ‚é lastHighlightedActionID ‚Å¦‚³‚ê‚½ƒnƒCƒ‰ƒCƒg•\¦‚ğ
-		// ‚·‚×‚ÄÁ‚·
+		// ç”»é¢ä¸Šã«ã‚ã‚‹ lastHighlightedActionID ã§ç¤ºã•ã‚ŒãŸãƒã‚¤ãƒ©ã‚¤ãƒˆè¡¨ç¤ºã‚’
+		// ã™ã¹ã¦æ¶ˆã™
 		if(lastHighlightedActionID == 0) return;
 		var max = everypage ? repageLine : ((dataLines <= dispLines) ? dataLines : dispLines);
 		for(var i = 0; i < max; i++)
@@ -773,7 +773,7 @@ class HistoryLayer extends Layer
 				if(info.end !== void && info.id == lastHighlightedActionID)
 				{
 					clearBack(i);
-					drawLine(i); // s‚ğ•`‰æ‚µ‚È‚¨‚·
+					drawLine(i); // è¡Œã‚’æç”»ã—ãªãŠã™
 				}
 			}
 		}
@@ -816,7 +816,7 @@ class HistoryLayer extends Layer
 
 	function prevPage()
 	{
-		// ‘Oƒy[ƒW‚ÉˆÚ“®
+		// å‰ãƒšãƒ¼ã‚¸ã«ç§»å‹•
 		if(!canScroll) return;
 		clearActionHighlights();
 		if(everypage)
@@ -842,7 +842,7 @@ class HistoryLayer extends Layer
 	
 	function nextPage()
 	{
-		// Ÿƒy[ƒW‚ÉˆÚ“®
+		// æ¬¡ãƒšãƒ¼ã‚¸ã«ç§»å‹•
 		if(!canScroll) return;
 		clearActionHighlights();
 		if(everypage)
@@ -1014,12 +1014,12 @@ class HistoryLayer extends Layer
 
 	function windowMouseWheel(shift, delta, x, y)
 	{
-		// ƒEƒBƒ“ƒhƒE‚ÌƒzƒC[ƒ‹‘€ìƒƒbƒZ[ƒW‚ª‚±‚±‚É—¬‚³‚ê‚é
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ›ã‚¤ãƒ¼ãƒ«æ“ä½œãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã“ã“ã«æµã•ã‚Œã‚‹
 		var currenttick = System.getTickCount();
 		delta = delta \ 120;
 		if(delta > 0 )
 		{
-			// ‰œ
+			// å¥¥
 			while(delta--)
 			{
 				if(everypage)
@@ -1030,13 +1030,13 @@ class HistoryLayer extends Layer
 		}
 		else if(delta < 0 )
 		{
-			// è‘O
+			// æ‰‹å‰
 			if(currenttick - lastWheelTick > 150 &&
 				((everypage && dispStart >= dataPages-1) ||
 				(!everypage && dispStart >= dataLines - dispLines)))
 			{
-				/* ‚­‚é‚­‚é‰ñ‚µ‚Ä‚¢‚é‚¤‚¿‚É‚¢‚«‚È‚è—š—ğ‚ª•Â‚¶‚½‚è‚µ‚È‚¢‚æ‚¤‚ÈdŠ|‚¯ */
-				// Šù‚ÉÅI•”•ª‚ğ•\¦‚µ‚Ä‚¢‚é
+				/* ãã‚‹ãã‚‹å›ã—ã¦ã„ã‚‹ã†ã¡ã«ã„ããªã‚Šå±¥æ­´ãŒé–‰ã˜ãŸã‚Šã—ãªã„ã‚ˆã†ãªä»•æ›ã‘ */
+				// æ—¢ã«æœ€çµ‚éƒ¨åˆ†ã‚’è¡¨ç¤ºã—ã¦ã„ã‚‹
 				hide();
 			}
 			else

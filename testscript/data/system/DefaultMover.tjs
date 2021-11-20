@@ -1,22 +1,22 @@
-// DefaultMover.tjs - ƒŒƒCƒ„©“®ˆÚ“®‚ÌƒfƒtƒHƒ‹ƒg‚Ìƒnƒ“ƒhƒ‰
-// Copyright (C)2001-2009, W.Dee and contributors  ‰ü•ÏE”z•z‚Í©—R‚Å‚·
+// DefaultMover.tjs - ãƒ¬ã‚¤ãƒ¤è‡ªå‹•ç§»å‹•ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒãƒ³ãƒ‰ãƒ©
+// Copyright (C)2001-2009, W.Dee and contributors  æ”¹å¤‰ãƒ»é…å¸ƒã¯è‡ªç”±ã§ã™
 
 class LinearMover
 {
-	// ’¼ü•âŠÔ
+	// ç›´ç·šè£œé–“
 
-	var layer; // ƒŒƒCƒ„
-	var path; // “_”z—ñ
-	var time; // “_‚ğ’Ê‰ß‚·‚é‚Ì‚É•K—v‚ÈŠÔ
-	var accel; // ‰Á‘¬“x“I‚È“®‚«‚ğ‚·‚é‚©‚Ç‚¤‚©
+	var layer; // ãƒ¬ã‚¤ãƒ¤
+	var path; // ç‚¹é…åˆ—
+	var time; // ç‚¹ã‚’é€šéã™ã‚‹ã®ã«å¿…è¦ãªæ™‚é–“
+	var accel; // åŠ é€Ÿåº¦çš„ãªå‹•ãã‚’ã™ã‚‹ã‹ã©ã†ã‹
 	var pointCount; // path.count -1
-	var finalFunction; // ˆÚ“®I—¹‚ÉŒÄ‚ÔŠÖ”
-	var startTick; // ˆÚ“®ŠJn‚ğ‚µ‚½ƒeƒBƒbƒN
-	var totalTime; // ‘S‘Ì‚ÌŠÔ
-	var delayTimer; // “®ìŠJn‚Ü‚Å‘Ò‚Â‚½‚ß‚Ìƒ^ƒCƒ}
-	var moving = false; // ˆÚ“®’†‚©
-	var first = true; // ‰‰ñ‚Ìƒnƒ“ƒhƒ‰ŒÄ‚Ño‚µ‚©
-	var nextStop = false; // Ÿ‚Ìƒnƒ“ƒhƒ‰ŒÄ‚Ño‚µ‚Å’â~‚·‚é‚©
+	var finalFunction; // ç§»å‹•çµ‚äº†æ™‚ã«å‘¼ã¶é–¢æ•°
+	var startTick; // ç§»å‹•é–‹å§‹ã‚’ã—ãŸãƒ†ã‚£ãƒƒã‚¯
+	var totalTime; // å…¨ä½“ã®æ™‚é–“
+	var delayTimer; // å‹•ä½œé–‹å§‹æ™‚ã¾ã§å¾…ã¤ãŸã‚ã®ã‚¿ã‚¤ãƒ
+	var moving = false; // ç§»å‹•ä¸­ã‹
+	var first = true; // åˆå›ã®ãƒãƒ³ãƒ‰ãƒ©å‘¼ã³å‡ºã—ã‹
+	var nextStop = false; // æ¬¡ã®ãƒãƒ³ãƒ‰ãƒ©å‘¼ã³å‡ºã—ã§åœæ­¢ã™ã‚‹ã‹
 
 	function LinearMover(layer, path, time, accel, finalfunction)
 	{
@@ -36,7 +36,7 @@ class LinearMover
 
 	function startMove(delay)
 	{
-		// ˆÚ“®‚ğŠJn‚·‚é
+		// ç§»å‹•ã‚’é–‹å§‹ã™ã‚‹
 		if(delay != 0)
 		{
 			delayTimer = new Timer(onDelayTimer, '');
@@ -46,24 +46,24 @@ class LinearMover
 		}
 		else
 		{
-			System.addContinuousHandler(handler); // ContinuousHandlers ‚É’Ç‰Á
+			System.addContinuousHandler(handler); // ContinuousHandlers ã«è¿½åŠ 
 			moving = true;
 		}
 	}
 
 	function onDelayTimer()
 	{
-		// delayTimer ‚ª”­“®‚µ‚½
+		// delayTimer ãŒç™ºå‹•ã—ãŸ
 		delayTimer.enabled = false;
 		System.addContinuousHandler(handler);
 	}
 
 	function stopMove()
 	{
-		// ˆÚ“®‚ğI‚í‚é
+		// ç§»å‹•ã‚’çµ‚ã‚ã‚‹
 		if(moving)
 		{
-			// ÅIˆÊ’u‚ÉˆÚ“®
+			// æœ€çµ‚ä½ç½®ã«ç§»å‹•
 			if(layer isvalid)
 			{
 				var idx = int(pointCount*3);
@@ -79,7 +79,7 @@ class LinearMover
 
 	function handler(tick)
 	{
-		// ˆÚ“®’†‚ÉŒÄ‚Î‚ê‚é
+		// ç§»å‹•ä¸­ã«å‘¼ã°ã‚Œã‚‹
 		if(nextStop || !(layer isvalid)) { stopMove();  return; }
 		if(first) startTick = tick, first = false;
 		tick -= startTick;
@@ -95,14 +95,14 @@ class LinearMover
 
 		if(accel < 0)
 		{
-			// ãŒ· ( Å‰‚ª“®‚«‚ª‘‚­A™X‚É’x‚­‚È‚é )
+			// ä¸Šå¼¦ ( æœ€åˆãŒå‹•ããŒæ—©ãã€å¾ã€…ã«é…ããªã‚‹ )
 			tick = 1.0 - tick / totalTime;
 			tick = Math.pow(tick, -accel);
 			tick = int ( (1.0 - tick) * totalTime );
 		}
 		else if(accel > 0)
 		{
-			// ‰ºŒ· ( Å‰‚Í“®‚«‚ª’x‚­A™X‚É‘‚­‚È‚é )
+			// ä¸‹å¼¦ ( æœ€åˆã¯å‹•ããŒé…ãã€å¾ã€…ã«æ—©ããªã‚‹ )
 			tick = tick / totalTime;
 			tick = Math.pow(tick, accel);
 			tick = int ( tick * totalTime );
@@ -135,9 +135,9 @@ class LinearMover
 
 class SplineMover extends LinearMover
 {
-	// ƒXƒvƒ‰ƒCƒ“•âŠÔ
-	var zx = []; // ƒXƒvƒ‰ƒCƒ“ƒ[ƒN
-	var zy = []; // ƒXƒvƒ‰ƒCƒ“ƒ[ƒN
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³è£œé–“
+	var zx = []; // ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³ãƒ¯ãƒ¼ã‚¯
+	var zy = []; // ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³ãƒ¯ãƒ¼ã‚¯
 
 	function SplineMover(layer, path, time, accel, finalfunction)
 	{
@@ -145,11 +145,11 @@ class SplineMover extends LinearMover
 
 		if(path.count < 9)
 		{
-			// 3 “_ˆÈ‰º ( w’è‚·‚é‚Ì‚Í‚»‚Ì‚¤‚¿‚Ì2“_ ) ‚Í•âŠ®‚Å‚«‚È‚¢
-			throw new Exception("2 “_ˆÈã‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢");
+			// 3 ç‚¹ä»¥ä¸‹ ( æŒ‡å®šã™ã‚‹ã®ã¯ãã®ã†ã¡ã®2ç‚¹ ) ã¯è£œå®Œã§ããªã„
+			throw new Exception("2 ç‚¹ä»¥ä¸Šã‚’æŒ‡å®šã—ã¦ãã ã•ã„");
 		}
 
-		// ƒXƒvƒ‰ƒCƒ“•âŠÔ‚É•K—v‚Èƒ[ƒN‚ğŒvZ
+		// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³è£œé–“ã«å¿…è¦ãªãƒ¯ãƒ¼ã‚¯ã‚’è¨ˆç®—
 		var points = path.count \ 3;
 		var tmpx = [], tmpy = [];
 		var tx = zx, ty = zy;
@@ -225,17 +225,17 @@ class SplineMover extends LinearMover
 
 class LinearFrameMover
 {
-	// ’¼ü•âŠÔ
-	var layer;				// ƒŒƒCƒ„
-	var path;				// ƒtƒŒ[ƒ€”z—ñ -> ƒtƒŒ[ƒ€”Ô†, x, y, opacity ‚ª“ü‚Á‚Ä‚¢‚é
-	var fps;				// ƒtƒŒ[ƒ€ƒŒ[ƒg
+	// ç›´ç·šè£œé–“
+	var layer;				// ãƒ¬ã‚¤ãƒ¤
+	var path;				// ãƒ•ãƒ¬ãƒ¼ãƒ é…åˆ— -> ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·, x, y, opacity ãŒå…¥ã£ã¦ã„ã‚‹
+	var fps;				// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆ
 	var pointCount;			// path.count -1
-	var finalFunction;		// ˆÚ“®I—¹‚ÉŒÄ‚ÔŠÖ”
-	var startTick;			// ˆÚ“®ŠJn‚ğ‚µ‚½ƒeƒBƒbƒN
-	var totalTime;			// ‘S‘Ì‚ÌŠÔ
-	var moving = false;		// ˆÚ“®’†‚©
-	var first = true;		// ‰‰ñ‚Ìƒnƒ“ƒhƒ‰ŒÄ‚Ño‚µ‚©
-	var nextStop = false;	// Ÿ‚Ìƒnƒ“ƒhƒ‰ŒÄ‚Ño‚µ‚Å’â~‚·‚é‚©
+	var finalFunction;		// ç§»å‹•çµ‚äº†æ™‚ã«å‘¼ã¶é–¢æ•°
+	var startTick;			// ç§»å‹•é–‹å§‹ã‚’ã—ãŸãƒ†ã‚£ãƒƒã‚¯
+	var totalTime;			// å…¨ä½“ã®æ™‚é–“
+	var moving = false;		// ç§»å‹•ä¸­ã‹
+	var first = true;		// åˆå›ã®ãƒãƒ³ãƒ‰ãƒ©å‘¼ã³å‡ºã—ã‹
+	var nextStop = false;	// æ¬¡ã®ãƒãƒ³ãƒ‰ãƒ©å‘¼ã³å‡ºã—ã§åœæ­¢ã™ã‚‹ã‹
 
 	var offset_x = 0;
 	var offset_y = 0;
@@ -259,14 +259,14 @@ class LinearFrameMover
 
 	function startMove() {
 		first = true;
-		System.addContinuousHandler(handler); // ContinuousHandlers ‚É’Ç‰Á
+		System.addContinuousHandler(handler); // ContinuousHandlers ã«è¿½åŠ 
 		moving = true;
 	}
 
 	function stopMove() {
-		// ˆÚ“®‚ğI‚í‚é
+		// ç§»å‹•ã‚’çµ‚ã‚ã‚‹
 		if( moving ) {
-			// ÅIˆÊ’u‚ÉˆÚ“®
+			// æœ€çµ‚ä½ç½®ã«ç§»å‹•
 			if(layer isvalid) {
 				var idx = int(pointCount*4);
 				var p = path;
@@ -280,7 +280,7 @@ class LinearFrameMover
 	}
 
 	function handler(tick) {
-		// ˆÚ“®’†‚ÉŒÄ‚Î‚ê‚é
+		// ç§»å‹•ä¸­ã«å‘¼ã°ã‚Œã‚‹
 		if(nextStop || !(layer isvalid)) { stopMove();  return; }
 		if(first) startTick = tick, first = false, curPoint = 0;
 		tick -= startTick;

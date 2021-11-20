@@ -8,7 +8,7 @@
 class tTJSDic;
 
 
-// TJSの配列をC++から簡単に使えるようにするクラス
+// TJS縺ｮ驟榊�励ｒC++縺九ｉ邁｡蜊倥↓菴ｿ縺医ｋ繧医≧縺ｫ縺吶ｋ繧ｯ繝ｩ繧ｹ
 
 
 class tTJSAry : public tTJSVariant {

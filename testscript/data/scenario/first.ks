@@ -5,104 +5,104 @@ property lf { getter { return kag.conductor.currentLocalVariables; } }
 kag.conductor.debugLevel = 4;
 @endscript
 ;
-; ƒ}ƒNƒprintlfFŒ»İ‚Ìƒ[ƒJƒ‹•Ï”‚ğ•\¦
+; ãƒã‚¯ãƒ­printlfï¼šç¾åœ¨ã®ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã‚’è¡¨ç¤º
 @macro name=printlf
 @eval exp="printObject('lf')"
 @endmacro
 ;
-; ƒ}ƒNƒprintlfF‘S‚Ä‚Ìƒ[ƒJƒ‹•Ï”‚ğ•\¦
+; ãƒã‚¯ãƒ­printlfï¼šå…¨ã¦ã®ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã‚’è¡¨ç¤º
 @macro name=printlfall
 @eval exp="printObject('kag.conductor.localVariables')"
 @endmacro
 ;
-; ƒ}ƒNƒ errendFƒ[ƒJƒ‹•Ï”‚Ì’l‚Ì—\’è’l‚Æˆá‚Á‚½ê‡‚ÉI—¹‚·‚é
-@macro name=errend errmsg="ƒ[ƒJƒ‹•Ï”’l•sˆê’vF" varname=void varval=void
+; ãƒã‚¯ãƒ­ errendï¼šãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã®å€¤ã®äºˆå®šå€¤ã¨é•ã£ãŸå ´åˆã«çµ‚äº†ã™ã‚‹
+@macro name=errend errmsg="ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å€¤ä¸ä¸€è‡´ï¼š" varname=void varval=void
 @printlfall
 @eval exp="mp.errmsg += mp.varname + ' != ' + mp.varval"
-ƒGƒ‰[F[&mp.errmsg](=[&"lf[mp.varname]"])
+ã‚¨ãƒ©ãƒ¼ï¼š[&mp.errmsg](=[&"lf[mp.varname]"])
 @s
 @endmacro
 ;
 @nowait
-*start|ŠJn
+*start|é–‹å§‹
 @printlfall
 [startanchor]\
-ƒeƒXƒg‚ğŠJn‚µ‚Ü‚·BŠeƒeƒXƒg‚ÅƒGƒ‰[‚ªo‚È‚¢‚©Akrkr.exe‚Ìg—pƒƒ‚ƒŠ—Ê‚ª\
-’˜‚µ‚­‘‰Á‚µ‚Ä‚¢‚È‚¢‚©Šm”F‚µ‚Ä‚­‚¾‚³‚¢B
-ƒNƒŠƒbƒN‚ÅƒeƒXƒgŠJn
+ãƒ†ã‚¹ãƒˆã‚’é–‹å§‹ã—ã¾ã™ã€‚å„ãƒ†ã‚¹ãƒˆã§ã‚¨ãƒ©ãƒ¼ãŒå‡ºãªã„ã‹ã€krkr.exeã®ä½¿ç”¨ãƒ¡ãƒ¢ãƒªé‡ãŒ\
+è‘—ã—ãå¢—åŠ ã—ã¦ã„ãªã„ã‹ç¢ºèªã—ã¦ãã ã•ã„ã€‚
+ã‚¯ãƒªãƒƒã‚¯ã§ãƒ†ã‚¹ãƒˆé–‹å§‹
 [p][cm]\
 ;
 @localvar i=1000
-;*macrotest1|ƒ}ƒNƒ“o˜^ƒeƒXƒg
-ƒ}ƒNƒ“o˜^ƒeƒXƒg([&lf.i]‰ñ) ...
+;*macrotest1|ãƒã‚¯ãƒ­ç™»éŒ²ãƒ†ã‚¹ãƒˆ
+ãƒã‚¯ãƒ­ç™»éŒ²ãƒ†ã‚¹ãƒˆ([&lf.i]å›) ...
 [while exp=lf.i>0 each=lf.i--]\
 	[eval exp="lf.macro_name = 'macro_'+lf.i"]\
 	@macro name=$macro_name arg=$i
 		@&lf.i
 	@endmacro
 [endwhile]\
-Š®—¹
+å®Œäº†
 [p][cm]\
 ;
 ;
 @localvar i=1000
-*macrotest2|ƒ}ƒNƒd•¡“o˜^ƒeƒXƒg
+*macrotest2|ãƒã‚¯ãƒ­é‡è¤‡ç™»éŒ²ãƒ†ã‚¹ãƒˆ
 @printlfall
-ƒ}ƒNƒd•¡“o˜^ƒeƒXƒg([&lf.i]‰ñ) ...
+ãƒã‚¯ãƒ­é‡è¤‡ç™»éŒ²ãƒ†ã‚¹ãƒˆ([&lf.i]å›) ...
 *macrotest_loop
 @macro name=tempmacro
 	@eval exp=1
 @endmacro
 @jump target=*macrotest_loop cond="lf.i-- >= 0"
-Š®—¹
+å®Œäº†
 @printlfall
 [p][cm]\
 ;
 ;
 @localvar i=1000
-*pmacrotest|pƒ}ƒNƒ“o˜^ƒeƒXƒg
-[[pmacro]“o˜^ƒeƒXƒg([&lf.i]‰ñ) ...
+*pmacrotest|pãƒã‚¯ãƒ­ç™»éŒ²ãƒ†ã‚¹ãƒˆ
+[[pmacro]ç™»éŒ²ãƒ†ã‚¹ãƒˆ([&lf.i]å›) ...
 [while exp=lf.i>0 each=lf.i--]\
 	[eval exp="lf.pmacro_name = 'macro_'+lf.i"]\
 	@pmacro name=$pmacro_name arg1=$i arg2=&lf.i+1
 [endwhile]\
-Š®—¹
+å®Œäº†
 [p][cm]\
 ;
 ;
 @localvar testlocalval=testlocalval
-*callsavetest|callæ‚Å‚ÌƒZ[ƒuƒeƒXƒg
+*callsavetest|callå…ˆã§ã®ã‚»ãƒ¼ãƒ–ãƒ†ã‚¹ãƒˆ
 @printlfall
-callæ‚Å‚ÌƒZ[ƒuƒeƒXƒg
+callå…ˆã§ã®ã‚»ãƒ¼ãƒ–ãƒ†ã‚¹ãƒˆ
 @call target=*callsavetest_subroutine i=0 j=1 k=2
 ;
 ;
 @localvar i=100
-*calltest|callƒeƒXƒg
+*calltest|callãƒ†ã‚¹ãƒˆ
 @printlfall
-call˜A‘±ŒÄ‚Ño‚µƒeƒXƒg([&lf.i]‰ñ) ...
+callé€£ç¶šå‘¼ã³å‡ºã—ãƒ†ã‚¹ãƒˆ([&lf.i]å›) ...
 *calltest_loop
 @call target=*calltest_subroutine
 @jump target=*calltest_loop cond="lf.i-- >= 0"
-Š®—¹
+å®Œäº†
 [p][cm]\
 ;
 ;
 @localvar imax=100 jmax=10
-*whiletest|whileƒ‹[ƒvƒeƒXƒg
+*whiletest|whileãƒ«ãƒ¼ãƒ—ãƒ†ã‚¹ãƒˆ
 @printlfall
-whileƒ‹[ƒvƒeƒXƒg([&lf.imax]x[&lf.jmax]‰ñ) ...
+whileãƒ«ãƒ¼ãƒ—ãƒ†ã‚¹ãƒˆ([&lf.imax]x[&lf.jmax]å›) ...
 @while init=lf.i=0 exp=lf.i<lf.imax each=lf.i++
 	@while init=lf.j=0 exp=lf.j<lf.jmax each=lf.j++
 	@endwhile
 @endwhile
-Š®—¹
+å®Œäº†
 [p][cm]\
 ;
 ;
-*localvartest|ƒ[ƒJƒ‹•Ï”/whileƒ‹[ƒvƒeƒXƒg
+*localvartest|ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°/whileãƒ«ãƒ¼ãƒ—ãƒ†ã‚¹ãƒˆ
 @printlfall
-ƒ[ƒJƒ‹•Ï”/whileƒ‹[ƒvƒeƒXƒg ...
+ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°/whileãƒ«ãƒ¼ãƒ—ãƒ†ã‚¹ãƒˆ ...
 ;
 @localvar i=3 count=0
 @printlf
@@ -135,13 +135,13 @@ whileƒ‹[ƒvƒeƒXƒg([&lf.imax]x[&lf.jmax]‰ñ) ...
 @poplocalvar
 @errend varname=count varval=0 cond="lf.count != 0"
 ;
-Š®—¹
+å®Œäº†
 [p][cm]\
 ;
 ;
 @localvar i=1000
-whileƒ‹[ƒv‹­§‘Ş‹ƒeƒXƒg([&lf.i]‰ñ) ...
-*whileexit|whileƒ‹[ƒv‹­§‘Ş‹ƒeƒXƒg
+whileãƒ«ãƒ¼ãƒ—å¼·åˆ¶é€€å»ãƒ†ã‚¹ãƒˆ([&lf.i]å›) ...
+*whileexit|whileãƒ«ãƒ¼ãƒ—å¼·åˆ¶é€€å»ãƒ†ã‚¹ãƒˆ
 @localvar whilestackdepth=&kag.conductor.whileStackDepth
 @errend varname=whilestackdepth varval=0 cond="lf.whilestackdepth != 0"
 @while exp=1
@@ -167,27 +167,27 @@ whileƒ‹[ƒv‹­§‘Ş‹ƒeƒXƒg([&lf.i]‰ñ) ...
 @endwhile
 @localvar whilestackdepth=&kag.conductor.whileStackDepth
 @errend varname=whilestackdepth varval=0 cond="lf.whilestackdepth != 0"
-Š®—¹
+å®Œäº†
 [p][cm]\
 ;
 ;
 @localvar i=1000
-while/call‹­§‘Ş‹ƒeƒXƒg([&lf.i]‰ñ) ...
-*whilecallexit|while/all‹­§‘Ş‹ƒeƒXƒg
+while/callå¼·åˆ¶é€€å»ãƒ†ã‚¹ãƒˆ([&lf.i]å›) ...
+*whilecallexit|while/allå¼·åˆ¶é€€å»ãƒ†ã‚¹ãƒˆ
 @while exp=--lf.i>0
 	@call target=*whilecallexit_subroutine i=$i
 	@jump target=*whilecallexit
 @endwhile
-Š®—¹
+å®Œäº†
 [p][cm]\
 ;
 ;
-ƒeƒXƒgI—¹BƒGƒ‰[‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½B
+ãƒ†ã‚¹ãƒˆçµ‚äº†ã€‚ã‚¨ãƒ©ãƒ¼ã¯ã‚ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚
 [s]
 
 
-*callsavetest_subroutine|callƒZ[ƒuƒeƒXƒg
-‚±‚±‚ÅƒZ[ƒu‚µ‚Ä‚­‚¾‚³‚¢B
+*callsavetest_subroutine|callã‚»ãƒ¼ãƒ–ãƒ†ã‚¹ãƒˆ
+ã“ã“ã§ã‚»ãƒ¼ãƒ–ã—ã¦ãã ã•ã„ã€‚
 @printlfall
 [p][cm]\
 @return
@@ -198,7 +198,7 @@ while/call‹­§‘Ş‹ƒeƒXƒg([&lf.i]‰ñ) ...
 @return
 
 *whilecallexit_subroutine
-;“ñ‰ñ‚Éˆê‰ñ‚Ítarget•t‚«return‚·‚é
+;äºŒå›ã«ä¸€å›ã¯targetä»˜ãreturnã™ã‚‹
 @return target=*whilecallexit cond=lf.i%2==0
 @return
 

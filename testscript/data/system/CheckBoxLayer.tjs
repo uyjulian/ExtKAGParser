@@ -1,5 +1,5 @@
-// CheckBoxLayer.tjs - ƒ`ƒFƒbƒNƒ{ƒbƒNƒXƒŒƒCƒ„
-// Copyright (C)2001-2009, W.Dee and contributors  ‰ü•ÏE”z•z‚Í©—R‚Å‚·
+// CheckBoxLayer.tjs - ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãƒ¬ã‚¤ãƒ¤
+// Copyright (C)2001-2009, W.Dee and contributors  æ”¹å¤‰ãƒ»é…å¸ƒã¯è‡ªç”±ã§ã™
 
 
 class CheckBoxLayer extends KAGLayer
@@ -8,8 +8,8 @@ class CheckBoxLayer extends KAGLayer
 	var CheckBox_glyph;
 	var CheckBox_mouseOn = false;
 	var CheckBox_color = clWindow;
-	var CheckBox_glyphColor = clWindowText; // ‹L†‚ÌF
-	var CheckBox_opacity = 192; // •s“§–¾“x
+	var CheckBox_glyphColor = clWindowText; // è¨˜å·ã®è‰²
+	var CheckBox_opacity = 192; // ä¸é€æ˜åº¦
 
 	function CheckBoxLayer(win, par)
 	{
@@ -27,7 +27,7 @@ class CheckBoxLayer extends KAGLayer
 		setImageSize(CheckBox_glyph.width, CheckBox_glyph.height);
 		setSizeToImageSize();
 
-		focusable = true; // ƒtƒH[ƒJƒX‚ğ“¾‚ç‚ê‚é
+		focusable = true; // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å¾—ã‚‰ã‚Œã‚‹
 	}
 
 	function finalize()
@@ -38,7 +38,7 @@ class CheckBoxLayer extends KAGLayer
 
 	function assign(src)
 	{
-		// src ‚Ìî•ñ‚ğ‚±‚Ìƒ{ƒ^ƒ“ƒŒƒCƒ„‚ÉƒRƒs[
+		// src ã®æƒ…å ±ã‚’ã“ã®ãƒœã‚¿ãƒ³ãƒ¬ã‚¤ãƒ¤ã«ã‚³ãƒ”ãƒ¼
 		assignImages(src, true);
 		CheckBox_checked = src.CheckBox_checked;
 		CheckBox_color = src.CheckBox_color;
@@ -49,9 +49,9 @@ class CheckBoxLayer extends KAGLayer
 
 	function draw()
 	{
-		// Œ»İ‚Ìó‘Ô‚ğ•`‰æ
+		// ç¾åœ¨ã®çŠ¶æ…‹ã‚’æç”»
 
-		// ”wŒi‚ğÁ‹
+		// èƒŒæ™¯ã‚’æ¶ˆå»
 		face = dfAlpha;
 		fillRect(0, 0, imageWidth, imageHeight, 0);
 
@@ -62,20 +62,20 @@ class CheckBoxLayer extends KAGLayer
 		if(CheckBox_color != clNone)
 			colorRect(l, t, w, h, CheckBox_color, CheckBox_opacity);
 
-		// ƒ}ƒEƒX‚ªã‚Éæ‚Á‚Ä‚¢‚é‚Æ‚«‚Í‰º’n‚ğF‚Ã‚¯‚·‚é
+		// ãƒã‚¦ã‚¹ãŒä¸Šã«ä¹—ã£ã¦ã„ã‚‹ã¨ãã¯ä¸‹åœ°ã‚’è‰²ã¥ã‘ã™ã‚‹
 		if(CheckBox_mouseOn)
-			colorRect(l+1, t+1, w-2, h-2, clHighlight, 64); // ƒnƒCƒ‰ƒCƒg‚·‚é
+			colorRect(l+1, t+1, w-2, h-2, clHighlight, 64); // ãƒã‚¤ãƒ©ã‚¤ãƒˆã™ã‚‹
 
-		// ‹L†‚ğ•`‰æ
+		// è¨˜å·ã‚’æç”»
 		if(CheckBox_checked)
 		{
 			CheckBox_glyph.face = dfOpaque;
 			CheckBox_glyph.holdAlpha = true;
-			CheckBox_glyph.fillRect(0, 0, w, h, CheckBox_glyphColor); // ‹L†F‚Å“h‚é
+			CheckBox_glyph.fillRect(0, 0, w, h, CheckBox_glyphColor); // è¨˜å·è‰²ã§å¡—ã‚‹
 			operateRect(l, t, CheckBox_glyph, 0, 0, w, h, omAlpha);
 		}
 
-		// ˜g‚ğ•`‰æ
+		// æ ã‚’æç”»
 		colorRect(l, t, w, 1, 0x000000, 128);
 		colorRect(l, t+1, 1, h-2, 0x000000, 128);
 		colorRect(l+w-1, t+1, 1, h-1, 0xffffff, 128);
@@ -83,7 +83,7 @@ class CheckBoxLayer extends KAGLayer
 
 		if(focused)
 		{
-			// ƒtƒH[ƒJƒX‚ª‚ ‚é‚Ì‚ÅƒnƒCƒ‰ƒCƒg‚·‚é
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹ã®ã§ãƒã‚¤ãƒ©ã‚¤ãƒˆã™ã‚‹
 			colorRect(l+2, t+2, w-4, 1, clHighlight, 128);
 			colorRect(l+2, t+3, 1, h-5, clHighlight, 128);
 			colorRect(l+3, t+h-3, w-5, 1, clHighlight, 128);
@@ -94,14 +94,14 @@ class CheckBoxLayer extends KAGLayer
 
 	function onPaint()
 	{
-		// •`‰æ‚Ì’¼‘O‚ÉŒÄ‚Î‚ê‚é
+		// æç”»ã®ç›´å‰ã«å‘¼ã°ã‚Œã‚‹
 		super.onPaint(...);
 		draw();
 	}
 
 	function onMouseEnter()
 	{
-		// ƒ}ƒEƒX‚ªƒŒƒCƒ„—Ìˆæ“à‚É“ü‚Á‚½
+		// ãƒã‚¦ã‚¹ãŒãƒ¬ã‚¤ãƒ¤é ˜åŸŸå†…ã«å…¥ã£ãŸ
 		CheckBox_mouseOn = true;
 		update();
 		super.onMouseEnter(...);
@@ -109,7 +109,7 @@ class CheckBoxLayer extends KAGLayer
 
 	function onMouseLeave()
 	{
-		// ƒ}ƒEƒX‚ªƒŒƒCƒ„—Ìˆæ‚©‚ço‚Ä‚¢‚Á‚½
+		// ãƒã‚¦ã‚¹ãŒãƒ¬ã‚¤ãƒ¤é ˜åŸŸã‹ã‚‰å‡ºã¦ã„ã£ãŸ
 		CheckBox_mouseOn = false;
 		update();
 		super.onMouseLeave(...);
@@ -117,35 +117,35 @@ class CheckBoxLayer extends KAGLayer
 
 	function onNodeDisabled()
 	{
-		// ƒŒƒCƒ„‚Ìƒm[ƒh‚ª•s‰Â‚É‚È‚Á‚½
+		// ãƒ¬ã‚¤ãƒ¤ã®ãƒãƒ¼ãƒ‰ãŒä¸å¯ã«ãªã£ãŸ
 		super.onNodeDisabled(...);
 		update();
 	}
 
 	function onNodeEnabled()
 	{
-		// ƒŒƒCƒ„‚Ìƒm[ƒh‚ª—LŒø‚É‚È‚Á‚½
+		// ãƒ¬ã‚¤ãƒ¤ã®ãƒãƒ¼ãƒ‰ãŒæœ‰åŠ¹ã«ãªã£ãŸ
 		super.onNodeEnabled(...);
 		update();
 	}
 
 	function onFocus()
 	{
-		// ƒtƒH[ƒJƒX‚ğ“¾‚½
+		// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å¾—ãŸ
 		super.onFocus(...);
 		update();
 	}
 
 	function onBlur()
 	{
-		// ƒtƒH[ƒJƒX‚ğ¸‚Á‚½
+		// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å¤±ã£ãŸ
 		super.onBlur(...);
 		update();
 	}
 
 	function onMouseDown()
 	{
-		// onMouseDown ƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
+		// onMouseDown ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©
 		focus();
 		CheckBox_checked = !CheckBox_checked;
 		update();
@@ -154,22 +154,22 @@ class CheckBoxLayer extends KAGLayer
 
 	function onMouseUp()
 	{
-		// onMouseUp ƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰
+		// onMouseUp ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©
 		update();
 		super.onMouseUp(...);
 	}
 
 	function onKeyDown(key, shift, process)
 	{
-		// ƒL[‚ª‰Ÿ‚³‚ê‚½
+		// ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸ
 		if(process)
 		{
 			if(key == VK_RETURN || key == VK_SPACE)
 			{
-				// ƒXƒy[ƒXƒL[‚Ü‚½‚ÍƒGƒ“ƒ^[ƒL[
+				// ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã¾ãŸã¯ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼
 				CheckBox_checked = !CheckBox_checked;
 				update();
-				super.onKeyDown(key, shift, false); // ˆ—‚ğ‚µ‚½‚Ì‚Åprocess‚Éfalse‚ğ“n‚·
+				super.onKeyDown(key, shift, false); // å‡¦ç†ã‚’ã—ãŸã®ã§processã«falseã‚’æ¸¡ã™
 			}
 			else
 			{
@@ -178,7 +178,7 @@ class CheckBoxLayer extends KAGLayer
 		}
 		else
 		{
-			// process ‚ª false ‚Ìê‡‚Íˆ—‚Ís‚í‚È‚¢
+			// process ãŒ false ã®å ´åˆã¯å‡¦ç†ã¯è¡Œã‚ãªã„
 			super.onKeyDown(...);
 		}
 	}

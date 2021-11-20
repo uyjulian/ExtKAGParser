@@ -1,75 +1,75 @@
 @return cond="typeof(global.TJSFunctions) != 'undefined'"
 ;
-; 2015/07/08	1.27	ignoreCR=false‚É‘Î‰(‰üs‚µ‚È‚¢‚æ‚¤‚É‚µ‚½‚¾‚¯)
-; 2014/06/21	1.26	str2num()‚Émin/maxˆø”‚ğ’Ç‰Á
-; 2014/02/26	1.25	str2num()‚ÅƒGƒ‰[‚É‚È‚Á‚Ä‚¢‚½‚Ì‚ğC³
-; 2013/08/10	1.24	em()‚Åemtype='stop'‚Ì‚ÉException‚Å’â~‚·‚é‚æ‚¤C³
-;			em()‚Ìˆø”‚Éerrflg(def=1)‚ğ’Ç‰Á
-; 2013/07/30	1.23	em()‚Åemtype='stop'‚Ì‚É‚àstop‚µ‚È‚©‚Á‚½‚Ì‚ğC³
-; 2012/10/01	1.22	selectcopy_dic()‚Écopyifvoid‚Ænumerize‚ğ’Ç‰Á
-;			numerize_dic()‚ÅA•ÏŠ·‚ÉRegExp‚ğ—p‚¢‚é‚æ‚¤‚É•ÏX
-;			showtickdiff() ‚ğ’Ç‰Á
-; 2012/09/25	1.21	selectcopy_dic()‚Ådst/src‚ªvoid‚¾‚Á‚½‚ç‚·‚®return‚·‚é
-;			‚æ‚¤•ÏX
-; 2012/08/13	1.20	getLayersFromElm()‚ÆgetLayerPageNamesFromElm()‚ğ’Ç‰Á
-; 2012/08/06	1.19	©ƒNƒ‰ƒX‚ÆeƒNƒ‰ƒX‚ğ“üè‚·‚éŠÖ”‚ğ’Ç‰Á
-; 2012/05/27	1.18	«‘‚ÌƒL[‚ğ•\¦‚·‚é‚Æ‚«ƒ\[ƒg‚·‚é‚æ‚¤‚É•ÏX
-; 2011/09/24	1.17	selectcopy_dic()‚ÅAtypeof(src[key]) != 'undefined'‚ğ
-;			src[key] !== void‚É–ß‚µ‚½BKLayers‚ÌSliderTab‚Å•s“s‡
-;			‚ ‚Á‚½‚½‚ß
-; 2011/07/18	1.16	printObject()‚Érecursive ƒIƒvƒVƒ‡ƒ“‚ğ’Ç‰ÁBuÄ‹N•\¦
-;			‚µ‚È‚¢v‚Ì‚à‘I‘ğ‚Å‚«‚é‚æ‚¤‚É‚µ‚½B
-;			str2num()‚ğ’Ç‰Á
-;			selectcopy_dic()‚ÅAsrc[key] !== void‚ğ
-;			typeof(src[key]) != 'undefined'‚É•ÏXBu’l‚Í‚ ‚é‚¯‚Ç
-;			voidv‚Ì‚ğ“¦‚³‚Ê‚æ‚¤‚É‚·‚é‚½‚ß
-; 2011/05/30	1.15	printLayers()’Ç‰Á
-; 2011/05/02	1.14	printObject()‚Å«‘ƒL[‚É/‚â:‚ªŠÜ‚Ü‚ê‚éê‡‚É‚à‘Î‰
-; 2011/02/14	1.13	getManLayerAbsolute(), getManKAGAbsolute() ‚ğ’Ç‰Á
-; 2011/01/17	1.12	marge_dic()‚ÅAif•¶‚ğƒ‹[ƒvŠO‚Éo‚µ‚ÄŒø—¦‰»
-; 2011/01/15	1.11	findStorage()‚ÅAŠg’£q–³‚µ‚Åƒ}ƒbƒ`‚µ‚½ê‡‚ğl—¶
-; 2010/12/19	1.10	deletevoid_dic()’Ç‰ÁB«‘’†‚ÌuƒL[‚Í‚ ‚é‚¯‚Ç’l‚Í
-;			voidv‚Ì—v‘f‚ğ delete ‚·‚éŠÖ”B
-;			setOptions_sub() ‚ÉAdeletevoid_dic‚ğg‚¤‚©‚Ç‚¤‚©‚Ì
-;			ƒtƒ‰ƒO voidwrite ‚ğ’Ç‰Á
-;			printObject()‚Å•Â‚¶ƒJƒbƒR‚Ìƒ^ƒuˆÊ’u‚ÌŠÔˆá‚¢‚ğC³
-;			objectString() ‚ğ’Ç‰Á
-;			em() ‚ğ’Ç‰Á
-;			add_ary() ‚ğ’Ç‰Á
-;			evalkag() ‚ğ’Ç‰Á
-;			marge_dic()‚ÆsetOptions_sub()‚Écopyƒtƒ‰ƒO‚ğ’Ç‰Á
-; 2010/11/26	1.03	find_val() ‚ğ’Ç‰Á
-; 2010/11/22	1.02	selectcopy_dic() ‚ğ’Ç‰Á
-; 2010/08/13	1.01	setOptions_sub()‚Å‚Íelm‚ğnumerize‚·‚é‚æ‚¤•ÏX
-;			numerize_dic() ‚Ì“ª‚É dic===void ‚Ì—áŠOˆ—‚ğ’Ç‰Á
+; 2015/07/08	1.27	ignoreCR=falseã«å¯¾å¿œ(æ”¹è¡Œã—ãªã„ã‚ˆã†ã«ã—ãŸã ã‘)
+; 2014/06/21	1.26	str2num()ã«min/maxå¼•æ•°ã‚’è¿½åŠ 
+; 2014/02/26	1.25	str2num()ã§ã‚¨ãƒ©ãƒ¼ã«ãªã£ã¦ã„ãŸã®ã‚’ä¿®æ­£
+; 2013/08/10	1.24	em()ã§emtype='stop'ã®æ™‚ã«Exceptionã§åœæ­¢ã™ã‚‹ã‚ˆã†ä¿®æ­£
+;			em()ã®å¼•æ•°ã«errflg(def=1)ã‚’è¿½åŠ 
+; 2013/07/30	1.23	em()ã§emtype='stop'ã®æ™‚ã«ã‚‚stopã—ãªã‹ã£ãŸã®ã‚’ä¿®æ­£
+; 2012/10/01	1.22	selectcopy_dic()ã«copyifvoidã¨numerizeã‚’è¿½åŠ 
+;			numerize_dic()ã§ã€å¤‰æ›ã«RegExpã‚’ç”¨ã„ã‚‹ã‚ˆã†ã«å¤‰æ›´
+;			showtickdiff() ã‚’è¿½åŠ 
+; 2012/09/25	1.21	selectcopy_dic()ã§dst/srcãŒvoidã ã£ãŸã‚‰ã™ãreturnã™ã‚‹
+;			ã‚ˆã†å¤‰æ›´
+; 2012/08/13	1.20	getLayersFromElm()ã¨getLayerPageNamesFromElm()ã‚’è¿½åŠ 
+; 2012/08/06	1.19	è‡ªã‚¯ãƒ©ã‚¹ã¨è¦ªã‚¯ãƒ©ã‚¹ã‚’å…¥æ‰‹ã™ã‚‹é–¢æ•°ã‚’è¿½åŠ 
+; 2012/05/27	1.18	è¾æ›¸ã®ã‚­ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹ã¨ãã‚½ãƒ¼ãƒˆã™ã‚‹ã‚ˆã†ã«å¤‰æ›´
+; 2011/09/24	1.17	selectcopy_dic()ã§ã€typeof(src[key]) != 'undefined'ã‚’
+;			src[key] !== voidã«æˆ»ã—ãŸã€‚KLayersã®SliderTabã§ä¸éƒ½åˆ
+;			ã‚ã£ãŸãŸã‚
+; 2011/07/18	1.16	printObject()ã«recursive ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’è¿½åŠ ã€‚ã€Œå†èµ·è¡¨ç¤º
+;			ã—ãªã„ã€ã®ã‚‚é¸æŠã§ãã‚‹ã‚ˆã†ã«ã—ãŸã€‚
+;			str2num()ã‚’è¿½åŠ 
+;			selectcopy_dic()ã§ã€src[key] !== voidã‚’
+;			typeof(src[key]) != 'undefined'ã«å¤‰æ›´ã€‚ã€Œå€¤ã¯ã‚ã‚‹ã‘ã©
+;			voidã€ã®æ™‚ã‚’é€ƒã•ã¬ã‚ˆã†ã«ã™ã‚‹ãŸã‚
+; 2011/05/30	1.15	printLayers()è¿½åŠ 
+; 2011/05/02	1.14	printObject()ã§è¾æ›¸ã‚­ãƒ¼ã«/ã‚„:ãŒå«ã¾ã‚Œã‚‹å ´åˆã«ã‚‚å¯¾å¿œ
+; 2011/02/14	1.13	getManLayerAbsolute(), getManKAGAbsolute() ã‚’è¿½åŠ 
+; 2011/01/17	1.12	marge_dic()ã§ã€ifæ–‡ã‚’ãƒ«ãƒ¼ãƒ—å¤–ã«å‡ºã—ã¦åŠ¹ç‡åŒ–
+; 2011/01/15	1.11	findStorage()ã§ã€æ‹¡å¼µå­ç„¡ã—ã§ãƒãƒƒãƒã—ãŸå ´åˆã‚’è€ƒæ…®
+; 2010/12/19	1.10	deletevoid_dic()è¿½åŠ ã€‚è¾æ›¸ä¸­ã®ã€Œã‚­ãƒ¼ã¯ã‚ã‚‹ã‘ã©å€¤ã¯
+;			voidã€ã®è¦ç´ ã‚’ delete ã™ã‚‹é–¢æ•°ã€‚
+;			setOptions_sub() ã«ã€deletevoid_dicã‚’ä½¿ã†ã‹ã©ã†ã‹ã®
+;			ãƒ•ãƒ©ã‚° voidwrite ã‚’è¿½åŠ 
+;			printObject()ã§é–‰ã˜ã‚«ãƒƒã‚³ã®ã‚¿ãƒ–ä½ç½®ã®é–“é•ã„ã‚’ä¿®æ­£
+;			objectString() ã‚’è¿½åŠ 
+;			em() ã‚’è¿½åŠ 
+;			add_ary() ã‚’è¿½åŠ 
+;			evalkag() ã‚’è¿½åŠ 
+;			marge_dic()ã¨setOptions_sub()ã«copyãƒ•ãƒ©ã‚°ã‚’è¿½åŠ 
+; 2010/11/26	1.03	find_val() ã‚’è¿½åŠ 
+; 2010/11/22	1.02	selectcopy_dic() ã‚’è¿½åŠ 
+; 2010/08/13	1.01	setOptions_sub()ã§ã¯elmã‚’numerizeã™ã‚‹ã‚ˆã†å¤‰æ›´
+;			numerize_dic() ã®é ­ã« dic===void ã®ä¾‹å¤–å‡¦ç†ã‚’è¿½åŠ 
 ;
 @iscript
 
 
-// “ñ‚Â‚Ì”z—ñ‚ğÚ‘±‚·‚é
+// äºŒã¤ã®é…åˆ—ã‚’æ¥ç¶šã™ã‚‹
 function add_ary(ary1=[], ary2=[])
 {
-	// ˆê‰¸‡‚ÉB
+	// ä¸€å¿œæ˜‡é †ã«ã€‚
 	for (var i = 0; i < ary2.count; i++)
 		ary1.add(ary2[i]);
 	return ary1;
 }
 
 
-// ƒnƒbƒVƒ…‚©‚çƒL[‚¾‚¯‚ğæ‚èo‚µ‚Ä”z—ñ‚ğ•Ô‚·(perl ‚Ì keys()‚Æ“¯“™)
+// ãƒãƒƒã‚·ãƒ¥ã‹ã‚‰ã‚­ãƒ¼ã ã‘ã‚’å–ã‚Šå‡ºã—ã¦é…åˆ—ã‚’è¿”ã™(perl ã® keys()ã¨åŒç­‰)
 function keys(dic)
 {
 	var ary = [];
 	var ret = [];
 	ary.assign(dic);
-	// ˆê‰¸‡‚Éæ‚èo‚·(‘¬“x“I‚É‚Í•s—˜‚©‚à‚µ‚ç‚ñ‚ª)
+	// ä¸€å¿œæ˜‡é †ã«å–ã‚Šå‡ºã™(é€Ÿåº¦çš„ã«ã¯ä¸åˆ©ã‹ã‚‚ã—ã‚‰ã‚“ãŒ)
 	for (var i = 0; i < ary.count; i += 2)
 		ret.add(ary[i]);
 	return ret;
 }
 
 
-// ƒnƒbƒVƒ…‚©‚çw’è’l(val) ‚ğ‚ÂƒL[‚ğ•Ô‚·Breturnary ‚È‚ç•¡”‚ğary‚Å•Ô‚·
+// ãƒãƒƒã‚·ãƒ¥ã‹ã‚‰æŒ‡å®šå€¤(val) ã‚’æŒã¤ã‚­ãƒ¼ã‚’è¿”ã™ã€‚returnary ãªã‚‰è¤‡æ•°ã‚’aryã§è¿”ã™
 function find_val(dic=%[], val, returnary=false)
 {
 	var ary = [];
@@ -77,12 +77,12 @@ function find_val(dic=%[], val, returnary=false)
 
 	ary.assign(dic);
 	if (!returnary) {
-		// ˆê‰¸‡‚Éˆ—‚·‚é(‘¬“x“I‚É‚Í•s—˜‚©‚à‚µ‚ç‚ñ‚ª)
+		// ä¸€å¿œæ˜‡é †ã«å‡¦ç†ã™ã‚‹(é€Ÿåº¦çš„ã«ã¯ä¸åˆ©ã‹ã‚‚ã—ã‚‰ã‚“ãŒ)
 		for (var i = 0; i < ary.count; i += 2)
 			if (ary[i+1] == val)
 				return ary[i];
 	} else {
-		// ˆê‰¸‡‚Éˆ—‚·‚é(‘¬“x“I‚É‚Í•s—˜‚©‚à‚µ‚ç‚ñ‚ª)
+		// ä¸€å¿œæ˜‡é †ã«å‡¦ç†ã™ã‚‹(é€Ÿåº¦çš„ã«ã¯ä¸åˆ©ã‹ã‚‚ã—ã‚‰ã‚“ãŒ)
 		for (var i = 0; i < ary.count; i += 2)
 			if (ary[i+1] == val)
 				retary.add(ary[i]);
@@ -91,7 +91,7 @@ function find_val(dic=%[], val, returnary=false)
 }
 
 
-// «‘‚©‚çw’è‚µ‚½ƒL[‚ğíœ‚·‚é
+// è¾æ›¸ã‹ã‚‰æŒ‡å®šã—ãŸã‚­ãƒ¼ã‚’å‰Šé™¤ã™ã‚‹
 function remove_keys(dic=%[], removekeys=[])
 {
 	var keyary = keys(dic);
@@ -104,13 +104,13 @@ function remove_keys(dic=%[], removekeys=[])
 }
 
 
-// dic ‚Æ elm ‚ğ“‡‚µAdic ‚ğã‘‚«‚µ‚Ä•Ô‚·B calc ‚Å or ‚Æ and ‚ğ•Ï‚¦‚ç‚ê‚é
-// copy = true‚ÅAassignStruct‚ğg‚Á‚ÄƒRƒs[‚·‚é
+// dic ã¨ elm ã‚’çµ±åˆã—ã€dic ã‚’ä¸Šæ›¸ãã—ã¦è¿”ã™ã€‚ calc ã§ or ã¨ and ã‚’å¤‰ãˆã‚‰ã‚Œã‚‹
+// copy = trueã§ã€assignStructã‚’ä½¿ã£ã¦ã‚³ãƒ”ãƒ¼ã™ã‚‹
 function marge_dic(dic=%[], elm=%[], calc='or', exceptkeys, copy=false)
 {
 	var ary = [];
 
-	// copyƒtƒ‰ƒO‚É]‚¢Aasssign()/assignStruct() ‚ğ•ÏX‚·‚é
+	// copyãƒ•ãƒ©ã‚°ã«å¾“ã„ã€asssign()/assignStruct() ã‚’å¤‰æ›´ã™ã‚‹
 	var tmp = [];
 	tmp.assign(elm);
 	if (copy)
@@ -148,8 +148,8 @@ function marge_dic(dic=%[], elm=%[], calc='or', exceptkeys, copy=false)
 }
 
 
-// «‘”z—ñ’†‚Ì’l‚ğ”’l‚É•ÏŠ·‚·‚éB‰½‚àw’è‚³‚ê‚Ä‚¢‚È‚¯‚ê‚ÎA‰Â”\‚È‚©‚¬‚è
-// string ‚ğ int ‚© real ‚Ö•ÏŠ·‚µ‚æ‚¤‚Æ‚·‚é
+// è¾æ›¸é…åˆ—ä¸­ã®å€¤ã‚’æ•°å€¤ã«å¤‰æ›ã™ã‚‹ã€‚ä½•ã‚‚æŒ‡å®šã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€å¯èƒ½ãªã‹ãã‚Š
+// string ã‚’ int ã‹ real ã¸å¤‰æ›ã—ã‚ˆã†ã¨ã™ã‚‹
 function numerize_dic(dic, intkeys = [], realkeys = [], strkeys = [])
 {
 	if (dic === void)
@@ -158,7 +158,7 @@ function numerize_dic(dic, intkeys = [], realkeys = [], strkeys = [])
 	var ary = [];
 	ary.assign(dic);
 	if (intkeys.count == 0 && realkeys.count == 0 && strkeys.count == 0) {
-		// ƒL[‚ªw’è‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î‰Â”\‚ÈŒÀ‚èint/real‚É•ÏŠ·‚·‚é
+		// ã‚­ãƒ¼ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã‘ã‚Œã°å¯èƒ½ãªé™ã‚Šint/realã«å¤‰æ›ã™ã‚‹
 		var e = new RegExp('^(([0-9]+)|([0-9]+\\.[0-9]+)|(0x[0-9a-fA-F]+))$');
 		for (var i = ary.count-2; i >= 0; i -= 2) {
 			var val = ary[i+1];
@@ -166,7 +166,7 @@ function numerize_dic(dic, intkeys = [], realkeys = [], strkeys = [])
 				dic[ary[i]] = +val;
 		}
 	} else {
-		// ƒL[‚ªw’è‚³‚ê‚Ä‚¢‚ê‚Î‚»‚ê‚É]‚¤
+		// ã‚­ãƒ¼ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚Œã°ãã‚Œã«å¾“ã†
 		for (var i = ary.count-2; i >= 0; i -= 2) {
 			var key = ary[i];
 			var val = ary[i+1];
@@ -185,10 +185,10 @@ function numerize_dic(dic, intkeys = [], realkeys = [], strkeys = [])
 }
 
 
-// «‘’†‚Ìw’èƒL[‚¾‚¯‚ğƒRƒs[‚·‚é(src.abc === void‚Ìê‡ƒRƒs[‚Å‚«‚È‚¢)
-// ¦numerize=true‚¾‚Æ‚â‚½‚ç‚Æd‚¢‚Ì‚ÅA‚â‚Á‚Ï‚èˆê‚Âˆê‚ÂƒL[‚ğnumerize‚·‚é‚©
-// @‚Ç‚¤‚©”»’f‚µ‚½•û‚ª‚¢‚¢B13000—v‘f‚Åselectcopy_dic=3899ms vs ˆê‚Âˆê‚Â”»’f
-//   = 43ms ‚­‚ç‚¢‚Ì·‚ª‚ ‚é
+// è¾æ›¸ä¸­ã®æŒ‡å®šã‚­ãƒ¼ã ã‘ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹(src.abc === voidã®å ´åˆã‚³ãƒ”ãƒ¼ã§ããªã„)
+// â€»numerize=trueã ã¨ã‚„ãŸã‚‰ã¨é‡ã„ã®ã§ã€ã‚„ã£ã±ã‚Šä¸€ã¤ä¸€ã¤ã‚­ãƒ¼ã‚’numerizeã™ã‚‹ã‹
+// ã€€ã©ã†ã‹åˆ¤æ–­ã—ãŸæ–¹ãŒã„ã„ã€‚13000è¦ç´ ã§selectcopy_dic=3899ms vs ä¸€ã¤ä¸€ã¤åˆ¤æ–­
+//   = 43ms ãã‚‰ã„ã®å·®ãŒã‚ã‚‹
 function selectcopy_dic(obj, src, keyary, copyifvoid=false, numerize=false)
 {
 	if (obj === void || src === void)
@@ -197,14 +197,14 @@ function selectcopy_dic(obj, src, keyary, copyifvoid=false, numerize=false)
 		keyary = keys(src);
 
 	var key, val, e;
-	if (numerize) // ‚±‚Ì’è‹`‚ªŒ‹\d‚¢‚Ì‚ÅğŒ‚í‚¯
+	if (numerize) // ã“ã®å®šç¾©ãŒçµæ§‹é‡ã„ã®ã§æ¡ä»¶ã‚ã‘
 		e = new RegExp('^(([0-9]+)|([0-9]+\\.[0-9]+)|(0x[0-9a-fA-F]+))$');
 	for (var i = keyary.count-1; i >= 0; i--) {
 		key = keyary[i];
 		// if (typeof(src[key]) != 'undefined')
-		// ª‚¾‚¯‚¾‚ÆvoidƒRƒs[‚Å‚«‚é‚ªAelm = %[str:mp.str]‚È
-		// ‚Ç‚Åmp.str‚ªw’è‚³‚ê‚Ä‚È‚©‚Á‚½‚É’l‚ªvoid‚Åİ’è‚³
-		// ‚ê‚Ä‚µ‚Ü‚¤‚Ì‚ÅA«‚É‚µ‚½
+		// â†‘ã ã‘ã ã¨voidã‚³ãƒ”ãƒ¼ã§ãã‚‹ãŒã€elm = %[str:mp.str]ãª
+		// ã©ã§mp.strãŒæŒ‡å®šã•ã‚Œã¦ãªã‹ã£ãŸæ™‚ã«å€¤ãŒvoidã§è¨­å®šã•
+		// ã‚Œã¦ã—ã¾ã†ã®ã§ã€â†“ã«ã—ãŸ
 		if (typeof(src[key]) != 'undefined') {
 			val = src[key];
 			if (val !== void || copyifvoid)
@@ -219,7 +219,7 @@ function selectcopy_dic(obj, src, keyary, copyifvoid=false, numerize=false)
 }
 
 
-// «‘‚ÌAvoid —v‘f(ƒL[‚Í‚ ‚é‚Ì‚É’l‚ªvoid)‚ğíœ‚·‚é
+// è¾æ›¸ã®ã€void è¦ç´ (ã‚­ãƒ¼ã¯ã‚ã‚‹ã®ã«å€¤ãŒvoid)ã‚’å‰Šé™¤ã™ã‚‹
 function deletevoid_dic(dic)
 {
 	var ary = keys(dic);
@@ -230,20 +230,20 @@ function deletevoid_dic(dic)
 }
 
 
-// marge_dic ‚ğ‚¿‚å‚Á‚Æ•Ï‚¦‚ÄAsetOptions_sub()‚ğÀ‘•
+// marge_dic ã‚’ã¡ã‚‡ã£ã¨å¤‰ãˆã¦ã€setOptions_sub()ã‚’å®Ÿè£…
 function setOptions_sub(obj, elm, exceptkeys=[], voidwrite=false, copy=true)
 {
 	numerize_dic(elm);
 	if (!voidwrite)
 		deletevoid_dic(elm);
-	// ƒfƒtƒHƒ‹ƒg‚Å copy = true ‚Å‚ ‚é‚±‚Æ‚É’ˆÓB‚±‚¤‚µ‚È‚¢‚ÆA
-	// ƒŒƒCƒ„‚Ì«‘ƒvƒƒpƒeƒB‚ğƒRƒs[‚µ‚½‚ÉŒ³ƒŒƒCƒ„‚ªÁ‚¦‚é‚ÆƒvƒƒpƒeƒB‚à
-	// Á‚¦‚é‚±‚Æ‚ª‚ ‚é‚½‚ßB
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ copy = true ã§ã‚ã‚‹ã“ã¨ã«æ³¨æ„ã€‚ã“ã†ã—ãªã„ã¨ã€
+	// ãƒ¬ã‚¤ãƒ¤ã®è¾æ›¸ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’ã‚³ãƒ”ãƒ¼ã—ãŸæ™‚ã«å…ƒãƒ¬ã‚¤ãƒ¤ãŒæ¶ˆãˆã‚‹ã¨ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚‚
+	// æ¶ˆãˆã‚‹ã“ã¨ãŒã‚ã‚‹ãŸã‚ã€‚
 	marge_dic(obj, elm, 'and', exceptkeys, copy);
 }
 
 
-// dic1 ‚Æ dic2 ‚ğ“‡‚µAdic2 ‚Åã‘‚«‚µ‚½V‚½‚È dic ‚ğ•Ô‚·B
+// dic1 ã¨ dic2 ã‚’çµ±åˆã—ã€dic2 ã§ä¸Šæ›¸ãã—ãŸæ–°ãŸãª dic ã‚’è¿”ã™ã€‚
 function create_dic(dic1=%[], dic2=%[], calc='or', exceptkeys=[])
 {
 	var tmp = %[];
@@ -252,8 +252,8 @@ function create_dic(dic1=%[], dic2=%[], calc='or', exceptkeys=[])
 }
 
 
-// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©’T‚µA‘¶İ‚·‚ê‚Î true ‚ğ•Ô‚·
-// Šg’£qw’è‚ª‚ ‚ê‚Î‚»‚ÌŠg’£q‚Æ‚Ì‘g‚İ‡‚í‚¹‚ğ’T‚·BŠg’£q‚Í'.'‚Â‚«‚Åw’è‚·‚é
+// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹æ¢ã—ã€å­˜åœ¨ã™ã‚Œã° true ã‚’è¿”ã™
+// æ‹¡å¼µå­æŒ‡å®šãŒã‚ã‚Œã°ãã®æ‹¡å¼µå­ã¨ã®çµ„ã¿åˆã‚ã›ã‚’æ¢ã™ã€‚æ‹¡å¼µå­ã¯'.'ã¤ãã§æŒ‡å®šã™ã‚‹
 function findStorage(fnam, exp)
 {
 	if (exp === void || Storages.isExistentStorage(fnam))
@@ -265,8 +265,8 @@ function findStorage(fnam, exp)
 }
 
 
-// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©’T‚µAƒtƒ‹ƒpƒX(“ˆêƒXƒgƒŒ[ƒW–¼)‚ğ•Ô‚·B
-// Šg’£qw’è‚ª‚ ‚ê‚Î‚»‚ÌŠg’£q‚Æ‚Ì‘g‚İ‡‚í‚¹‚ğ’T‚·BŠg’£q‚Í'.'‚Â‚«‚Åw’è‚·‚é
+// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹æ¢ã—ã€ãƒ•ãƒ«ãƒ‘ã‚¹(çµ±ä¸€ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸å)ã‚’è¿”ã™ã€‚
+// æ‹¡å¼µå­æŒ‡å®šãŒã‚ã‚Œã°ãã®æ‹¡å¼µå­ã¨ã®çµ„ã¿åˆã‚ã›ã‚’æ¢ã™ã€‚æ‹¡å¼µå­ã¯'.'ã¤ãã§æŒ‡å®šã™ã‚‹
 function findPlacedPath(fnam, exp)
 {
 	if (exp === void)
@@ -279,7 +279,7 @@ function findPlacedPath(fnam, exp)
 }
 
 
-// ƒIƒuƒWƒFƒNƒg(global.xxxx‚ÅQÆ‚Å‚«‚é‚à‚Ì)‚ğ“n‚·‚ÆƒIƒuƒWƒFƒNƒg•¶š—ñ‚ğ•Ô‚·
+// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(global.xxxxã§å‚ç…§ã§ãã‚‹ã‚‚ã®)ã‚’æ¸¡ã™ã¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ–‡å­—åˆ—ã‚’è¿”ã™
 function objectString(obj)
 {
 	var ary = [];
@@ -292,17 +292,17 @@ function objectString(obj)
 }
 
 
-// ‚ ‚éƒIƒuƒWƒFƒNƒgE”z—ñEƒnƒbƒVƒ…‚Ì’†g‚ğ‘S•”•\¦‚·‚éc‚ÌƒTƒuƒ‹[ƒ`ƒ“
-// ˆø”‚ÍƒIƒuƒWƒFƒNƒg‚»‚Ì‚à‚Ì‚Å‚Í‚È‚­‚ÄA•¶š—ñ‚Å‚ ‚é‚±‚Æ‚É’ˆÓB
+// ã‚ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ»é…åˆ—ãƒ»ãƒãƒƒã‚·ãƒ¥ã®ä¸­èº«ã‚’å…¨éƒ¨è¡¨ç¤ºã™ã‚‹â€¦ã®ã‚µãƒ–ãƒ«ãƒ¼ãƒãƒ³
+// å¼•æ•°ã¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãã®ã‚‚ã®ã§ã¯ãªãã¦ã€æ–‡å­—åˆ—ã§ã‚ã‚‹ã“ã¨ã«æ³¨æ„ã€‚
 function printObject_sub(objstr, indent=0, printedObject=[], recursive=true)
 {
 	var obj  = Scripts.eval(objstr);
 	var type = typeof(obj);
 	var tabs = "";
 	for (var i = indent; i > 0; i--)
-		tabs += "    ";	// 4TAB‚ÅB
+		tabs += "    ";	// 4TABã§ã€‚
 
-	// void ‚Æ‚© null ‚Ì
+	// void ã¨ã‹ null ã®æ™‚
 	if (obj === void) {
 		dm(tabs + objstr + '(' + type + ') = (void)');
 		return;
@@ -313,25 +313,25 @@ function printObject_sub(objstr, indent=0, printedObject=[], recursive=true)
 	}
 	if (type == 'Integer' || type == 'Real' || type == 'String' ||
 	    type == 'Octet') {
-		// ®”EÀ”E•¶š—ñ‚Ì
+		// æ•´æ•°ãƒ»å®Ÿæ•°ãƒ»æ–‡å­—åˆ—ã®æ™‚
 		dm(tabs + objstr + ' = (' + type + ') ' + obj);
 		return;
 	}
-	if (obj instanceof "Function") { // æ‚Éƒ`ƒFƒbƒN‚·‚é•K—v‚ ‚è
-		// ŠÖ”‚Ìê‡
+	if (obj instanceof "Function") { // å…ˆã«ãƒã‚§ãƒƒã‚¯ã™ã‚‹å¿…è¦ã‚ã‚Š
+		// é–¢æ•°ã®å ´åˆ
 		dm(tabs + objstr + ' = (Function) ' + obj);
 		return;
 	}
 
-	// Šù‚É•\¦Ï‚İ‚©‚Ç‚¤‚©ƒ`ƒFƒbƒNA•\¦Ï‚İ‚È‚çˆÈ~ˆ—‚µ‚È‚¢
+	// æ—¢ã«è¡¨ç¤ºæ¸ˆã¿ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã€è¡¨ç¤ºæ¸ˆã¿ãªã‚‰ä»¥é™å‡¦ç†ã—ãªã„
 	if (printedObject.find(obj) >= 0) {
 		dm(tabs + objstr + ' = (' + type + ') (Recursive displayed)');
 		return;
 	}
-	printedObject.add(obj);	// •\¦Ï‚İ‚É‚·‚é
+	printedObject.add(obj);	// è¡¨ç¤ºæ¸ˆã¿ã«ã™ã‚‹
 
 	if (obj instanceof "Array") {
-		// ”z—ñ‚Ì
+		// é…åˆ—ã®æ™‚
 		dm(tabs + objstr + ' = (Array) [');
 		for (var i = 0; i < obj.count; i++)
 			if (!recursive)
@@ -339,27 +339,27 @@ function printObject_sub(objstr, indent=0, printedObject=[], recursive=true)
 			else
 				printObject_sub(objstr+'['+i+']', indent+1);
 	} else if (obj instanceof "Dictionary") {
-		// «‘”z—ñ‚Ì
+		// è¾æ›¸é…åˆ—ã®æ™‚
 		dm(tabs + objstr + ' = (Dictionary) %[');
 		var keyary = keys(obj);
 		keyary.sort();
 		for (var i = 0; i < keyary.count; i++) {
 			if (!recursive)
 				dm(tabs+'    '+objstr+'['+keyary[i]+'] = ' + obj[keyary[i]]);
-			else if (/^[0-9]/.test(keyary[i])) // ”’l‚Í“Á•Êˆµ‚¢
+			else if (/^[0-9]/.test(keyary[i])) // æ•°å€¤ã¯ç‰¹åˆ¥æ‰±ã„
 				printObject_sub(objstr+'['+keyary[i]+']',indent+1);
 			else
 				printObject_sub(objstr+'["'+keyary[i]+'"]',indent+1);
 		}
 	} else if (type == "Object") {
-		// ƒIƒuƒWƒFƒNƒg‚Ì
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ™‚
 		dm(tabs + objstr + ' = (Object) %[');
 		var keyary = keys(obj);
 		keyary.sort();
 		for (var i = 0; i < keyary.count; i++) {
 			if (!recursive)
 				dm(tabs+'    '+objstr+'['+keyary[i]+'] = ' + obj[keyary[i]]);
-			if (/^[0-9]/.test(keyary[i])) // ”’l‚Ì‚Í“Á•Êˆµ‚¢
+			if (/^[0-9]/.test(keyary[i])) // æ•°å€¤ã®æ™‚ã¯ç‰¹åˆ¥æ‰±ã„
 				printObject_sub(objstr+'['+keyary[i]+']',indent+1);
 			else
 				printObject_sub(objstr+'["'+keyary[i]+'"]',indent+1);
@@ -372,40 +372,40 @@ function printObject_sub(objstr, indent=0, printedObject=[], recursive=true)
 
 //var printObject_printedObject;
 
-// ‚ ‚éƒIƒuƒWƒFƒNƒgE”z—ñEƒnƒbƒVƒ…‚Ì’†g‚ğ‘S•”•\¦‚·‚éB
-// ‚ ‚ñ‚Ü‚èƒfƒJ‚¢ƒIƒuƒWƒFƒNƒg‚ğ•\¦‚µ‚æ‚¤‚Æ‚·‚é‚ÆƒXƒ^ƒbƒN•s‘«‚É‚È‚éB
+// ã‚ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ»é…åˆ—ãƒ»ãƒãƒƒã‚·ãƒ¥ã®ä¸­èº«ã‚’å…¨éƒ¨è¡¨ç¤ºã™ã‚‹ã€‚
+// ã‚ã‚“ã¾ã‚Šãƒ‡ã‚«ã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¡¨ç¤ºã—ã‚ˆã†ã¨ã™ã‚‹ã¨ã‚¹ã‚¿ãƒƒã‚¯ä¸è¶³ã«ãªã‚‹ã€‚
 function printObject(objstr, recursive=true)
 {
-	// objstr‚¶‚á‚È‚­‚Äobj‚ğw’è‚Å‚«‚é‚æ‚¤‚É‚µ‚æ‚¤‚Æ‚àv‚Á‚½‚ªA
-	// obj‚¾‚Æobjstr‚Ö‚Ì•ÏŠ·‚ª‚Å‚«‚È‚¢‚Ì‚ÅƒpƒXB
+	// objstrã˜ã‚ƒãªãã¦objã‚’æŒ‡å®šã§ãã‚‹ã‚ˆã†ã«ã—ã‚ˆã†ã¨ã‚‚æ€ã£ãŸãŒã€
+	// objã ã¨objstrã¸ã®å¤‰æ›ãŒã§ããªã„ã®ã§ãƒ‘ã‚¹ã€‚
 	printObject_sub(objstr, 0, [], recursive);
 }
 
 
-// ƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•\¦‚·‚éB
-// sf.emtype ‚É‰‚¶AƒƒbƒZ[ƒW‚ğc‚·‚¾‚¯Eƒ|ƒbƒvƒAƒbƒv‚·‚é ‚ª‘I‘ğ‚Å‚«‚éB
-// sf.emtype: void   = ƒGƒ‰[‚ğSystem.inform()‚Å•\¦‚·‚é‚ª’â~‚µ‚È‚¢
-//            'stop' = ƒGƒ‰[‚É‚Í’â~
-//            ‘¼     = dm()‚Ì‚İ
+// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹ã€‚
+// sf.emtype ã«å¿œã˜ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ®‹ã™ã ã‘ãƒ»ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã™ã‚‹ ãŒé¸æŠã§ãã‚‹ã€‚
+// sf.emtype: void   = ã‚¨ãƒ©ãƒ¼ã‚’System.inform()ã§è¡¨ç¤ºã™ã‚‹ãŒåœæ­¢ã—ãªã„
+//            'stop' = ã‚¨ãƒ©ãƒ¼æ™‚ã«ã¯åœæ­¢
+//            ä»–     = dm()ã®ã¿
 function em(str, errflg=1)
 {
-	if (!errflg) // •\¦‚·‚é•K—v‚ª‚È‚¯‚ê‚Î‚È‚É‚à‚µ‚È‚¢
+	if (!errflg) // è¡¨ç¤ºã™ã‚‹å¿…è¦ãŒãªã‘ã‚Œã°ãªã«ã‚‚ã—ãªã„
 		return;
-	Debug.message(str);	// ƒƒO‚ÉƒƒbƒZ[ƒW‚ğc‚·
+	Debug.message(str);	// ãƒ­ã‚°ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æ®‹ã™
 	if (sf.emtype === void) {
-		var s = "\n(sf.emtype‚ğ’è‹`‚·‚é‚Æ•\¦‚³‚ê‚È‚­‚È‚è‚Ü‚·)";
+		var s = "\n(sf.emtypeã‚’å®šç¾©ã™ã‚‹ã¨è¡¨ç¤ºã•ã‚Œãªããªã‚Šã¾ã™)";
 		System.inform(str + s);
 	}
 	if (sf.emtype !== void && sf.emtype == 'stop') {
 		throw new Exception(str + '\n');
-		// ‚±‚ê‚¾‚Æ‹g—¢‹g—¢ƒRƒ“ƒ\[ƒ‹‚©‚çem()‚ğÀs‚µ‚Ä‚àƒ|ƒbƒvƒAƒbƒv‚ª
-		// •\¦‚³‚ê‚È‚¢‚Ì‚¾‚ªc‚Ü‚Ÿc‚¢‚¢‚©cB
+		// ã“ã‚Œã ã¨å‰é‡Œå‰é‡Œã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‹ã‚‰em()ã‚’å®Ÿè¡Œã—ã¦ã‚‚ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ãŒ
+		// è¡¨ç¤ºã•ã‚Œãªã„ã®ã ãŒâ€¦ã¾ãâ€¦ã„ã„ã‹â€¦ã€‚
 	}
 }
 
 
-// kagƒXƒNƒŠƒvƒg•¶š—ñ‚ğÀs‚·‚é
-// ƒ}ƒNƒ‚àg—p‰Â”\‚¾‚ªA[wt][wait]‚È‚Ç‚Ì‘Ò‚¿ˆ—‚Íg—p‚Å‚«‚È‚¢
+// kagã‚¹ã‚¯ãƒªãƒ—ãƒˆæ–‡å­—åˆ—ã‚’å®Ÿè¡Œã™ã‚‹
+// ãƒã‚¯ãƒ­ã‚‚ä½¿ç”¨å¯èƒ½ã ãŒã€[wt][wait]ãªã©ã®å¾…ã¡å‡¦ç†ã¯ä½¿ç”¨ã§ããªã„
 function kageval(kagscript)
 {
 	var tmp = kag.onConductorScenarioLoad;
@@ -415,7 +415,7 @@ function kageval(kagscript)
 }
 
 
-// ‚ ‚éƒŒƒCƒ„‚ÌqƒŒƒCƒ„‚ÌÅ‚absolute‚ğŒŸõ
+// ã‚ã‚‹ãƒ¬ã‚¤ãƒ¤ã®å­ãƒ¬ã‚¤ãƒ¤ã®æœ€é«˜absoluteã‚’æ¤œç´¢
 function getMaxLayerAbsolute(l)
 {
 	var abs = -1;
@@ -430,7 +430,7 @@ function getMaxLayerAbsolute(l)
 }
 
 
-// KAGƒEƒBƒ“ƒhƒE‚ÌqƒŒƒCƒ„‚ÌÅ‚absolute‚ğŒŸõ
+// KAGã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å­ãƒ¬ã‚¤ãƒ¤ã®æœ€é«˜absoluteã‚’æ¤œç´¢
 function getMaxKAGAbsolute()
 {
 	var foreabs = getMaxLayerAbsolute(kag.fore.base);
@@ -438,13 +438,13 @@ function getMaxKAGAbsolute()
 	return (foreabs >= backabs) ? foreabs+1 : backabs+1;
 }
 
-// KAGƒEƒBƒ“ƒhƒE‚ÌŠK‘wŠÖŒW‚ğ•\¦(sub)
+// KAGã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®éšå±¤é–¢ä¿‚ã‚’è¡¨ç¤º(sub)
 function printLayers_sub(layer, indent=0, cnum=0)
 {
 	var lnum = 1;
 	var tabs = "";
 	for (var i = indent; i > 0; i--)
-		tabs += "    ";	// 4TAB‚ÅB
+		tabs += "    ";	// 4TABã§ã€‚
 	if (typeof(layer.classid) == 'undefined' || layer.classid === void)
 		dm(tabs + '['+cnum+']: name = ' + layer.name + ', children = ' + layer.children.count);
 	else
@@ -454,7 +454,7 @@ function printLayers_sub(layer, indent=0, cnum=0)
 	return lnum;
 }
 
-// KAGƒEƒBƒ“ƒhƒE‚ÌŠK‘wŠÖŒW‚ğ•\¦
+// KAGã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®éšå±¤é–¢ä¿‚ã‚’è¡¨ç¤º
 function printLayers(layer)
 {
 	var lnum;
@@ -473,7 +473,7 @@ function printLayers(layer)
 }
 
 
-// •¶š—ñ‚ğ”’l‚É•ÏŠ·B•ÏŠ·ƒGƒ‰[‚Æ‚È‚Á‚½‚çƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·‚Æ‚±‚ë‚ªˆÙ‚È‚é
+// æ–‡å­—åˆ—ã‚’æ•°å€¤ã«å¤‰æ›ã€‚å¤‰æ›ã‚¨ãƒ©ãƒ¼ã¨ãªã£ãŸã‚‰ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™ã¨ã“ã‚ãŒç•°ãªã‚‹
 function str2num(str, def=0, min, max)
 {
 	if (str === void)
@@ -487,13 +487,13 @@ function str2num(str, def=0, min, max)
 }
 
 
-// ©ƒNƒ‰ƒX‚Ì–¼‘O‚ğ“¾‚é
+// è‡ªã‚¯ãƒ©ã‚¹ã®åå‰ã‚’å¾—ã‚‹
 function getClassName(obj)
 {
 	return Scripts.getClassNames(obj)[0];
 }
 
-// eƒNƒ‰ƒX‚ğ“¾‚é(’PƒŒp³‚Ìê‡‚Ì‚İ)
+// è¦ªã‚¯ãƒ©ã‚¹ã‚’å¾—ã‚‹(å˜ç´”ç¶™æ‰¿ã®å ´åˆã®ã¿)
 function getSuperClass(obj)
 {
 	var cls = Scripts.getClassNames(obj)[1];
@@ -501,8 +501,8 @@ function getSuperClass(obj)
 }
 
 
-// elm ‚É‰‚¶‚ÄƒŒƒCƒ„‚ğ•Ô‚·Belm.layer === void ‚â elm.page === void ‚ğ‹–‚µA
-// ‚»‚Ìê‡‚Í‘ÎÛ‚ğ‘SƒŒƒCƒ„A‘Sƒy[ƒW‚Æ‚·‚é
+// elm ã«å¿œã˜ã¦ãƒ¬ã‚¤ãƒ¤ã‚’è¿”ã™ã€‚elm.layer === void ã‚„ elm.page === void ã‚’è¨±ã—ã€
+// ãã®å ´åˆã¯å¯¾è±¡ã‚’å…¨ãƒ¬ã‚¤ãƒ¤ã€å…¨ãƒšãƒ¼ã‚¸ã¨ã™ã‚‹
 function getLayersFromElm(elm = %[])
 {
 	if (elm.page === void || elm.page == 'both') {
@@ -512,12 +512,12 @@ function getLayersFromElm(elm = %[])
 	}
 	if (elm.layer === void)
 		return kag[elm.page].layers;
-	// page!==void, layer!==void‚Ìê‡
+	// page!==void, layer!==voidã®å ´åˆ
 	return [kag[elm.page].layers[string(elm.layer)]];
 }
 
-// elm ‚É‰‚¶‚ÄƒŒƒCƒ„‚Æƒy[ƒW–¼‚ÌƒyƒA‚ğ—v‘f‚Æ‚·‚é”z—ñ‚ğ•Ô‚·Belm.layer === void
-// ‚â elm.page === void ‚ğ‹–‚µA‚»‚Ìê‡‚Í‘ÎÛ‚ğ‘SƒŒƒCƒ„A‘Sƒy[ƒW‚Æ‚·‚é
+// elm ã«å¿œã˜ã¦ãƒ¬ã‚¤ãƒ¤ã¨ãƒšãƒ¼ã‚¸åã®ãƒšã‚¢ã‚’è¦ç´ ã¨ã™ã‚‹é…åˆ—ã‚’è¿”ã™ã€‚elm.layer === void
+// ã‚„ elm.page === void ã‚’è¨±ã—ã€ãã®å ´åˆã¯å¯¾è±¡ã‚’å…¨ãƒ¬ã‚¤ãƒ¤ã€å…¨ãƒšãƒ¼ã‚¸ã¨ã™ã‚‹
 function getLayerPageNamesFromElm(elm = %[])
 {
 	if (elm.page === void || elm.page == 'both') {
@@ -536,7 +536,7 @@ function getLayerPageNamesFromElm(elm = %[])
 }
 
 
-// ‘O‰ñ‚©‚ç‚Ì·•ªŠÔ(1/1000•b’PˆÊ)‚ğ•\¦‚·‚é
+// å‰å›ã‹ã‚‰ã®å·®åˆ†æ™‚é–“(1/1000ç§’å˜ä½)ã‚’è¡¨ç¤ºã™ã‚‹
 tf.showtickdiff_ticksaver = System.getTickCount();
 function showtickdiff(tag = "", prevtick)
 {
@@ -552,7 +552,7 @@ function showtickdiff(tag = "", prevtick)
 }
 
 
-// ‚±‚ÌŠÖ”ŒQ“Ç‚İ‚İÏ‚İƒtƒ‰ƒO
+// ã“ã®é–¢æ•°ç¾¤èª­ã¿è¾¼ã¿æ¸ˆã¿ãƒ•ãƒ©ã‚°
 global.TJSFunctions = true;
 
 @endscript

@@ -1,7 +1,7 @@
-// startup.tjs - ƒXƒ^[ƒgƒAƒbƒvƒXƒNƒŠƒvƒg
-// Copyright (C) 2001, W.Dee  ‰ü•ÏE”z•z‚Í©—R‚Å‚·
+// startup.tjs - ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+// Copyright (C) 2001, W.Dee  æ”¹å¤‰ãƒ»é…å¸ƒã¯è‡ªç”±ã§ã™
 
-// ‹g—¢‹g—¢Z‚Ìê‡‚Í×H‚·‚é
+// å‰é‡Œå‰é‡ŒZã®å ´åˆã¯ç´°å·¥ã™ã‚‹
 if (System.versionInformation.substr(11,1) == 'Z') {
 	property _dummyProp { getter {} setter (v) {} }
 	with(Window) {
@@ -9,11 +9,11 @@ if (System.versionInformation.substr(11,1) == 'Z') {
 	    &.showScrollBars = &_dummyProp;
 	}
 	Plugins.link("plugin/menu.dll");
-//	Plugins.link("plugin/KAGParser.dll"); ExtKAGParser‚ª‚ ‚é‚©‚ç–³Œø‰»
+//	Plugins.link("plugin/KAGParser.dll"); ExtKAGParserãŒã‚ã‚‹ã‹ã‚‰ç„¡åŠ¹åŒ–
 }
 
-// ‹g—¢‹g—¢2/‹g—¢‹g—¢Z‹¤’Ê‚ÅAExtKAGParser‚ğ—LŒø‰»B
+// å‰é‡Œå‰é‡Œ2/å‰é‡Œå‰é‡ŒZå…±é€šã§ã€ExtKAGParserã‚’æœ‰åŠ¹åŒ–ã€‚
 Plugins.link("plugin/ExtKAGParser.dll");
 
-// ‚±‚ÌƒXƒNƒŠƒvƒg‚Íˆê”ÔÅ‰‚ÉÀs‚³‚ê‚éƒXƒNƒŠƒvƒg‚Å‚·
-Scripts.execStorage("system/Initialize.tjs"); // system/Initialize.tjs ‚ğÀs
+// ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã¯ä¸€ç•ªæœ€åˆã«å®Ÿè¡Œã•ã‚Œã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆã§ã™
+Scripts.execStorage("system/Initialize.tjs"); // system/Initialize.tjs ã‚’å®Ÿè¡Œ

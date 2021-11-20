@@ -1,21 +1,21 @@
-// SE.tjs - Œø‰Ê‰¹ŠÇ—
-// Copyright (C)2001-2009, W.Dee and contributors  ‰ü•ÏE”z•z‚Í©—R‚Å‚·
+// SE.tjs - åŠ¹æœéŸ³ç®¡ç†
+// Copyright (C)2001-2009, W.Dee and contributors  æ”¹å¤‰ãƒ»é…å¸ƒã¯è‡ªç”±ã§ã™
 
 class SESoundBuffer extends WaveSoundBuffer
 {
-	// Œø‰Ê‰¹ƒNƒ‰ƒX ( WaveSoundBuffer ‚ğŒp³ )
+	// åŠ¹æœéŸ³ã‚¯ãƒ©ã‚¹ ( WaveSoundBuffer ã‚’ç¶™æ‰¿ )
 
-	var owner; // ƒI[ƒi[
-	var id; // Œø‰Ê‰¹ƒoƒbƒtƒ@ID
-	var inFading; // ƒtƒF[ƒh’†‚©‚Ç‚¤‚©
-	var prevstatus = "unload"; // ’¼‘O‚ÌƒXƒe[ƒ^ƒX
-	var currentStorage = ""; // Œ©‚©‚¯‚Ì‰‰‘t’†‚ÌƒXƒgƒŒ[ƒW
-	var currentVolume = 100; // Œ©‚©‚¯‚Ìƒ{ƒŠƒ…[ƒ€
-	var inFadeAndStop = false; // ƒtƒF[ƒhI—¹‚É’â~‚·‚é‚©
+	var owner; // ã‚ªãƒ¼ãƒŠãƒ¼
+	var id; // åŠ¹æœéŸ³ãƒãƒƒãƒ•ã‚¡ID
+	var inFading; // ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‹ã©ã†ã‹
+	var prevstatus = "unload"; // ç›´å‰ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
+	var currentStorage = ""; // è¦‹ã‹ã‘ã®æ¼”å¥ä¸­ã®ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸
+	var currentVolume = 100; // è¦‹ã‹ã‘ã®ãƒœãƒªãƒ¥ãƒ¼ãƒ 
+	var inFadeAndStop = false; // ãƒ•ã‚§ãƒ¼ãƒ‰çµ‚äº†æ™‚ã«åœæ­¢ã™ã‚‹ã‹
     
 	function SESoundBuffer(owner, id)
 	{
-		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		super.WaveSoundBuffer(owner);
 
 		this.owner = owner;
@@ -30,7 +30,7 @@ class SESoundBuffer extends WaveSoundBuffer
 
 	function play(elm, resetvolume = true)
 	{
-		// play ƒI[ƒo[ƒ‰ƒCƒh
+		// play ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		super.stop();
 		stopFade();
 		var storage = elm.storage;
@@ -49,7 +49,7 @@ class SESoundBuffer extends WaveSoundBuffer
 				found = false;
 		}
 		if(!found)
-			throw new Exception("Œø‰Ê‰¹ " + storage + " ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ");
+			throw new Exception("åŠ¹æœéŸ³ " + storage + " ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“");
 		var loop = elm.loop === void ? false : +elm.loop;
 		looping = loop;
 		if(loop)
@@ -60,7 +60,7 @@ class SESoundBuffer extends WaveSoundBuffer
 		{
             super.open(storage);
             if(resetvolume) super.volume = currentVolume * 1000;
-            // Ä¶ˆÊ’uw’è
+            // å†ç”Ÿä½ç½®æŒ‡å®š
             if (start !== void &&
                 super.labels !== void &&
                 (start = super.labels[start]) !== void &&
@@ -71,13 +71,13 @@ class SESoundBuffer extends WaveSoundBuffer
 		}
 		catch(e)
 		{
-			dm("Œø‰Ê‰¹‚ÌÄ¶‚É¸”s‚µ‚Ü‚µ‚½(Às‚Í‘±s‚Å‚«‚Ü‚·) : " + e.message);
+			dm("åŠ¹æœéŸ³ã®å†ç”Ÿã«å¤±æ•—ã—ã¾ã—ãŸ(å®Ÿè¡Œã¯ç¶šè¡Œã§ãã¾ã™) : " + e.message);
 		}
 	}
 
 	function stop()
 	{
-		// stop ƒI[ƒo[ƒ‰ƒCƒh
+		// stop ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		currentStorage = "";
 		try
 		{
@@ -85,28 +85,28 @@ class SESoundBuffer extends WaveSoundBuffer
 		}
 		catch(e)
 		{
-			dm("Œø‰Ê‰¹‚Ì’â~‚É¸”s‚µ‚Ü‚µ‚½(Às‚Í‘±s‚Å‚«‚Ü‚·) : " + e.message);
+			dm("åŠ¹æœéŸ³ã®åœæ­¢ã«å¤±æ•—ã—ã¾ã—ãŸ(å®Ÿè¡Œã¯ç¶šè¡Œã§ãã¾ã™) : " + e.message);
 		}
 		inFadeAndStop = false;
 	}
 
 	function stopFade()
 	{
-		// stopFade ƒI[ƒo[ƒ‰ƒCƒh
+		// stopFade ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		try
 		{
 			super.stopFade();
 		}
 		catch(e)
 		{
-			dm("Œø‰Ê‰¹‚ÌƒtƒF[ƒh‚É¸”s‚µ‚Ü‚µ‚½(Às‚Í‘±s‚Å‚«‚Ü‚·) : " + e.message);
+			dm("åŠ¹æœéŸ³ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸ(å®Ÿè¡Œã¯ç¶šè¡Œã§ãã¾ã™) : " + e.message);
 		}
 		inFadeAndStop = false;
 	}
 
 	function fade(elm)
 	{
-		// fade ƒI[ƒo[ƒ‰ƒCƒh
+		// fade ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		inFading = true;
 		var time = elm.time === void ? 5000 : +elm.time;
 		var vol = +elm.volume * 1000;
@@ -117,13 +117,13 @@ class SESoundBuffer extends WaveSoundBuffer
 		}
 		catch(e)
 		{
-			dm("Œø‰Ê‰¹‚ÌƒtƒF[ƒh‚É¸”s‚µ‚Ü‚µ‚½(Às‚Í‘±s‚Å‚«‚Ü‚·) : " + e.message);
+			dm("åŠ¹æœéŸ³ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸ(å®Ÿè¡Œã¯ç¶šè¡Œã§ãã¾ã™) : " + e.message);
 		}
 	}
 
 	function fadeIn(elm)
 	{
-		// ƒtƒF[ƒhƒCƒ“‚µ‚È‚ª‚ç‚ÌÄ¶
+		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã—ãªãŒã‚‰ã®å†ç”Ÿ
 		super.volume = 0;
 		play(elm, false);
 		inFading = true;
@@ -135,14 +135,14 @@ class SESoundBuffer extends WaveSoundBuffer
 		}
 		catch(e)
 		{
-			dm("Œø‰Ê‰¹‚ÌƒtƒF[ƒh‚É¸”s‚µ‚Ü‚µ‚½(Às‚Í‘±s‚Å‚«‚Ü‚·) : " + e.message);
+			dm("åŠ¹æœéŸ³ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸ(å®Ÿè¡Œã¯ç¶šè¡Œã§ãã¾ã™) : " + e.message);
 		}
 	}
 
 	function fadeOut(elm)
 	{
-		// ƒtƒF[ƒhƒAƒEƒgŒã’â~
-		currentStorage = ""; // ó‘Ô‚Æ‚µ‚Ä‚Í’â~ˆµ‚¢
+		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå¾Œåœæ­¢
+		currentStorage = ""; // çŠ¶æ…‹ã¨ã—ã¦ã¯åœæ­¢æ‰±ã„
         inFading = true;
 		inFadeAndStop = true;
 		var time = elm.time === void ? 5000 : +elm.time;
@@ -152,34 +152,34 @@ class SESoundBuffer extends WaveSoundBuffer
 		}
 		catch(e)
 		{
-			dm("Œø‰Ê‰¹‚ÌƒtƒF[ƒh‚É¸”s‚µ‚Ü‚µ‚½(Às‚Í‘±s‚Å‚«‚Ü‚·) : " + e.message);
+			dm("åŠ¹æœéŸ³ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸ(å®Ÿè¡Œã¯ç¶šè¡Œã§ãã¾ã™) : " + e.message);
 		}
 	}
 
 	function onFadeCompleted()
 	{
-		// onFadeCompleted ƒI[ƒo[ƒ‰ƒCƒh
+		// onFadeCompleted ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
 		inFading = false;
 		if(inFadeAndStop)
 		{
 			try
 			{
-				super.stop(); // Ä¶’â~
+				super.stop(); // å†ç”Ÿåœæ­¢
 			}
 			catch(e)
 			{
-				dm("Œø‰Ê‰¹‚Ì’â~‚É¸”s‚µ‚Ü‚µ‚½(Às‚Í‘±s‚Å‚«‚Ü‚·) : " + e.message);
+				dm("åŠ¹æœéŸ³ã®åœæ­¢ã«å¤±æ•—ã—ã¾ã—ãŸ(å®Ÿè¡Œã¯ç¶šè¡Œã§ãã¾ã™) : " + e.message);
 			}
 			inFadeAndStop = false;
 		}
         super.onFadeCompleted(...);
-		owner.onSESoundBufferFadeCompleted(id); // ƒtƒF[ƒhI—¹
+		owner.onSESoundBufferFadeCompleted(id); // ãƒ•ã‚§ãƒ¼ãƒ‰çµ‚äº†
 	}
 
 	function onStatusChanged()
 	{
-		// onStatusChanged ƒI[ƒo[ƒ‰ƒCƒh
-		// ƒXƒe[ƒ^ƒX‚ª•ÏX‚³‚ê‚½
+		// onStatusChanged ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+		// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒå¤‰æ›´ã•ã‚ŒãŸ
 		super.onStatusChanged(...);
 		var ps = prevstatus;
 		var cs = status;
@@ -187,13 +187,13 @@ class SESoundBuffer extends WaveSoundBuffer
 		if(ps == "play" && cs == "stop")
 		{
 			currentStorage = "";
-			owner.onSESoundBufferStop(id); // play => stop : ‰‰‘t‚ª’â~‚µ‚½
+			owner.onSESoundBufferStop(id); // play => stop : æ¼”å¥ãŒåœæ­¢ã—ãŸ
 		}
 	}
 
 	function canWaitStop()
 	{
-		// I—¹‚ğ‘Ò‚Ä‚é‚©
+		// çµ‚äº†ã‚’å¾…ã¦ã‚‹ã‹
 		return status == "play" && !looping;
 	}
 
@@ -227,8 +227,8 @@ class SESoundBuffer extends WaveSoundBuffer
 		if(elm.volume !== void) volume = +elm.volume;
 		if(elm.gvolume !== void)
 		{
-			// ‘åˆæƒ{ƒŠƒ…[ƒ€
-			var sysvar = owner.scflags; // ƒVƒXƒeƒ€(ƒRƒA)•Ï”
+			// å¤§åŸŸãƒœãƒªãƒ¥ãƒ¼ãƒ 
+			var sysvar = owner.scflags; // ã‚·ã‚¹ãƒ†ãƒ (ã‚³ã‚¢)å¤‰æ•°
 			if(sysvar.se === void) sysvar.se = [];
 			sysvar = sysvar.se;
 			if(sysvar[id] === void) sysvar[id] = %[];
@@ -250,7 +250,7 @@ class SESoundBuffer extends WaveSoundBuffer
 
 	function store()
 	{
-		// «‘”z—ñ‚ÉŒ»İ‚Ìó‘Ô‚ğ‹L˜^‚·‚é
+		// è¾æ›¸é…åˆ—ã«ç¾åœ¨ã®çŠ¶æ…‹ã‚’è¨˜éŒ²ã™ã‚‹
 		var dic = %[];
 		dic.currentStorage = currentStorage;
 		dic.volume = currentVolume;
@@ -260,7 +260,7 @@ class SESoundBuffer extends WaveSoundBuffer
 
 	function restore(dic)
 	{
-		// «‘”z—ñ‚©‚çó‘Ô‚ğ“Ç‚İo‚µA•œ‹A‚·‚é
+		// è¾æ›¸é…åˆ—ã‹ã‚‰çŠ¶æ…‹ã‚’èª­ã¿å‡ºã—ã€å¾©å¸°ã™ã‚‹
 		currentVolume = dic.volume;
 		pan = dic.pan;
 		if(dic.currentStorage != "")
@@ -271,8 +271,8 @@ class SESoundBuffer extends WaveSoundBuffer
 
 	function restoreSystemState(dic)
 	{
-		// ƒVƒXƒeƒ€•Ï” dic ‚©‚çî•ñ‚ğİ’è‚·‚é
-		// ‘åˆæƒ{ƒŠƒ…[ƒ€‚Ìî•ñ‚ğ“¾‚é
+		// ã‚·ã‚¹ãƒ†ãƒ å¤‰æ•° dic ã‹ã‚‰æƒ…å ±ã‚’è¨­å®šã™ã‚‹
+		// å¤§åŸŸãƒœãƒªãƒ¥ãƒ¼ãƒ ã®æƒ…å ±ã‚’å¾—ã‚‹
 		var sysvar = dic.se;
 		if(sysvar !== void)
 		{

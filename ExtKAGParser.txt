@@ -1,401 +1,401 @@
-1. �͂��߂�
-	���̃v���O�C���́AKAGParser���g�����A�ȉ��̋@�\��ǉ�����B
+1. はじめに
+	このプラグインは、KAGParserを拡張し、以下の機能を追加する。
 
-	A. ���KAG�^�O�𕡐��s�ɂ킽���ċL�q�ł���(@�A[]�Ƃ�)
-	B. �}�N����`���ɁA�����̃f�t�H���g�l���w��ł���
-	C. [while][endwhile][continue][break]�^�O����
-	D. ignoreCR���V�i���I���ŕύX�ł���
-	E. !ignoreCR����s����[np]�}�N�����Ăяo���悤�ɂł���
-	F. [call]��[return]�O��[call]���V�i���I���ύX���ꂽ
-	�@ �Ƃ��ɂ��A[call]����������x�T���Ė߂邱�Ƃ��ł���
-	G. �G���[�`�F�b�N���i���ƃG���[���b�Z�[�W�ڍ׉�
-	   ��F[if][ignore][while]�X�R�[�v���Ƀ��x�������鎞�̓G���[��
-	H. �V�\�L[&tjs��]�𓱓��B[emb exp=tjs��]�Ɠ���
-	I. [macroname arg1 arg2=2 arg3]�Ń}�N�����Ăяo�����Ƃ��A
-	   �}�N��macroname���ŕϐ�%1(=arg1)�A%2(=arg2)�A%3(=arg3)��
-	   �Q�Ɖ\
-	J. ���[�J���ϐ� $val �܂��� kag.conductor.lf ���g�p�\�B
-	   [call]����[call]�悪���[�J���ϐ��ɁA�܂������I��
-	�@ [pushlocalvar][poplocalvar]�^�O�Ń��[�J���ϐ��̐�����Ԃ�
-	�@ �w��\
-	K. �T�u���[�`���ւ̈������A[call]���̃��[�J���ϐ��̃����o��
-	�@ ���ĎQ�Ɖ\
-	L. [iscript]-[endscript]��[macro]-[endmacro]���Ŏg����
-	�@ �悤�ɕύX
-	M. [pmacro]����
-	N. [iscript]���̍s����*�𖳎�(���x���Ƃ��Ă͎�舵��Ȃ�)
+	A. 一つのKAGタグを複数行にわたって記述できる(@、[]とも)
+	B. マクロ定義時に、引数のデフォルト値を指定できる
+	C. [while][endwhile][continue][break]タグ実装
+	D. ignoreCRをシナリオ中で変更できる
+	E. !ignoreCRかつ空行時に[np]マクロを呼び出すようにできる
+	F. [call]後[return]前に[call]元シナリオが変更された
+	　 ときにも、[call]元をある程度探して戻ることができる
+	G. エラーチェック厳格化とエラーメッセージ詳細化
+	   例：[if][ignore][while]スコープ中にラベルがある時はエラーに
+	H. 新表記[&tjs式]を導入。[emb exp=tjs式]と同等
+	I. [macroname arg1 arg2=2 arg3]でマクロを呼び出したとき、
+	   マクロmacroname側で変数%1(=arg1)、%2(=arg2)、%3(=arg3)を
+	   参照可能
+	J. ローカル変数 $val または kag.conductor.lf が使用可能。
+	   [call]時は[call]先がローカル変数に、また明示的に
+	　 [pushlocalvar][poplocalvar]タグでローカル変数の生存区間を
+	　 指定可能
+	K. サブルーチンへの引数を、[call]内のローカル変数のメンバと
+	　 して参照可能
+	L. [iscript]-[endscript]を[macro]-[endmacro]中で使える
+	　 ように変更
+	M. [pmacro]実装
+	N. [iscript]中の行頭の*を無視(ラベルとしては取り扱わない)
 
-	��2014/01/26�ɋg���g��Z(1.0.0.1)��KAGPlugin����\�[�X�R�[�h��
-	�@���򂵂܂����B�g���g��Z����Ɋւ�������X�Ɋ��Ӓv���܂��B
+	※2014/01/26に吉里吉里Z(1.0.0.1)のKAGPluginからソースコードを
+	　分岐しました。吉里吉里Z製作に関わった方々に感謝致します。
 
 
-2. �g����
-	ExtKAGParser.dll���g���g���o�C�i��(krkr.exe)�Ɠ����f�B���N�g��
-	�ɃR�s�[���āA�g���q�� .tpm �ɕύX����B
+2. 使い方
+	ExtKAGParser.dllを吉里吉里バイナリ(krkr.exe)と同じディレクトリ
+	にコピーして、拡張子を .tpm に変更する。
 
-	�܂��́AExtKAGParser.dll���g���g���Q�[���f�B���N�g��(���Ƃ���
-	plugin/�ȉ�)�ɔz�u������Adata/Initialize.tjs ���邢�́A
-	Override.tjs�̒��ŁA
+	または、ExtKAGParser.dllを吉里吉里ゲームディレクトリ(たとえば
+	plugin/以下)に配置した後、data/Initialize.tjs あるいは、
+	Override.tjsの中で、
 	Plugins.link("plugin/ExtKAGParser.dll");
-	�̂悤�ɂ��ēǂݍ��ށB�g���g��Z�̏ꍇ�AKAGParser.dll �̑����
-	�����ǂݍ���ł��悢�B
+	のようにして読み込む。吉里吉里Zの場合、KAGParser.dll の代わりに
+	これを読み込んでもよい。
 
-	KAG�^�O�̕����s�ɘj��L�q��������Ȃ�AAfterinit.tjs ��
+	KAGタグの複数行に亘る記述を許可するなら、Afterinit.tjs に
 		kag.mainConductor.multiLineTagEnabled = true;
-	��ǉ����邱�ƁB
+	を追加すること。
 
-	[return]����[call]����T���悤�ɂ���ɂ͈ȉ���ǉ����邱�ƁB
+	[return]時に[call]元を探すようにするには以下を追加すること。
 		kag.mainConductor.fuzzyReturn = true;
 
-	[return]���s���ɃG���[�I���ł͂Ȃ��X�N���v�g�����s����ɂ�
-	�ȉ���ǉ����邱�ƁB
+	[return]失敗時にエラー終了ではなくスクリプトを実行するには
+	以下を追加すること。
 		kag.mainConductor.returnErrorStorage = 'returnerror.ks';
 
-	�}�N���ϐ� %1, %2,...  ��L���ɂ���ɂ́A�ȉ���ǉ����邱�ƁB
+	マクロ変数 %1, %2,...  を有効にするには、以下を追加すること。
 	kag.mainConductor.numericMacroArgumentsEnabled = true;
 
 
-3. ExtKAGParser�Ŏg�p�ł���悤�ɂȂ�@�\�ڍ�
+3. ExtKAGParserで使用できるようになる機能詳細
 
-  A. ���KAG�^�O�𕡐��s�ɂ킽���ċL�q�ł���(@�A[]�Ƃ�)
-	KAGParser�� multiLineTagEnabled �� true �ɂ��邱�ƂŁA
-	�s���� '\' �ł����KAG�^�O�𕡐��s�ɘj���ċL�q����
-	���Ƃ��ł���B
-	ignoreCR�̒l�Ɋւ�炸�A�܂����s�̐擪�� ';' ��ǋL����
-	�K�v���Ȃ��B
+  A. 一つのKAGタグを複数行にわたって記述できる(@、[]とも)
+	KAGParserの multiLineTagEnabled を true にすることで、
+	行末が '\' であればKAGタグを複数行に亘って記述する
+	ことができる。
+	ignoreCRの値に関わらず、また次行の先頭に ';' を追記する
+	必要もない。
 
-	���၄
-	; �ŏ��Ɏ��s
+	＜例＞
+	; 最初に実行
 	[eval exp="kag.mainConductor.multiLineTagEnabled = true"]
 	(snip)
-	[image storage=�摜 layer=base page=back \
+	[image storage=画像 layer=base page=back \
 		top=%top \
 		left=%left]
 	@wait \
 		time=2000
 
-	KAGParser.dll �Ŏ��̍s���`�F�b�N���Ă������������ɂ傲�ɂ債��
-	�����BKAGParserEx.dll �ł͕����s�� cond= ���t�����ꍇ�ɏ���
-	�����ł��Ă��Ȃ��������߁A���� ExtKAGParser.dll �ł͂���Ƃ�
-	�����������قȂ�B
-	�������A���s�\�Ȃ̂̓^�O�����̐؂�ڂɌ���B�^�O��������
-	���s�͂ł��Ȃ����A������̊Ԃŉ��s���邱�Ƃ��ł��Ȃ��B
+	KAGParser.dll で次の行をチェックしていた部分をごにょごにょして
+	実装。KAGParserEx.dll では複数行で cond= が付いた場合に上手に
+	処理できていなかったため、この ExtKAGParser.dll ではそれとは
+	少し実装が異なる。
+	ただし、改行可能なのはタグ属性の切れ目に限る。タグ属性中で
+	改行はできないし、文字列の間で改行することもできない。
 
-	�\�L���ȒP�ȑ���ɁA���̍s�ŃG���[���N�����Ƃ��A�\�������
-	�G���[�s���u�����s�̍ŉ��s�v�ɂȂ邱�Ƃɒ��ӁB����͂����d�l�B
+	表記が簡単な代わりに、この行でエラーが起きたとき、表示される
+	エラー行が「複数行の最下行」になることに注意。これはもう仕様。
 
-  B. �}�N����`���ɁA�����̃f�t�H���g�l���w��ł���
+  B. マクロ定義時に、引数のデフォルト値を指定できる
 
-	�}�N����`�̂Ƃ��ɁA�}�N���ɓn�������ɂ��āA���ꂪ
-	�}�N���g�p���Ɏw�肳��Ȃ��������̃f�t�H���g�l��
-	�w��\�B
+	マクロ定義のときに、マクロに渡す引数について、それが
+	マクロ使用時に指定されなかった時のデフォルト値を
+	指定可能。
 
-	���၄
-	[macro name=����\�� layer=base page=fore]
-	[image storage=���� layer=%layer page=%page]
+	＜例＞
+	[macro name=星空表示 layer=base page=fore]
+	[image storage=星空 layer=%layer page=%page]
 	[endmacro]
 
-	���̂Ƃ��A
-	[����\�� page=back]
-	�́A
-	[image storage=���� layer=base page=back]
-	�Ə��������B
+	このとき、
+	[星空表示 page=back]
+	は、
+	[image storage=星空 layer=base page=back]
+	と処理される。
 
-	���ۂɂ́A���̋@�\�́A��̃}�N����`������I�Ɉȉ��̂悤�ɓW�J����
-	�L�^���邱�ƂŎ�������Ă���(�������������̂��߁A�}�N���擪��
-	����s��ǉ�)�B
+	実際には、この機能は、上のマクロ定義を内部的に以下のように展開して
+	記録することで実現されている(※引数初期化のため、マクロ先頭に
+	★二行を追加)。
 
-	[macro name=����\��]
-	[eval exp=mp.layer='base' cond=mp.layer===void]���ǉ�
-	[eval exp=mp.page='fore' cond=mp.page===void]���ǉ�
+	[macro name=星空表示]
+	[eval exp=mp.layer='base' cond=mp.layer===void]★追加
+	[eval exp=mp.page='fore' cond=mp.page===void]★追加
 	[image layer=%layer page=%fore]
 	[endmacro]
 		
-  C. [while][endwhile][continue][break]�^�O����
+  C. [while][endwhile][continue][break]タグ実装
 
-	KAG�^�O�Ƃ��āA[while][endwhile][continue][break]��V�݁B
-	���݂͈ȉ��̐����ɒ��ӁB
+	KAGタグとして、[while][endwhile][continue][break]を新設。
+	現在は以下の制限に注意。
 
-	�E[if]��[ignore]�^�O�Ɠ��l�A[while]�`[endwhile]�Ԃɂ̓��x����
-	�@���݂��Ă͂Ȃ�Ȃ��B
-	�@��[while]����[call ...]������łȂ烉�x���z�uO.K.�B
-	�@�@�������A[call]�Ɠ��l�A�Z�[�u�ŃV�i���I�ύX�Ɏキ�Ȃ�
-	�@�@���Ƃɒ���
-	�E���ꃋ�[�v��\��[while]�`[endwhile]�A[break][continue]�̓t�@�C����
-	�@�܂����ŋL�q���Ă͂Ȃ�Ȃ��B
-	�E[while]��[jump]�Ŕ����Ă��悢�B
+	・[if]や[ignore]タグと同様、[while]〜[endwhile]間にはラベルが
+	　存在してはならない。
+	　※[while]中で[call ...]した先でならラベル配置O.K.。
+	　　しかし、[call]と同様、セーブでシナリオ変更に弱くなる
+	　　ことに注意
+	・同一ループを表す[while]〜[endwhile]、[break][continue]はファイルを
+	　またいで記述してはならない。
+	・[while]を[jump]で抜けてもよい。
 
-	�����F	[while init= exp= each=]
-	�����F	����(=exp)�ɏ]���A[endwhile]�܂ł�KAG�X�N���v�g�������[�v
-		����B
-		���[�v�͓���q�ɂ��邱�Ƃ��\�B
-	�����F	init=	���[�v�J�n���Ɉ�x�������s�����TJS��(�ȗ���)
-		exp=	���[�v���p�����邩�ǂ������f����TJS��(�ȗ��s��)
-			true=���[�v�p���Afalse=���[�v�I��
-		each=	���̃��[�v���J�n����O�ɖ�����s�����TJS��(�ȗ���)
+	書式：	[while init= exp= each=]
+	説明：	条件(=exp)に従い、[endwhile]までのKAGスクリプトををループ
+		する。
+		ループは入れ子にすることも可能。
+	引数：	init=	ループ開始時に一度だけ実行されるTJS式(省略可)
+		exp=	ループを継続するかどうか判断するTJS式(省略不可)
+			true=ループ継続、false=ループ終了
+		each=	次のループを開始する前に毎回実行されるTJS式(省略可)
 
-	�����F	[endwhile]
-	�����F	�Ή�����[while]�^�O�Ƃ̊Ԃ�KAG�X�N���v�g�����[�v������B
-		[if][else][endif][ignore][endignore]�ȂǂƓ���q��Ԃ�
-		�����Ƃ��������Ȃ�̂ŁA�����̃^�O�͕K���Ή������邱�ƁB
+	書式：	[endwhile]
+	説明：	対応する[while]タグとの間でKAGスクリプトをループさせる。
+		[if][else][endif][ignore][endignore]などと入れ子状態が
+		崩れるとおかしくなるので、これらのタグは必ず対応させること。
 
-	�����F	[continue]
-	�����F	�œ�����[while]�̌��݂̃��[�v�𒆒f���A���̃��[�v�����s����B
-		���̃��[�v�ł́A���̍s�ȍ~��KAG�^�O�͎��s����Ȃ��B
+	書式：	[continue]
+	説明：	最内周の[while]の現在のループを中断し、次のループを実行する。
+		そのループでは、この行以降のKAGタグは実行されない。
 
-	�����F	[break]
-	�����F	�œ�����[while]�̌��݂̃��[�v�𒆒f���A����[while]�𔲂���B
+	書式：	[break]
+	説明：	最内周の[while]の現在のループを中断し、その[while]を抜ける。
 
 
-	���၄
-	 TJS�̊֐�need_to_loop()��true��Ԃ��ԃ��[�v����
+	＜例＞
+	 TJSの関数need_to_loop()がtrueを返す間ループする
 	[while exp="need_to_be_loop()"]
-		; ����KAG�̏���
+		; 何かKAGの処理
 	[endwhile]
 
-	; C�����for���̂悤�Ȃ��̂��������������
+	; C言語のfor文のようなものを実現したければ
 	[while init="tf.i = 0" exp="tf.i < 10" each="tf.i++"]
-		; ����KAG�̏���
+		; 何かKAGの処理
 	[endwhile]
 
-	; foreach �������炱�����ȁH
+	; foreach だったらこうかな？
 	[while init="(tf.ary = [5, 8, 2, 9]).reverse()" \
 		exp="(tf.val = tf.ary.pop()) !== void"]
-		; tf.val �ɔz��̗v�f����Â����ă��[�v�����
-		; ����KAG�̏���
+		; tf.val に配列の要素が一つづつ入ってループを回る
+		; 何かKAGの処理
 	[endwhile]
 
-  D. ignoreCR���V�i���I���ŕύX�ł���
+  D. ignoreCRをシナリオ中で変更できる
 
-	�I���W�i��KAGParser�ł�ignoreCR�́u�ύX�ł��邪�Z�[�u����
-	�Ȃ����߁AConfig.tjs�Œ�`�����l����ύX������K��������
-	���Ƃɖ߂��Ȃ��Ƃ����Ȃ��v�Ƃ�������������A���̂���
-	�V�i���I���ŕύX���鎞�͒��ӂ��K�v�������B
-	ExtKAGParser�ł�KAGParser�N���X��IgnoreCR���Z�[�u����悤��
-	�ύX�������߁A�V�i���I���ŔC�ӂɕύX�\�ƂȂ����B
-	���ۂɂ͂���͎��� E. �̋@�\�̕z�΁B
+	オリジナルKAGParserではignoreCRは「変更できるがセーブされ
+	ないため、Config.tjsで定義した値から変更したら必ずすぐに
+	もとに戻さないといけない」という条件があり、そのため
+	シナリオ中で変更する時は注意が必要だった。
+	ExtKAGParserではKAGParserクラスでIgnoreCRをセーブするように
+	変更したため、シナリオ中で任意に変更可能となった。
+	実際にはこれは次の E. の機能の布石。
 
-  E. !ignoreCR����s����[np]�}�N�����Ăяo���悤�ɂł���
+  E. !ignoreCRかつ空行時に[np]マクロを呼び出すようにできる
 
-	KAGParser�C���X�^���X(���kag.mainConductor)�ɂ����āA
-	ignoreCR=false ���� enableNP=true �ŁA��s���� "[np]\"
-	�}�N�����}�������悤�ɂ���(������\��)�B����ɂ��AKAG
-	�V�i���I�t�@�C���̋L�q�����ȈՂɂȂ����Bnp �� New Page
-	�̗����Ǝv���Ƌg�B
+	KAGParserインスタンス(主にkag.mainConductor)において、
+	ignoreCR=false かつ enableNP=true で、空行時に "[np]\"
+	マクロが挿入されるようにした(末尾に\も)。これにより、KAG
+	シナリオファイルの記述がより簡易になった。np は New Page
+	の略だと思うと吉。
 
-	���၄
-	(kag.mainConductor.)ignoreCR = false �ł���ꍇ�̈ȉ���
-	�L�q���l����B
-	=== �������� ===
+	＜例＞
+	(kag.mainConductor.)ignoreCR = false である場合の以下の
+	記述を考える。
+	=== ここから ===
 	[eval exp="kag.mainConductor.enableNP = true"]\
-	���̍s���ł͉��s����܂��B
-	���̍s���ł͉��s���ꂸ�A���̍s��[[np]���}������܂��B
+	この行末では改行されます。
+	この行末では改行されず、次の行に[[np]が挿入されます。
 	
-	�킩�邩�ȁH
+	わかるかな？
 
-	=== �����܂� ===
+	=== ここまで ===
 
-	��́A(ignoreCR=true�̏ꍇ�ł�)�ȉ��̂悤�ɉ��߂����
+	上は、(ignoreCR=trueの場合では)以下のように解釈される
 
-	=== �������� ===
+	=== ここから ===
 	[eval exp="kag.mainConductor.enableNP = true"]
-	���̍s���ł͉��s����܂��B[r eol=true]
-	���̍s���ł͉��s���ꂸ�A���̍s��[[np]���}������܂��B
+	この行末では改行されます。[r eol=true]
+	この行末では改行されず、次の行に[[np]が挿入されます。
 	[np]
-	�킩�邩�ȁH
+	わかるかな？
 	[np]
-	=== �����܂� ===
+	=== ここまで ===
 
-	�P�ɋ�s��u�������ꍇ�́A���܂ł�ignoreCR=false�̎���
-	���l�A�R�����g�s(';')��ݒu���邱�ƁB
+	単に空行を置きたい場合は、今までのignoreCR=falseの時と
+	同様、コメント行(';')を設置すること。
 
-  F. [call]��[return]�O��[call]���V�i���I���ύX���ꂽ�Ƃ��ɂ��A
-     [call]����������x�T���Ė߂邱�Ƃ��ł���
+  F. [call]後[return]前に[call]元シナリオが変更されたときにも、
+     [call]元をある程度探して戻ることができる
 
-	�݂�Ȃ��������Ƃ������āA�Q�[�����ɏo��Ƃ��Ȃ肪������
-	����G���[���b�Z�[�W�A�u�V�i���I�t�@�C���ɕύX��������
-	���� return �̖߂��ʒu�����ł��܂���v�B
-	ExtKAGParser�ł́A�ȉ����`���邱�ƂŁA���̃��b�Z�[�W��
-	������x������邱�Ƃ��ł���B
+	みんなが見たことがあって、ゲーム中に出るとかなりがっかり
+	するエラーメッセージ、「シナリオファイルに変更があった
+	ため return の戻り先位置を特定できません」。
+	ExtKAGParserでは、以下を定義することで、このメッセージを
+	ある程度回避することができる。
 	[eval exp="kag.mainConductor.fuzzyReturn = true"]
-	fuzzyReturn�͌̈ӂɃZ�[�u����Ȃ��悤�ɂ��Ă���(���
-	������ς���K�v���o�����ɑΉ����邽��)�̂ŁAfirst.ks��
-	�擪��AfterInit.tjs�Œ�`���邱�Ƃ������߂���B
+	fuzzyReturnは故意にセーブされないようにしている(後に
+	挙動を変える必要が出た時に対応するため)ので、first.ksの
+	先頭かAfterInit.tjsで定義することをお勧めする。
 
-	��̓I�ɂ́A�u[return]�߂�ʒu(=[call storage=xxx]���܂�
-	�s)���A�V�����V�i���I�t�@�C�����őO��\�s�͈̔͂ŒT���v�B
-	�I���W�i���ł͖߂낤�Ƃ���s�ɕύX���������ꍇ�͖ⓚ
-	���p�ŃG���[�ɂ��Ă������AExtKAGParser�ł͂�����������
-	�߂��*��������Ȃ�*�B
+	具体的には、「[return]戻り位置(=[call storage=xxx]を含む
+	行)を、新しいシナリオファイル中で前後十行の範囲で探す」。
+	オリジナルでは戻ろうとする行に変更があった場合は問答
+	無用でエラーにしていたが、ExtKAGParserではもしかしたら
+	戻れる*かもしれない*。
 
-	����A�ȉ��̂悤�ȃP�[�X�ł́A������ꏊ�ɖ߂�ꍇ��
-	���邱�Ƃɂ����ӁB
+	一方、以下のようなケースでは、誤った場所に戻る場合が
+	あることにも注意。
 	[macro name=np]
 	[p]
 	[cr]
 	[call storage=saveanyware.ks target=*saveanywhere]
 	[endmacro]
-	�Ƃ����}�N�������炩���ߒ�`����Ă�����̂Ƃ���B
+	というマクロがあらかじめ定義されているものとする。
 
-	���ύX�O�̃V�i���I��
-	���ł��Ăӂ������������ł��B
+	＜変更前のシナリオ＞
+	うでたてふせがだいすきです。
 	[np] 
-	�勹�؂����������Ȃ邩��ł��B
-	[np]�@�@�@�@�@�@�@�@�@�@�� �����ŃZ�[�u
-	��r�񓙋؂������������ł�
+	大胸筋がおおきくなるからです。
+	[np]　　　　　　　　　　← ここでセーブ
+	上腕二等筋もきたえたいです
 	[np]
 
-	���ύX��̃V�i���I��
-	���ł��Ăӂ������������ł��B[r]
-	�v�b�V���A�b�v�Ƃ������܂��B[r]
-	���Ƃ��̃��}���ł��B[r]
-	�������݂����ȓ�̘r�ɂȂ�܂��B
-	[np]�@�@�@�@�@�@�@�@�@�@�� ���[�h����Ƃ�������ĊJ�����
-	�勹�؂����������Ȃ�܂��B
-	[np]			�� ��������ĊJ���Ăق��������̂ɁI
-	��r�񓙋؂������������ł�
+	＜変更後のシナリオ＞
+	うでたてふせがだいすきです。[r]
+	プッシュアップともいいます。[r]
+	おとこのロマンです。[r]
+	レモンみたいな二の腕になります。
+	[np]　　　　　　　　　　← ロードするとここから再開される
+	大胸筋もおおきくなります。
+	[np]			← ここから再開してほしかったのに！
+	上腕二等筋もきたえたいです
 	[np]
 
-	fuzzyReturn�́A�ύX�O�̃V�i���I��[call]�����s�����̂Ɠ���
-	���e�̍s(��ł�[np])���A�ȑO����ł��߂��ӏ�����T���B
-	���̂��߁A��̗�ł́A[np]���܂܂������Ƃ��߂�(�����)
-	�s����ĊJ����Ă��܂��B
+	fuzzyReturnは、変更前のシナリオで[call]を実行したのと同じ
+	内容の行(上では[np])を、以前から最も近い箇所から探す。
+	そのため、上の例では、[np]が含まれるもっとも近い(誤った)
+	行から再開されてしまう。
 
-	�Ƃ͂����A�I���W�i��KAGParser�ł������悤�Ȃ��Ƃ͋N����
-	�Ă����킯�ŁA�������炻�̂��炢�͂������Ȃ��A�ƑË��B
-	�����������Ƃ����S�ɖh���ɂ́A�}�W���Ƀ��j�[�N�ȃZ�[�u
-	���x�������z�u����K�v������͕̂ς��Ȃ��B
+	とはいえ、オリジナルKAGParserでも似たようなことは起こっ
+	ていたわけで、だったらそのくらいはいいかなぁ、と妥協。
+	こういうことを完全に防ぐには、マジメにユニークなセーブ
+	ラベルを一つ一つ配置する必要があるのは変わらない。
 
-	�Ȃ��A[return]�Ŗ߂�ʒu��T������Ȃ������ꍇ�A�ʏ��
-	�u�V�i���I�t�@�C���ɕύX�����������߁c�v�Ƃ�����̃��b
-	�Z�[�W��\�����ăG���[�I�����邪�AreturnErrorStorage��
-	��`����Ă���΂�����Ă�ŏ������p������B
-	returnErrorStorage���Z�[�u����Ȃ��̂ŁA�g���Ȃ�first.ks
-	�̓���AfterInit.tjs�Œ�`���邱�ƁB
+	なお、[return]で戻る位置を探しきれなかった場合、通常は
+	「シナリオファイルに変更があったため…」という例のメッ
+	セージを表示してエラー終了するが、returnErrorStorageが
+	定義されていればそれを呼んで処理を継続する。
+	returnErrorStorageもセーブされないので、使うならfirst.ks
+	の頭かAfterInit.tjsで定義すること。
 
-	��first.ks�̓��ł̒�`�၄
+	＜first.ksの頭での定義例＞
 	[eval exp="kag.mainConductor.returnErrorStorage = 'returnerror.ks'"]
 
-	��returnerror.ks�̗၄
-	[eval exp="System.inform('����܂���[return]�Ŗ߂�܂���ł�����[')"]
-	; �ⓚ���p�Ń^�C�g���ɖ߂����Ⴄ
+	＜returnerror.ksの例＞
+	[eval exp="System.inform('すんません[return]で戻れませんでしたわー')"]
+	; 問答無用でタイトルに戻しちゃう
 	[gotostart]
 
-    G. �G���[�`�F�b�N���i���ƃG���[���b�Z�[�W�ڍ׉�
+    G. エラーチェック厳格化とエラーメッセージ詳細化
 
-	[if][ignore]([while][pushlocalvar]��)�X�R�[�v���Ƀ��x��������
-	���̓G���[�ɂ���B�}�j���A���ɂ́u����ȁv�Ɩ��m�ɏ�����
-	����̂ɁA���ۂɂ��̎��ɂ̓G���[�ɂ��ꂸ��������Ă������߁A
-	�G���[�ɂ���悤�ύX�����B����ɂ��A���܂܂�(�����Ă�
-	�����Ȃ����������)�����Ă����Q�[���������Ȃ��Ȃ�\����
-	���邱�Ƃɒ��ӁB
+	[if][ignore]([while][pushlocalvar]も)スコープ中にラベルがある
+	時はエラーにする。マニュアルには「するな」と明確に書いて
+	あるのに、実際にその時にはエラーにされず無視されていたため、
+	エラーにするよう変更した。これにより、いままで(動いては
+	いけなかったけれど)動いていたゲームが動かなくなる可能性が
+	あることに注意。
 	http://devdoc.kikyou.info/tvp/docs/kag3doc/contents/Tags.html#if
 	http://devdoc.kikyou.info/tvp/docs/kag3doc/contents/Tags.html#ignore
-	�����āA���@�G���[�̏ꍇ�A�R���\�[�����O�����ɁA���̏ڍׂ�
-	CurPosCurLineStr��\������悤�ɂ����B
+	加えて、文法エラーの場合、コンソールログ末尾に、その詳細と
+	CurPosCurLineStrを表示するようにした。
 
-    H. �V�\�L[&tjs��]�𓱓��B[emb exp=tjs��]�Ɠ���
+    H. 新表記[&tjs式]を導入。[emb exp=tjs式]と同等
 
-	[emb]�̒Z���\�L���~�����Ƃ����v�]���󂯂āB
+	[emb]の短い表記が欲しいという要望を受けて。
 
-    I. [macroname arg1 arg2=2 arg3]�Ń}�N�����Ăяo�����Ƃ��A
-       �}�N��macroname���ŕϐ�%1(=arg1)�A%2(=arg2)�A%3(=arg3)��
-       �Q�Ɖ\
+    I. [macroname arg1 arg2=2 arg3]でマクロを呼び出したとき、
+       マクロmacroname側で変数%1(=arg1)、%2(=arg2)、%3(=arg3)を
+       参照可能
 
-	numericMacroArgumentEnabled(def:false)��true�ɂ��邱�ƂŁA
-	�}�N������%1,%2,%3...�Ȃǂ��Q�Ƃł���悤�ɂȂ�B
-	NScripter�̂悤�ȁA�w�肳�ꂽ�����̏��ԂŃp�����[�^��
-	�n���}�N�����������Ɏg�p����B
+	numericMacroArgumentEnabled(def:false)をtrueにすることで、
+	マクロ中で%1,%2,%3...などが参照できるようになる。
+	NScripterのような、指定された引数の順番でパラメータを
+	渡すマクロを書く時に使用する。
 
-	��first.ks�̓��ł̒�`�၄
+	＜first.ksの頭での定義例＞
 	[eval exp="kag.mainConductor.numericMacroArgumentsEnabled = true"]
 
 	[macro name=test]
 	[ch text=%1]
 	[endmacro]
 
-	[test abcdefg]   (�� [ch text=abcdefg] �ɒu�������)
+	[test abcdefg]   (← [ch text=abcdefg] に置換される)
 
-	���̂Ƃ��}�N���̌Ăяo�����ł͈����̖��O�ɐ��l�͎g���Ȃ�
-	([test 1=5]�Ȃ�)���Ƃɒ��ӁB����Ȃ��Ƃ���l���Ȃ�
-	���낤����ǁB
+	このときマクロの呼び出し側では引数の名前に数値は使えない
+	([test 1=5]など)ことに注意。そんなことする人居ない
+	だろうけれど。
 
-	[emb exp=]��[if exp=] �ȂǁATJS�����w�肷��^�O��
-	�g�p����ɂ́A%1 �ł͂Ȃ��Amp['1'] �Ǝw�肷��K�v��
-	���邱�Ƃɒ��ӁB
-	���၄
-	[emb exp=%1] �ł͂Ȃ� [emb exp="mp['1']"]�A
-	[if exp="%1=='abc'"] �ł͂Ȃ� [if exp="mp['1']=='abc'"]
+	[emb exp=]や[if exp=] など、TJS式を指定するタグに
+	使用するには、%1 ではなく、mp['1'] と指定する必要が
+	あることに注意。
+	＜例＞
+	[emb exp=%1] ではなく [emb exp="mp['1']"]、
+	[if exp="%1=='abc'"] ではなく [if exp="mp['1']=='abc'"]
 
-    J. ���[�J���ϐ� $val �܂��� kag.conductor.lf ���g�p�\�B
+    J. ローカル変数 $val または kag.conductor.lf が使用可能。
 
-	���[�J���ϐ��́Akag.conductor.lf.XXX �Ƃ��č쐬�\��
-	�ϐ��BKAG�^�O��ł� $XXX �ł��Q�Ɖ\�B
-	�X�N���v�g�����ł��g�p�ł��A�Z�[�u������邪�A
-	[pushlocalvar][poplocalvar]�ԁA�܂���[call][return]�Ԃł�
-	�V�K�쐬����A��������o��Ƃ��̊ԂɎg�p�������̂�Y��
-	���ɖ߂�B
-	[if][while]�Ɠ��l�A[pushlocalvar]-[poplocalvar]�Ԃɂ�
-	���x����z�u���Ă͂Ȃ�Ȃ��B
+	ローカル変数は、kag.conductor.lf.XXX として作成可能な
+	変数。KAGタグ上では $XXX でも参照可能。
+	スクリプト中いつでも使用でき、セーブもされるが、
+	[pushlocalvar][poplocalvar]間、または[call][return]間では
+	新規作成され、そこから出るとその間に使用したものを忘れ
+	元に戻る。
+	[if][while]と同様、[pushlocalvar]-[poplocalvar]間には
+	ラベルを配置してはならない。
 
 	[localvar arg1=val1 arg2=val2 ...]
-		���[�J���ϐ��ɒl��������B���ۂɂ�tagname=localvar��
-		�ꏏ�ɒ�`����Ă��܂����Ƃɒ��ӁB
-		[eval exp="&kag.conductor.lf.i = 5"]�Ƃ��ł�����ł���B
+		ローカル変数に値を代入する。実際にはtagname=localvarも
+		一緒に定義されてしまうことに注意。
+		[eval exp="&kag.conductor.lf.i = 5"]とかでも代入できる。
 
 	[pushlocalvar copyvar=true_or_false arg1=val1 arg2=varl2 ...]
-		���[�J���ϐ��̃X�R�[�v�J�n�B����ȉ��Œ�`����
-		���[�J���ϐ��́A[poplocalvar]�܂Œ�`�E�Q�ƁE�ύX��
-		�\�B����q�ɂ��ł���B
+		ローカル変数のスコープ開始。これ以下で定義した
+		ローカル変数は、[poplocalvar]まで定義・参照・変更が
+		可能。入れ子にもできる。
 		copyvar=true/false(def)
-			������O�̃��[�J���ϐ���S�ăR�s�[����
-			�V���ȃ��[�J���ϐ��Ƃ��Ďg�p���邩�ǂ����B
-			def=false(�ȑO�̃��[�J���ϐ��̓R�s�[�����A
-			�����ł͉�����`����Ȃ�)
-			�@��tagname=pushlocalval�͒�`�����
+			これより前のローカル変数を全てコピーして
+			新たなローカル変数として使用するかどうか。
+			def=false(以前のローカル変数はコピーせず、
+			ここでは何も定義されない)
+			　※tagname=pushlocalvalは定義される
 		arg#= ...
-			�V�������[�J���ϐ����`����B��������
-			[eval exp="kag.conductor.lf.arg=2"]�Ȃǂ�
-			���Ă���`�\�B���ۂɂ�tagname=pushlocalvar
-			(�Əꍇ�ɂ���Ă�copyvar=true��)����`�����
-			���Ƃɒ���
+			新しいローカル変数を定義する。これより後に
+			[eval exp="kag.conductor.lf.arg=2"]などと
+			しても定義可能。実際にはtagname=pushlocalvar
+			(と場合によってはcopyvar=trueも)が定義される
+			ことに注意
 			
 	[poplocalvar]
-		���[�J���ϐ��̃X�R�[�v�I���B[pushlocalvar]�����`
-		�������[�J���ϐ��͑S�ĖY��A[pushlocalvar]�ȑO��
-		��`����Ă������[�J���ϐ��Q�ɖ߂��B
-		[pushlocalvar]��[poplocalvar]�Ԃ�[jump]�Ŕ����Ă��悢�B
+		ローカル変数のスコープ終了。[pushlocalvar]から定義
+		したローカル変数は全て忘れ、[pushlocalvar]以前に
+		定義されていたローカル変数群に戻す。
+		[pushlocalvar]→[poplocalvar]間を[jump]で抜けてもよい。
 
-	���၄
+	＜例＞
 		@iscript
-		// �ʓ|�Ȃ̂ŁAlf = kag.conductor.lf �Ƃ��Ē�`���Ă���
+		// 面倒なので、lf = kag.conductor.lf として定義しておく
 		property lf
 		  { getter { return kag.conductor.lf; } }
 		@endscript
 
-		; �����ł��O���[�o���X�R�[�v�̃��[�J���ϐ��͎g�p�ł���B
+		; ここでもグローバルスコープのローカル変数は使用できる。
 		@localvar i=5 j=7
 		@pushlocalvar i=6
-			�����ł�lf.i=6�Alf.j�͑��݂��Ȃ�
+			ここではlf.i=6、lf.jは存在しない
 			@eval exp=lf.i++
-			����lf.i=7�ɂȂ���
-			KAG�^�O���ł́�$i��lf.i���Q�Ƃł���B
+			↑でlf.i=7になった
+			KAGタグ中では↓$iでlf.iを参照できる。
 			@ch text=$i
-			"&lf.i"��$i���w�肵���̂Ɠ���
+			"&lf.i"は$iを指定したのと同じ
 			@ch text=&lf.i
 		@poplocalvar
-		�����ł�lf.i=5�Alf.j=7
+		ここではlf.i=5、lf.j=7
 		@s
 
-    K. [call]�̈������A[call]���̃��[�J���ϐ��̃����o�Ƃ���
-    �@ �Q�Ɖ\
+    K. [call]の引数を、[call]内のローカル変数のメンバとして
+    　 参照可能
 
-	[call]���ȉ��̂悤�Ɏg���ƁA�T�u���[�`�����Ń��[�J���ϐ���
-	�����o�Ƃ���[call]�̈������Q�Ƃł���B�܂�A[call]��
-	������n����B[pushlocalvar] �Ɠ��l�Acopyvar ��n���ƍ��L����
-	���[�J���ϐ���S�ăR�s�[���ēn���B
-	�������A�����͑S�����[�J���ϐ��ɂ���̂ŁAtagname,storage,
-	target�Ȃǂ̃��[�J���ϐ����쐬����邱�Ƃɒ��ӁB
+	[call]を以下のように使うと、サブルーチン側でローカル変数の
+	メンバとして[call]の引数を参照できる。つまり、[call]に
+	引数を渡せる。[pushlocalvar] と同様、copyvar を渡すと今有効な
+	ローカル変数を全てコピーして渡す。
+	ただし、引数は全部ローカル変数にするので、tagname,storage,
+	targetなどのローカル変数が作成されることに注意。
 		@iscript
 		property lf
 		  { getter { return kag.conductor.lf; } }
@@ -403,229 +403,229 @@
 
 		@eval exp="lf.aaa = 5"
 		@call target=*subroutine arg1=val1
-		; �����ł͑��ς�炸 lf.aaa = 5
+		; ここでは相変わらず lf.aaa = 5
 		@s
 
 		*subroutine
-		�����ł́Alf.tagname=call, lf.target=*subroutine, lf.arg1=val1
-		copyvar=true ���w�肳��Ă��Ȃ��̂� lf.aaa �̓R�s�[����Ă��Ȃ�
+		ここでは、lf.tagname=call, lf.target=*subroutine, lf.arg1=val1
+		copyvar=true が指定されていないので lf.aaa はコピーされていない
 		[ch text=$arg1]
-		; �� "val1" �ƕ\�������
+		; ↑ "val1" と表示される
 		[return]
 
-	���[�J���ϐ���[call]��[return]����܂ŗL���B[call]���̃��[�J���ϐ���
-	[pushlocalvar]�Ɠ��l�V�����쐬����Ă��邽�߁A[call]�O�̃��[�J���ϐ���
-	�㏑�����邱�Ƃ͂Ȃ��B
+	ローカル変数は[call]が[return]するまで有効。[call]内のローカル変数は
+	[pushlocalvar]と同様新しく作成されているため、[call]外のローカル変数を
+	上書きすることはない。
 
-    L. [iscript]-[endscript]��[macro]-[endmacro]���Ŏg����
-    �@ �悤�ɕύX
+    L. [iscript]-[endscript]を[macro]-[endmacro]中で使える
+    　 ように変更
 
-	���܂ł͂ł��Ȃ��������A�ł���悤�ɂ����B
-	�����͊ȒP�ŁA[iscript]-[endscript]�Ԃ̃X�N���v�g���A�S��
-	[eval exp="xxx"]�Ƃ���macro�ɖ��ߍ��ނ悤�ɂ����B�����̂��B
-	���̂��߃}�N������[iscript]�ł�onScript()�C�x���g�͋N����
-	�Ȃ����Ƃɒ��ӁB
-	�������escape/unescape���J��Ԃ��̂ő��x�I�ɂ͏����s���B
-	�\�Ȃ�A�ŏ����� [eval] �ŏ����Ă������ق����悢�B
+	今まではできなかったが、できるようにした。
+	実装は簡単で、[iscript]-[endscript]間のスクリプトを、全部
+	[eval exp="xxx"]としてmacroに埋め込むようにした。いいのか。
+	そのためマクロ中の[iscript]ではonScript()イベントは起こら
+	ないことに注意。
+	文字列のescape/unescapeを繰り返すので速度的には少し不利。
+	可能なら、最初から [eval] で書いておいたほうがよい。
 
-    M. [pmacro]����
+    M. [pmacro]実装
 
-	�p�����[�^�}�N���������BKAG�^�O�̕����̑������}�N��������
-	�o���A�ȒP�ȋL�q�Ŏw�肷�邱�Ƃ��ł���B
+	パラメータマクロを実装。KAGタグの複数の属性をマクロ化して
+	覚え、簡単な記述で指定することができる。
 
-	����P��
-	[pmacro name=�w�i�\���C�� layer=base page=fore]
+	＜例１＞
+	[pmacro name=背景表レイヤ layer=base page=fore]
 	;
-	[image storage=�X �w�i�\���C��]
-	; �� [image storage=�X layer=base page=fore] �Ƃ��Ȃ�
+	[image storage=森 背景表レイヤ]
+	; ↑ [image storage=森 layer=base page=fore] とおなじ
 
-	����Q��
-	[pmacro name=�Ί� ��=���� ��=�΂� ��=���]
+	＜例２＞
+	[pmacro name=笑顔 眉=普通 口=笑い 目=喜び]
 	;
-	[������ �Ί� ��=�����s�[�X]
-	; �� [������ ��=���� ��=�΂� ��=���] �Ƃ��Ȃ�
+	[あかね 笑顔 服=ワンピース]
+	; ↑ [あかね 眉=普通 口=笑い 目=喜び] とおなじ
 
-	�������A�p�����[�^�}�N�����g�p���鎞�́A=XXX ��t�����Ă�
-	�Ȃ�Ȃ��B�������̂��߁A�p�[�T��� =XXX ������ꍇ��
-	�p�����[�^�}�N���ł͂Ȃ��Ɣ��f���Ă��邽�߁B
+	ただし、パラメータマクロを使用する時は、=XXX を付加しては
+	ならない。効率化のため、パーサ上で =XXX がある場合は
+	パラメータマクロではないと判断しているため。
 
-	�����pmacro���g�p���鎞�̈����၄
-	[image storage=�X �w�i�\���C��=true]
-	; �� "�w�i�\���C��" �̓p�����[�^�}�N���ł͂Ȃ����ʂ̑�����
-	; �@�@���āA���̂܂�[image]�^�O�ɓn�����
+	＜上のpmacroを使用する時の悪い例＞
+	[image storage=森 背景表レイヤ=true]
+	; ↑ "背景表レイヤ" はパラメータマクロではなく普通の属性と
+	; 　　して、そのまま[image]タグに渡される
 
-	�܂��AnumericMacroArgumentEnabled=true �̎��A�}�N������
-	�󂯎�����p�����[�^�̓p�����[�^�}�N�����W�J���ꂽ���
-	���̂����A�p�����[�^�}�N���̂ݏ��s���ɂȂ邱�Ƃɒ��ӁB
+	また、numericMacroArgumentEnabled=true の時、マクロ側で
+	受け取ったパラメータはパラメータマクロが展開された後の
+	ものだが、パラメータマクロのみ順不同になることに注意。
 
-	�����pmacro���g�p���鎞�̗၄
-	[������ �Ί� ��=�����s�[�X]
+	＜上のpmacroを使用する時の例＞
+	[あかね 笑顔 服=ワンピース]
 	;
-	[macor name=������]
-	[ch text=%1] �u���v�E�u���v�E�u�ځv�̂����ꂩ
-	[ch text=%2] %1�ȊO�́u���v�E�u���v�E�u�ځv�̂����ꂩ
-	[ch text=%3] %1��%2�ȊO�́u���v�E�u���v�E�u�ځv�̂����ꂩ
-	[ch text=%4] ����́u���v
+	[macor name=あかね]
+	[ch text=%1] 「眉」・「口」・「目」のいずれか
+	[ch text=%2] %1以外の「眉」・「口」・「目」のいずれか
+	[ch text=%3] %1と%2以外の「眉」・「口」・「目」のいずれか
+	[ch text=%4] これは「服」
 	;
 	[endmacro]
 
-    N. [iscript]���̍s����*�𖳎�(���x���Ƃ��Ă͎�舵��Ȃ�)
+    N. [iscript]中の行頭の*を無視(ラベルとしては取り扱わない)
 
-	�f�t�H���gKAGParser�́A[iscript]-[endscript]���ł����Ă��A
-	�s����*���o�Ă���Ƃ�������x����(��)�F�����Ă����B���̂��߁A
-	�uiscript�̉�����ς��������Ń��x�����������A�Z�[�u�f�[�^��
-	�݊�����������v���Ƃ��������B
-	ExtKAGParser�ł͂����������邽�߁Aiscript���ł͍s����
-	'*'�������Ă�����𖳎�����悤�ɂ����B���̂��߁A�t��
-	���܂ł�KAGParser�ŃZ�[�u�����f�[�^���ĊJ�ł��Ȃ����Ƃ�����B
-	ExtKAGParser��ExtKAGParser�̃Z�[�u�f�[�^�݂̂Ŏg�p���邱�ƁB
+	デフォルトKAGParserは、[iscript]-[endscript]中であっても、
+	行頭に*が出てくるとこれをラベルと(誤)認識していた。そのため、
+	「iscriptの何かを変えただけでラベルが増減し、セーブデータの
+	互換性が失われる」ことがあった。
+	ExtKAGParserではこれを回避するため、iscript中では行頭に
+	'*'があってもこれを無視するようにした。このため、逆に
+	今までのKAGParserでセーブしたデータを再開できないことがある。
+	ExtKAGParserはExtKAGParserのセーブデータのみで使用すること。
 
 
-4. �g���g��2�Ƌg���g��Z�ł̑���
-	�g���g��Z(�����ɂ����J���ŋg���g��2?)�ł́A�ȉ��̊֐����ǉ�����Ă���B
+4. 吉里吉里2と吉里吉里Zでの相違
+	吉里吉里Z(が元にした開発版吉里吉里2?)では、以下の関数が追加されている。
 
 	void TVPExecuteScript(const ttstr &, iTJSDispatch2 *, tTJSVariant *);
 
-	�g���g��2.32r2�ɂ͂��̊֐������݂��Ȃ����߁AExtKAGParser�ł́A
-	���̊֐����g���E�g��Ȃ���I���ł���悤�Ƀ\�[�X�R�[�h��ō׍H����
-	����B���R���p�C���͕K�v�B
+	吉里吉里2.32r2にはこの関数が存在しないため、ExtKAGParserでは、
+	この関数を使う・使わないを選択できるようにソースコード上で細工して
+	いる。リコンパイルは必要。
 
 
-5. ���ӓ_
-	�E�g���g��Z��KAGParser���Q�l�ɂ������߁A�C��BSD���C�Z���X�ƂȂ�B
-	�@�Ȃ�Ƌ��R(?)dll�͋g���g���ł��g�p�ł����Ⴄ���ǂˁI
-	�EVC2010�Ńr���h�����̂ŁAWinXP���O(Win2k�Ȃ�)�ł͓��삵�Ȃ��B
+5. 注意点
+	・吉里吉里ZのKAGParserを参考にしたため、修正BSDライセンスとなる。
+	　なんと偶然(?)dllは吉里吉里でも使用できちゃうけどね！
+	・VC2010でビルドしたので、WinXPより前(Win2kなど)では動作しない。
 
 
-6. �\�[�X�t�@�C��������Ƃ�������
-	ExtKAGParser.h ...... ��̊֐����g���E�g��Ȃ��̃r���h�𕪂����`
-	KAGParser.cpp ....... KAGParser�{��
-	KAGParser.h ......... KAGParser�p�w�b�_
-	Main.cpp ............ dll�ǂݍ��ݗp���C��
-	TJSAry.h ............ TJS�̔z���C++�ォ��g�p���邽�߂̏��N���X
-	TJSAry.cpp .......... ���̎���
-	TJSDic.h ............ TJS�̎�����C++�ォ��g�p���邽�߂̏��N���X
-	TJSDic.cpp .......... ���̎���
-	tjsHashSearch.h ..... �n�b�V�������p�w�b�_(�g���g��[2Z]���ʂ�����)
-	tp_stub.cpp ......... �g���g��Z(1.0.0.1)���玝���Ă��� tp_stub.cpp
-	tp_stub.h ........... �g���g��Z(1.0.0.1)���玝���Ă��� tp_stub.h
+6. ソースファイルちょっとだけ説明
+	ExtKAGParser.h ...... 上の関数を使う・使わないのビルドを分ける定義
+	KAGParser.cpp ....... KAGParser本体
+	KAGParser.h ......... KAGParser用ヘッダ
+	Main.cpp ............ dll読み込み用メイン
+	TJSAry.h ............ TJSの配列をC++上から使用するための小クラス
+	TJSAry.cpp .......... その実体
+	TJSDic.h ............ TJSの辞書をC++上から使用するための小クラス
+	TJSDic.cpp .......... その実体
+	tjsHashSearch.h ..... ハッシュ検索用ヘッダ(吉里吉里[2Z]共通だった)
+	tp_stub.cpp ......... 吉里吉里Z(1.0.0.1)から持ってきた tp_stub.cpp
+	tp_stub.h ........... 吉里吉里Z(1.0.0.1)から持ってきた tp_stub.h
 
 
-7. �Q�l����
+7. 参考資料
 	KAGPluginEx.dll
 		https://sv.kikyou.info/svn/kirikiri2/trunk/kirikiri2/src/plugins/win32/KAGParserEx/
 	KAGPluginExb.dll:
 		http://kasekey.blog101.fc2.com/blog-entry-203.html
 		https://github.com/sakano/KAGParserExb
-	�g���g��Z
+	吉里吉里Z
 		http://www.kaede-software.com/cat20/z/
-	KAGPlugin.dll for �g���g��Z
+	KAGPlugin.dll for 吉里吉里Z
 		https://github.com/krkrz/krkrz/tree/master/src/plugins/win32/KAGParser
-	���g���g���^�j�`�f�^�s�i�r�G�k����X��������29 �̏Z�l�̕��X
+	■吉里吉里／ＫＡＧ／ＴＪＳ雑談質問スレ■その29 の住人の方々
 	http://peace.2ch.net/test/read.cgi/gamedev/1433436610/
 
 
-8. ���̑�
-	�E[while][endwhile]�ł̃��[�v�́A[jump target=*loop]�ł�
-	�@���[�v�����R�{�قǍ����B�R���\�[���ւ̏o�͗ʂ̍��̖͗l�B
-	�E���ӌ����~�����B���������ق��������A���������L�q�ɂ��ׂ����A
-	�@����ȋ@�\���~�����A�ȂǁB���[���E�f���łǂ����B
-		���[��: s_naray��yahoo[dot]co[dot]jp �� �Ђ˂��Ă���̂Œ���
-		�f����: http://b.koroweb.com/pa/patio.cgi?room=kaicho
-	�E���я��Ȃ��̂ŁA���������Ă��΂��ċ�����l�Ɏg���Ē��������B
-	�@���񂩂��񍐂���������Εs��Ȃǂւ̑Ή��͉\�Ȍ��葁������
-	�@�����i���B
+8. その他
+	・[while][endwhile]でのループは、[jump target=*loop]での
+	　ループよりも３倍ほど高速。コンソールへの出力量の差の模様。
+	・ご意見が欲しい。こうしたほうがいい、こういう記述にすべきだ、
+	　こんな機能が欲しい、など。メール・掲示板でどうぞ。
+		メール: s_naray＠yahoo[dot]co[dot]jp ← ひねってあるので注意
+		掲示板: http://b.koroweb.com/pa/patio.cgi?room=kaicho
+	・実績少ないので、何かあっても笑って許せる人に使って頂きたい。
+	　そんかし報告いただければ不具合などへの対応は可能な限り早くする
+	　所存ナリ。
 
 
-����A�F�Ȃ�[if][ignore][while][pushlocalvar]�X�R�[�v���Ƀ��x����z�u
-       �ł��Ȃ���
-	���R�͊ȒP�A�S���֌W�Ȃ��Ƃ��납�炻����[jump]�ȂǂŔ��
-	���܂��ƁA���̒n�_�̏�����ϐ��l�����m�ɂȂ�Ȃ�����B
+メモA：なぜ[if][ignore][while][pushlocalvar]スコープ中にラベルを配置
+       できないか
+	理由は簡単、全く関係ないところからそこに[jump]などで飛び
+	込まれると、その地点の条件や変数値が明確にならないから。
 
-	���Ƃ��Έȉ��̗�ł́AA�n�_�ɔ�э��񂾂Ƃ��̕ϐ� tf.a ��
-	�l�͂����ɂȂ邩�ۏ؂ł��Ȃ����A�]����[else]�ȉ���
-	���������s���ׂ����ǂ����킩��Ȃ��Ȃ��Ă��܂��B�����āA
-	tf.a != 2 �̎��ɂ���э��ނ��Ƃ��ł��Ă��܂��A�X�N���v�g��
-	�_�����j�]����B
+	たとえば以下の例では、A地点に飛び込んだときの変数 tf.a の
+	値はいくつになるか保証できないし、従って[else]以下の
+	条件を実行すべきかどうかわからなくなってしまう。加えて、
+	tf.a != 2 の時にも飛び込むことができてしまい、スクリプトの
+	論理が破綻する。
 
-	���၄
-	[jump target=*A�n�_]
+	＜例＞
+	[jump target=*A地点]
 	;
 	[if exp=tf.a == 2]
-	*A�n�_
+	*A地点
 		[ch text=&tf.a]
 	[else]
 		[ch text=&tf.a]
 	[endif]
 
-	�{���́u�Z�[�u�|�C���g�͔z�u�ł���v(���̎��_�ł̃f�[�^��
-	�o���Ă���΂�������)�̂ł��邪�AKAG�ł̓Z�[�u�|�C���g��
-	�u�����߂ɂ̓��x�����K�{�Ȃ̂ŁA�]����[if][ignore][while]
-	[pushlocalvar]�̃X�R�[�v���ɃZ�[�u�|�C���g���z�u�ł��Ȃ�
-	�Ȃ��Ă���B
+	本当は「セーブポイントは配置できる」(その時点でのデータを
+	覚えていればいいから)のであるが、KAGではセーブポイントを
+	置くためにはラベルが必須なので、従って[if][ignore][while]
+	[pushlocalvar]のスコープ中にセーブポイントも配置できなく
+	なっている。
 
-����B: [jump]���
-	�K���A[if][ignore][while][pushlocalvar]�X�R�[�v�O�łȂ����
-	�Ȃ�Ȃ��B�����jump���ɓ����R���f�B�V�����Ƃ��Ă�����
-	�X�R�[�v�O�ł��邱�Ƃ��������邽�߁B���R�̓���A�Ɠ����B
+メモB: [jump]先は
+	必ず、[if][ignore][while][pushlocalvar]スコープ外でなければ
+	ならない。これはjump時に内部コンディションとしてこれらの
+	スコープ外であることを強制するため。理由はメモAと同じ。
 
 
-�t�^A�FExtKAGParser�ɒǉ������ATJS�ォ��Q�Ƃł���KAGParser�̃v���p�e�B
+付録A：ExtKAGParserに追加した、TJS上から参照できるKAGParserのプロパティ
 
 enableNP(true/false(def)):
-	!ignoreCR����s���A�}�N��[np]��ǉ����邩�ǂ���
+	!ignoreCRかつ空行時、マクロ[np]を追加するかどうか
 
 fuzzyReturn(true/false(def)):
-	call��ŃZ�[�u���ꂽ���call�ɍs���ǉ��E�폜���ꂽ�Ƃ��A
-	call����T�����ǂ���
+	call先でセーブされた後にcallに行が追加・削除されたとき、
+	call元を探すかどうか
 
-returnErrorStorage(def=""(�Ȃ�)):
-	call���֖߂邱�ƂɎ��s�������ɁA�G���[�I������̂ł͂Ȃ�
-	KAG�X�N���v�g�����s����ꍇ��KAG�X�N���v�g���w��B
-	�Ȃ��ŃG���[�I��
+returnErrorStorage(def=""(なし)):
+	call元へ戻ることに失敗した時に、エラー終了するのではなく
+	KAGスクリプトを実行する場合にKAGスクリプトを指定。
+	なしでエラー終了
 
 multiLineTagEnabled(true/false(def)):
-	�^�O�𕡐��s�ɂ킽���ċL�q�ł��邩�ǂ����Btrue�̏ꍇ�A
-	�s���� \ ������ƁA�^�O�����̍s�ɑ����Ă���Ƃ݂Ȃ����
+	タグを複数行にわたって記述できるかどうか。trueの場合、
+	行末に \ をつけると、タグが次の行に続いているとみなされる
 
 numericMacroArgumentsEnabled(true/false(false)):
-	�}�N���Ɏw�肵���������A���̏��ԂŃ}�N������ %1�A%2...
-	�ŎQ�Ɖ\�ɂ��邩�ǂ����B
+	マクロに指定した引数を、その順番でマクロ内で %1、%2...
+	で参照可能にするかどうか。
 
-currentLocalVariables(�����z��):
-	KAG�^�O���� $var �ȂǂŎQ�Ƃł��郍�[�J���ϐ��̊i�[��B
-	[call]�܂���[pushlocalvar]�ŃX�^�b�N�ɋl�܂�A[return]�܂���
-	[poplocalvar]�ŃX�^�b�N����߂����B
+currentLocalVariables(辞書配列):
+	KAGタグ中で $var などで参照できるローカル変数の格納先。
+	[call]または[pushlocalvar]でスタックに詰まれ、[return]または
+	[poplocalvar]でスタックから戻される。
 
-lf(�����z��):
-	currentLocalVariables�Ɠ���
+lf(辞書配列):
+	currentLocalVariablesと同じ
 
-prelf(�����z��):
-	���̃X�^�b�N�̃��[�J���ϐ�
+prelf(辞書配列):
+	一つ上のスタックのローカル変数
 
-pmacros(�����z��):
-	�p�����[�^�}�N��
+pmacros(辞書配列):
+	パラメータマクロ
 
-ifLevel(����):
-	���݂� IfLevel�B[if]�܂���[while]�̃l�X�g���Ƃ�+1����A
-	[endif]�܂���[endwhile]���Ƃ�-1�����
+ifLevel(整数):
+	現在の IfLevel。[if]または[while]のネストごとに+1され、
+	[endif]または[endwhile]ごとに-1される
 
-whileStackDepth(����):
-	���݂� while �X�^�b�N�̐[���B[while]���ł�+1����A
-	[endwhile]�𔲂����-1�����B
+whileStackDepth(整数):
+	現在の while スタックの深さ。[while]中では+1され、
+	[endwhile]を抜けると-1される。
 
-localVariablesDepth(����):
-	���[�J���ϐ��̃X�^�b�N�̐[���B[call]�܂���[pushlocalvar]��
-	+1����A[return]�܂���[poplocalvar]��-1�����B
+localVariablesDepth(整数):
+	ローカル変数のスタックの深さ。[call]または[pushlocalvar]で
+	+1され、[return]または[poplocalvar]で-1される。
 
-localVariables(�����z��̔z��):
-	���[�J���ϐ��X�^�b�N�S��
+localVariables(辞書配列の配列):
+	ローカル変数スタック全て
 
 
-�����F
-	�Esyntax error �������`�F�b�N����ExtKAGParserChecker.exe��
-	�@�쐬���ׂ����l����
-	�E�s�ԍ��w��Z�[�u���ł���悤�ɁAExtKAGParser�Ɉȉ��̊֐���
-	�@�������ׂ����l����
+メモ：
+	・syntax error だけをチェックするExtKAGParserChecker.exeを
+	　作成すべきか考える
+	・行番号指定セーブができるように、ExtKAGParserに以下の関数を
+	　実装すべきか考える
 	  void tTJSNI_KAGParser::GoToLine(const tjs_int lineno);
 	  void tTJSNI_GoToStorageAndLine(const ttstr &storage, const tjs_int lineno);
