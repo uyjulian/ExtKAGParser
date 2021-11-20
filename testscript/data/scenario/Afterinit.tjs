@@ -1,0 +1,3 @@
+kag.mainConductor.multiLineTagEnabled = true;
+kag.extraConductor.multiLineTagEnabled = true;
+kag.mainConductor.numericMacroArgumentsEnabled = true;

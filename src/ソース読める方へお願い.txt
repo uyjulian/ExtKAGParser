@@ -1,0 +1,44 @@
+メモリリークの原因がわからないので、ソース読んでわかったら
+教えてください是非。
+
+今は「こうすれば逃げられるというのがわかっているから回避して
+いる」けれど、本来はそうすべきではないので。
+
+具体的には、TJSAry.h(とTJSAry.cpp) で、今はコメントアウト
+されているコンストラクタ
+tTJSAry(tTJSDispatch2 *srcary);
+を有効にすると、KAGParser.cpp 3132行あたりの
+tTJSAry ary(DicObj.GetKeys());
+で盛大なメモリリークになる。有効にしてコンパイルした後、以下の
+スクリプトを流すと、krkr.exe のサイズが秒間50MBくらいの
+イキオイで増えていくからわかる。
+@macro name=a
+@eval exp=1
+@endmacro
+*aaa
+@a
+@jump target=*aaa
+実行する時は、タスクマネージャをあらかじめ開いておいて、
+ヤバそうならすかさずkrkr.exeを殺せるようにしておくのを
+お勧めする。
+
+原因は、
+tTJSAry ary(tTJSAry());
+の時に、ary がコンストラクタ tTJSAry(iTJSDispatch2* p) で初期化
+され、この時点で p->RefCountが +1 されていることの模様。そのため、
+一時変数が消える時にもこの変数が参照している領域が残ってしまい、
+メモリリークとなっているように見える。
+仕方ないので、現在はコンストラクタ tTJSAry(iTJSDispatch2* p) を
+削除して回避している。そうすると、ary は tTJSAry(tTJSVariant&) で
+初期化され(それも意図していないけど)、メモリリークにはならない。
+
+疑問点は二つ。
+
+A.コンストラクタ tTJSAry(tTJSAry&) があるのに、なぜこちらが
+　呼ばれないのか？　tTJSAry(const tTJSAry&)がないからか？
+B.どういう経路で tTJSAry(iTJSDispatch2* p)が呼ばれ、その時なぜ
+　p->RefCount が +1 されているのか？
+
+なお、コピーコンストラクタ tTJSAry(const tTJSAry&) は作成できない。
+tTJSAryが初期化時に "assign" を使う(時に &(&src)を使う) ので
+const 修飾できないため。

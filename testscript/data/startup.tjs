@@ -1,0 +1,19 @@
+// startup.tjs - スタートアップスクリプト
+// Copyright (C) 2001, W.Dee  改変・配布は自由です
+
+// 吉里吉里Zの場合は細工する
+if (System.versionInformation.substr(11,1) == 'Z') {
+	property _dummyProp { getter {} setter (v) {} }
+	with(Window) {
+	    &.innerSunken    = &_dummyProp;
+	    &.showScrollBars = &_dummyProp;
+	}
+	Plugins.link("plugin/menu.dll");
+//	Plugins.link("plugin/KAGParser.dll"); ExtKAGParserがあるから無効化
+}
+
+// 吉里吉里2/吉里吉里Z共通で、ExtKAGParserを有効化。
+Plugins.link("plugin/ExtKAGParser.dll");
+
+// このスクリプトは一番最初に実行されるスクリプトです
+Scripts.execStorage("system/Initialize.tjs"); // system/Initialize.tjs を実行

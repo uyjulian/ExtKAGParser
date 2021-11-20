@@ -1,0 +1,631 @@
+1. はじめに
+	このプラグインは、KAGParserを拡張し、以下の機能を追加する。
+
+	A. 一つのKAGタグを複数行にわたって記述できる(@、[]とも)
+	B. マクロ定義時に、引数のデフォルト値を指定できる
+	C. [while][endwhile][continue][break]タグ実装
+	D. ignoreCRをシナリオ中で変更できる
+	E. !ignoreCRかつ空行時に[np]マクロを呼び出すようにできる
+	F. [call]後[return]前に[call]元シナリオが変更された
+	　 ときにも、[call]元をある程度探して戻ることができる
+	G. エラーチェック厳格化とエラーメッセージ詳細化
+	   例：[if][ignore][while]スコープ中にラベルがある時はエラーに
+	H. 新表記[&tjs式]を導入。[emb exp=tjs式]と同等
+	I. [macroname arg1 arg2=2 arg3]でマクロを呼び出したとき、
+	   マクロmacroname側で変数%1(=arg1)、%2(=arg2)、%3(=arg3)を
+	   参照可能
+	J. ローカル変数 $val または kag.conductor.lf が使用可能。
+	   [call]時は[call]先がローカル変数に、また明示的に
+	　 [pushlocalvar][poplocalvar]タグでローカル変数の生存区間を
+	　 指定可能
+	K. サブルーチンへの引数を、[call]内のローカル変数のメンバと
+	　 して参照可能
+	L. [iscript]-[endscript]を[macro]-[endmacro]中で使える
+	　 ように変更
+	M. [pmacro]実装
+	N. [iscript]中の行頭の*を無視(ラベルとしては取り扱わない)
+
+	※2014/01/26に吉里吉里Z(1.0.0.1)のKAGPluginからソースコードを
+	　分岐しました。吉里吉里Z製作に関わった方々に感謝致します。
+
+
+2. 使い方
+	ExtKAGParser.dllを吉里吉里バイナリ(krkr.exe)と同じディレクトリ
+	にコピーして、拡張子を .tpm に変更する。
+
+	または、ExtKAGParser.dllを吉里吉里ゲームディレクトリ(たとえば
+	plugin/以下)に配置した後、data/Initialize.tjs あるいは、
+	Override.tjsの中で、
+	Plugins.link("plugin/ExtKAGParser.dll");
+	のようにして読み込む。吉里吉里Zの場合、KAGParser.dll の代わりに
+	これを読み込んでもよい。
+
+	KAGタグの複数行に亘る記述を許可するなら、Afterinit.tjs に
+		kag.mainConductor.multiLineTagEnabled = true;
+	を追加すること。
+
+	[return]時に[call]元を探すようにするには以下を追加すること。
+		kag.mainConductor.fuzzyReturn = true;
+
+	[return]失敗時にエラー終了ではなくスクリプトを実行するには
+	以下を追加すること。
+		kag.mainConductor.returnErrorStorage = 'returnerror.ks';
+
+	マクロ変数 %1, %2,...  を有効にするには、以下を追加すること。
+	kag.mainConductor.numericMacroArgumentsEnabled = true;
+
+
+3. ExtKAGParserで使用できるようになる機能詳細
+
+  A. 一つのKAGタグを複数行にわたって記述できる(@、[]とも)
+	KAGParserの multiLineTagEnabled を true にすることで、
+	行末が '\' であればKAGタグを複数行に亘って記述する
+	ことができる。
+	ignoreCRの値に関わらず、また次行の先頭に ';' を追記する
+	必要もない。
+
+	＜例＞
+	; 最初に実行
+	[eval exp="kag.mainConductor.multiLineTagEnabled = true"]
+	(snip)
+	[image storage=画像 layer=base page=back \
+		top=%top \
+		left=%left]
+	@wait \
+		time=2000
+
+	KAGParser.dll で次の行をチェックしていた部分をごにょごにょして
+	実装。KAGParserEx.dll では複数行で cond= が付いた場合に上手に
+	処理できていなかったため、この ExtKAGParser.dll ではそれとは
+	少し実装が異なる。
+	ただし、改行可能なのはタグ属性の切れ目に限る。タグ属性中で
+	改行はできないし、文字列の間で改行することもできない。
+
+	表記が簡単な代わりに、この行でエラーが起きたとき、表示される
+	エラー行が「複数行の最下行」になることに注意。これはもう仕様。
+
+  B. マクロ定義時に、引数のデフォルト値を指定できる
+
+	マクロ定義のときに、マクロに渡す引数について、それが
+	マクロ使用時に指定されなかった時のデフォルト値を
+	指定可能。
+
+	＜例＞
+	[macro name=星空表示 layer=base page=fore]
+	[image storage=星空 layer=%layer page=%page]
+	[endmacro]
+
+	このとき、
+	[星空表示 page=back]
+	は、
+	[image storage=星空 layer=base page=back]
+	と処理される。
+
+	実際には、この機能は、上のマクロ定義を内部的に以下のように展開して
+	記録することで実現されている(※引数初期化のため、マクロ先頭に
+	★二行を追加)。
+
+	[macro name=星空表示]
+	[eval exp=mp.layer='base' cond=mp.layer===void]★追加
+	[eval exp=mp.page='fore' cond=mp.page===void]★追加
+	[image layer=%layer page=%fore]
+	[endmacro]
+		
+  C. [while][endwhile][continue][break]タグ実装
+
+	KAGタグとして、[while][endwhile][continue][break]を新設。
+	現在は以下の制限に注意。
+
+	・[if]や[ignore]タグと同様、[while]～[endwhile]間にはラベルが
+	　存在してはならない。
+	　※[while]中で[call ...]した先でならラベル配置O.K.。
+	　　しかし、[call]と同様、セーブでシナリオ変更に弱くなる
+	　　ことに注意
+	・同一ループを表す[while]～[endwhile]、[break][continue]はファイルを
+	　またいで記述してはならない。
+	・[while]を[jump]で抜けてもよい。
+
+	書式：	[while init= exp= each=]
+	説明：	条件(=exp)に従い、[endwhile]までのKAGスクリプトををループ
+		する。
+		ループは入れ子にすることも可能。
+	引数：	init=	ループ開始時に一度だけ実行されるTJS式(省略可)
+		exp=	ループを継続するかどうか判断するTJS式(省略不可)
+			true=ループ継続、false=ループ終了
+		each=	次のループを開始する前に毎回実行されるTJS式(省略可)
+
+	書式：	[endwhile]
+	説明：	対応する[while]タグとの間でKAGスクリプトをループさせる。
+		[if][else][endif][ignore][endignore]などと入れ子状態が
+		崩れるとおかしくなるので、これらのタグは必ず対応させること。
+
+	書式：	[continue]
+	説明：	最内周の[while]の現在のループを中断し、次のループを実行する。
+		そのループでは、この行以降のKAGタグは実行されない。
+
+	書式：	[break]
+	説明：	最内周の[while]の現在のループを中断し、その[while]を抜ける。
+
+
+	＜例＞
+	 TJSの関数need_to_loop()がtrueを返す間ループする
+	[while exp="need_to_be_loop()"]
+		; 何かKAGの処理
+	[endwhile]
+
+	; C言語のfor文のようなものを実現したければ
+	[while init="tf.i = 0" exp="tf.i < 10" each="tf.i++"]
+		; 何かKAGの処理
+	[endwhile]
+
+	; foreach だったらこうかな？
+	[while init="(tf.ary = [5, 8, 2, 9]).reverse()" \
+		exp="(tf.val = tf.ary.pop()) !== void"]
+		; tf.val に配列の要素が一つづつ入ってループを回る
+		; 何かKAGの処理
+	[endwhile]
+
+  D. ignoreCRをシナリオ中で変更できる
+
+	オリジナルKAGParserではignoreCRは「変更できるがセーブされ
+	ないため、Config.tjsで定義した値から変更したら必ずすぐに
+	もとに戻さないといけない」という条件があり、そのため
+	シナリオ中で変更する時は注意が必要だった。
+	ExtKAGParserではKAGParserクラスでIgnoreCRをセーブするように
+	変更したため、シナリオ中で任意に変更可能となった。
+	実際にはこれは次の E. の機能の布石。
+
+  E. !ignoreCRかつ空行時に[np]マクロを呼び出すようにできる
+
+	KAGParserインスタンス(主にkag.mainConductor)において、
+	ignoreCR=false かつ enableNP=true で、空行時に "[np]\"
+	マクロが挿入されるようにした(末尾に\も)。これにより、KAG
+	シナリオファイルの記述がより簡易になった。np は New Page
+	の略だと思うと吉。
+
+	＜例＞
+	(kag.mainConductor.)ignoreCR = false である場合の以下の
+	記述を考える。
+	=== ここから ===
+	[eval exp="kag.mainConductor.enableNP = true"]\
+	この行末では改行されます。
+	この行末では改行されず、次の行に[[np]が挿入されます。
+	
+	わかるかな？
+
+	=== ここまで ===
+
+	上は、(ignoreCR=trueの場合では)以下のように解釈される
+
+	=== ここから ===
+	[eval exp="kag.mainConductor.enableNP = true"]
+	この行末では改行されます。[r eol=true]
+	この行末では改行されず、次の行に[[np]が挿入されます。
+	[np]
+	わかるかな？
+	[np]
+	=== ここまで ===
+
+	単に空行を置きたい場合は、今までのignoreCR=falseの時と
+	同様、コメント行(';')を設置すること。
+
+  F. [call]後[return]前に[call]元シナリオが変更されたときにも、
+     [call]元をある程度探して戻ることができる
+
+	みんなが見たことがあって、ゲーム中に出るとかなりがっかり
+	するエラーメッセージ、「シナリオファイルに変更があった
+	ため return の戻り先位置を特定できません」。
+	ExtKAGParserでは、以下を定義することで、このメッセージを
+	ある程度回避することができる。
+	[eval exp="kag.mainConductor.fuzzyReturn = true"]
+	fuzzyReturnは故意にセーブされないようにしている(後に
+	挙動を変える必要が出た時に対応するため)ので、first.ksの
+	先頭かAfterInit.tjsで定義することをお勧めする。
+
+	具体的には、「[return]戻り位置(=[call storage=xxx]を含む
+	行)を、新しいシナリオファイル中で前後十行の範囲で探す」。
+	オリジナルでは戻ろうとする行に変更があった場合は問答
+	無用でエラーにしていたが、ExtKAGParserではもしかしたら
+	戻れる*かもしれない*。
+
+	一方、以下のようなケースでは、誤った場所に戻る場合が
+	あることにも注意。
+	[macro name=np]
+	[p]
+	[cr]
+	[call storage=saveanyware.ks target=*saveanywhere]
+	[endmacro]
+	というマクロがあらかじめ定義されているものとする。
+
+	＜変更前のシナリオ＞
+	うでたてふせがだいすきです。
+	[np] 
+	大胸筋がおおきくなるからです。
+	[np]　　　　　　　　　　← ここでセーブ
+	上腕二等筋もきたえたいです
+	[np]
+
+	＜変更後のシナリオ＞
+	うでたてふせがだいすきです。[r]
+	プッシュアップともいいます。[r]
+	おとこのロマンです。[r]
+	レモンみたいな二の腕になります。
+	[np]　　　　　　　　　　← ロードするとここから再開される
+	大胸筋もおおきくなります。
+	[np]			← ここから再開してほしかったのに！
+	上腕二等筋もきたえたいです
+	[np]
+
+	fuzzyReturnは、変更前のシナリオで[call]を実行したのと同じ
+	内容の行(上では[np])を、以前から最も近い箇所から探す。
+	そのため、上の例では、[np]が含まれるもっとも近い(誤った)
+	行から再開されてしまう。
+
+	とはいえ、オリジナルKAGParserでも似たようなことは起こっ
+	ていたわけで、だったらそのくらいはいいかなぁ、と妥協。
+	こういうことを完全に防ぐには、マジメにユニークなセーブ
+	ラベルを一つ一つ配置する必要があるのは変わらない。
+
+	なお、[return]で戻る位置を探しきれなかった場合、通常は
+	「シナリオファイルに変更があったため…」という例のメッ
+	セージを表示してエラー終了するが、returnErrorStorageが
+	定義されていればそれを呼んで処理を継続する。
+	returnErrorStorageもセーブされないので、使うならfirst.ks
+	の頭かAfterInit.tjsで定義すること。
+
+	＜first.ksの頭での定義例＞
+	[eval exp="kag.mainConductor.returnErrorStorage = 'returnerror.ks'"]
+
+	＜returnerror.ksの例＞
+	[eval exp="System.inform('すんません[return]で戻れませんでしたわー')"]
+	; 問答無用でタイトルに戻しちゃう
+	[gotostart]
+
+    G. エラーチェック厳格化とエラーメッセージ詳細化
+
+	[if][ignore]([while][pushlocalvar]も)スコープ中にラベルがある
+	時はエラーにする。マニュアルには「するな」と明確に書いて
+	あるのに、実際にその時にはエラーにされず無視されていたため、
+	エラーにするよう変更した。これにより、いままで(動いては
+	いけなかったけれど)動いていたゲームが動かなくなる可能性が
+	あることに注意。
+	http://devdoc.kikyou.info/tvp/docs/kag3doc/contents/Tags.html#if
+	http://devdoc.kikyou.info/tvp/docs/kag3doc/contents/Tags.html#ignore
+	加えて、文法エラーの場合、コンソールログ末尾に、その詳細と
+	CurPosCurLineStrを表示するようにした。
+
+    H. 新表記[&tjs式]を導入。[emb exp=tjs式]と同等
+
+	[emb]の短い表記が欲しいという要望を受けて。
+
+    I. [macroname arg1 arg2=2 arg3]でマクロを呼び出したとき、
+       マクロmacroname側で変数%1(=arg1)、%2(=arg2)、%3(=arg3)を
+       参照可能
+
+	numericMacroArgumentEnabled(def:false)をtrueにすることで、
+	マクロ中で%1,%2,%3...などが参照できるようになる。
+	NScripterのような、指定された引数の順番でパラメータを
+	渡すマクロを書く時に使用する。
+
+	＜first.ksの頭での定義例＞
+	[eval exp="kag.mainConductor.numericMacroArgumentsEnabled = true"]
+
+	[macro name=test]
+	[ch text=%1]
+	[endmacro]
+
+	[test abcdefg]   (← [ch text=abcdefg] に置換される)
+
+	このときマクロの呼び出し側では引数の名前に数値は使えない
+	([test 1=5]など)ことに注意。そんなことする人居ない
+	だろうけれど。
+
+	[emb exp=]や[if exp=] など、TJS式を指定するタグに
+	使用するには、%1 ではなく、mp['1'] と指定する必要が
+	あることに注意。
+	＜例＞
+	[emb exp=%1] ではなく [emb exp="mp['1']"]、
+	[if exp="%1=='abc'"] ではなく [if exp="mp['1']=='abc'"]
+
+    J. ローカル変数 $val または kag.conductor.lf が使用可能。
+
+	ローカル変数は、kag.conductor.lf.XXX として作成可能な
+	変数。KAGタグ上では $XXX でも参照可能。
+	スクリプト中いつでも使用でき、セーブもされるが、
+	[pushlocalvar][poplocalvar]間、または[call][return]間では
+	新規作成され、そこから出るとその間に使用したものを忘れ
+	元に戻る。
+	[if][while]と同様、[pushlocalvar]-[poplocalvar]間には
+	ラベルを配置してはならない。
+
+	[localvar arg1=val1 arg2=val2 ...]
+		ローカル変数に値を代入する。実際にはtagname=localvarも
+		一緒に定義されてしまうことに注意。
+		[eval exp="&kag.conductor.lf.i = 5"]とかでも代入できる。
+
+	[pushlocalvar copyvar=true_or_false arg1=val1 arg2=varl2 ...]
+		ローカル変数のスコープ開始。これ以下で定義した
+		ローカル変数は、[poplocalvar]まで定義・参照・変更が
+		可能。入れ子にもできる。
+		copyvar=true/false(def)
+			これより前のローカル変数を全てコピーして
+			新たなローカル変数として使用するかどうか。
+			def=false(以前のローカル変数はコピーせず、
+			ここでは何も定義されない)
+			　※tagname=pushlocalvalは定義される
+		arg#= ...
+			新しいローカル変数を定義する。これより後に
+			[eval exp="kag.conductor.lf.arg=2"]などと
+			しても定義可能。実際にはtagname=pushlocalvar
+			(と場合によってはcopyvar=trueも)が定義される
+			ことに注意
+			
+	[poplocalvar]
+		ローカル変数のスコープ終了。[pushlocalvar]から定義
+		したローカル変数は全て忘れ、[pushlocalvar]以前に
+		定義されていたローカル変数群に戻す。
+		[pushlocalvar]→[poplocalvar]間を[jump]で抜けてもよい。
+
+	＜例＞
+		@iscript
+		// 面倒なので、lf = kag.conductor.lf として定義しておく
+		property lf
+		  { getter { return kag.conductor.lf; } }
+		@endscript
+
+		; ここでもグローバルスコープのローカル変数は使用できる。
+		@localvar i=5 j=7
+		@pushlocalvar i=6
+			ここではlf.i=6、lf.jは存在しない
+			@eval exp=lf.i++
+			↑でlf.i=7になった
+			KAGタグ中では↓$iでlf.iを参照できる。
+			@ch text=$i
+			"&lf.i"は$iを指定したのと同じ
+			@ch text=&lf.i
+		@poplocalvar
+		ここではlf.i=5、lf.j=7
+		@s
+
+    K. [call]の引数を、[call]内のローカル変数のメンバとして
+    　 参照可能
+
+	[call]を以下のように使うと、サブルーチン側でローカル変数の
+	メンバとして[call]の引数を参照できる。つまり、[call]に
+	引数を渡せる。[pushlocalvar] と同様、copyvar を渡すと今有効な
+	ローカル変数を全てコピーして渡す。
+	ただし、引数は全部ローカル変数にするので、tagname,storage,
+	targetなどのローカル変数が作成されることに注意。
+		@iscript
+		property lf
+		  { getter { return kag.conductor.lf; } }
+		@endscript
+
+		@eval exp="lf.aaa = 5"
+		@call target=*subroutine arg1=val1
+		; ここでは相変わらず lf.aaa = 5
+		@s
+
+		*subroutine
+		ここでは、lf.tagname=call, lf.target=*subroutine, lf.arg1=val1
+		copyvar=true が指定されていないので lf.aaa はコピーされていない
+		[ch text=$arg1]
+		; ↑ "val1" と表示される
+		[return]
+
+	ローカル変数は[call]が[return]するまで有効。[call]内のローカル変数は
+	[pushlocalvar]と同様新しく作成されているため、[call]外のローカル変数を
+	上書きすることはない。
+
+    L. [iscript]-[endscript]を[macro]-[endmacro]中で使える
+    　 ように変更
+
+	今まではできなかったが、できるようにした。
+	実装は簡単で、[iscript]-[endscript]間のスクリプトを、全部
+	[eval exp="xxx"]としてmacroに埋め込むようにした。いいのか。
+	そのためマクロ中の[iscript]ではonScript()イベントは起こら
+	ないことに注意。
+	文字列のescape/unescapeを繰り返すので速度的には少し不利。
+	可能なら、最初から [eval] で書いておいたほうがよい。
+
+    M. [pmacro]実装
+
+	パラメータマクロを実装。KAGタグの複数の属性をマクロ化して
+	覚え、簡単な記述で指定することができる。
+
+	＜例１＞
+	[pmacro name=背景表レイヤ layer=base page=fore]
+	;
+	[image storage=森 背景表レイヤ]
+	; ↑ [image storage=森 layer=base page=fore] とおなじ
+
+	＜例２＞
+	[pmacro name=笑顔 眉=普通 口=笑い 目=喜び]
+	;
+	[あかね 笑顔 服=ワンピース]
+	; ↑ [あかね 眉=普通 口=笑い 目=喜び] とおなじ
+
+	ただし、パラメータマクロを使用する時は、=XXX を付加しては
+	ならない。効率化のため、パーサ上で =XXX がある場合は
+	パラメータマクロではないと判断しているため。
+
+	＜上のpmacroを使用する時の悪い例＞
+	[image storage=森 背景表レイヤ=true]
+	; ↑ "背景表レイヤ" はパラメータマクロではなく普通の属性と
+	; 　　して、そのまま[image]タグに渡される
+
+	また、numericMacroArgumentEnabled=true の時、マクロ側で
+	受け取ったパラメータはパラメータマクロが展開された後の
+	ものだが、パラメータマクロのみ順不同になることに注意。
+
+	＜上のpmacroを使用する時の例＞
+	[あかね 笑顔 服=ワンピース]
+	;
+	[macor name=あかね]
+	[ch text=%1] 「眉」・「口」・「目」のいずれか
+	[ch text=%2] %1以外の「眉」・「口」・「目」のいずれか
+	[ch text=%3] %1と%2以外の「眉」・「口」・「目」のいずれか
+	[ch text=%4] これは「服」
+	;
+	[endmacro]
+
+    N. [iscript]中の行頭の*を無視(ラベルとしては取り扱わない)
+
+	デフォルトKAGParserは、[iscript]-[endscript]中であっても、
+	行頭に*が出てくるとこれをラベルと(誤)認識していた。そのため、
+	「iscriptの何かを変えただけでラベルが増減し、セーブデータの
+	互換性が失われる」ことがあった。
+	ExtKAGParserではこれを回避するため、iscript中では行頭に
+	'*'があってもこれを無視するようにした。このため、逆に
+	今までのKAGParserでセーブしたデータを再開できないことがある。
+	ExtKAGParserはExtKAGParserのセーブデータのみで使用すること。
+
+
+4. 吉里吉里2と吉里吉里Zでの相違
+	吉里吉里Z(が元にした開発版吉里吉里2?)では、以下の関数が追加されている。
+
+	void TVPExecuteScript(const ttstr &, iTJSDispatch2 *, tTJSVariant *);
+
+	吉里吉里2.32r2にはこの関数が存在しないため、ExtKAGParserでは、
+	この関数を使う・使わないを選択できるようにソースコード上で細工して
+	いる。リコンパイルは必要。
+
+
+5. 注意点
+	・吉里吉里ZのKAGParserを参考にしたため、修正BSDライセンスとなる。
+	　なんと偶然(?)dllは吉里吉里でも使用できちゃうけどね！
+	・VC2010でビルドしたので、WinXPより前(Win2kなど)では動作しない。
+
+
+6. ソースファイルちょっとだけ説明
+	ExtKAGParser.h ...... 上の関数を使う・使わないのビルドを分ける定義
+	KAGParser.cpp ....... KAGParser本体
+	KAGParser.h ......... KAGParser用ヘッダ
+	Main.cpp ............ dll読み込み用メイン
+	TJSAry.h ............ TJSの配列をC++上から使用するための小クラス
+	TJSAry.cpp .......... その実体
+	TJSDic.h ............ TJSの辞書をC++上から使用するための小クラス
+	TJSDic.cpp .......... その実体
+	tjsHashSearch.h ..... ハッシュ検索用ヘッダ(吉里吉里[2Z]共通だった)
+	tp_stub.cpp ......... 吉里吉里Z(1.0.0.1)から持ってきた tp_stub.cpp
+	tp_stub.h ........... 吉里吉里Z(1.0.0.1)から持ってきた tp_stub.h
+
+
+7. 参考資料
+	KAGPluginEx.dll
+		https://sv.kikyou.info/svn/kirikiri2/trunk/kirikiri2/src/plugins/win32/KAGParserEx/
+	KAGPluginExb.dll:
+		http://kasekey.blog101.fc2.com/blog-entry-203.html
+		https://github.com/sakano/KAGParserExb
+	吉里吉里Z
+		http://www.kaede-software.com/cat20/z/
+	KAGPlugin.dll for 吉里吉里Z
+		https://github.com/krkrz/krkrz/tree/master/src/plugins/win32/KAGParser
+	■吉里吉里／ＫＡＧ／ＴＪＳ雑談質問スレ■その29 の住人の方々
+	http://peace.2ch.net/test/read.cgi/gamedev/1433436610/
+
+
+8. その他
+	・[while][endwhile]でのループは、[jump target=*loop]での
+	　ループよりも３倍ほど高速。コンソールへの出力量の差の模様。
+	・ご意見が欲しい。こうしたほうがいい、こういう記述にすべきだ、
+	　こんな機能が欲しい、など。メール・掲示板でどうぞ。
+		メール: s_naray＠yahoo[dot]co[dot]jp ← ひねってあるので注意
+		掲示板: http://b.koroweb.com/pa/patio.cgi?room=kaicho
+	・実績少ないので、何かあっても笑って許せる人に使って頂きたい。
+	　そんかし報告いただければ不具合などへの対応は可能な限り早くする
+	　所存ナリ。
+
+
+メモA：なぜ[if][ignore][while][pushlocalvar]スコープ中にラベルを配置
+       できないか
+	理由は簡単、全く関係ないところからそこに[jump]などで飛び
+	込まれると、その地点の条件や変数値が明確にならないから。
+
+	たとえば以下の例では、A地点に飛び込んだときの変数 tf.a の
+	値はいくつになるか保証できないし、従って[else]以下の
+	条件を実行すべきかどうかわからなくなってしまう。加えて、
+	tf.a != 2 の時にも飛び込むことができてしまい、スクリプトの
+	論理が破綻する。
+
+	＜例＞
+	[jump target=*A地点]
+	;
+	[if exp=tf.a == 2]
+	*A地点
+		[ch text=&tf.a]
+	[else]
+		[ch text=&tf.a]
+	[endif]
+
+	本当は「セーブポイントは配置できる」(その時点でのデータを
+	覚えていればいいから)のであるが、KAGではセーブポイントを
+	置くためにはラベルが必須なので、従って[if][ignore][while]
+	[pushlocalvar]のスコープ中にセーブポイントも配置できなく
+	なっている。
+
+メモB: [jump]先は
+	必ず、[if][ignore][while][pushlocalvar]スコープ外でなければ
+	ならない。これはjump時に内部コンディションとしてこれらの
+	スコープ外であることを強制するため。理由はメモAと同じ。
+
+
+付録A：ExtKAGParserに追加した、TJS上から参照できるKAGParserのプロパティ
+
+enableNP(true/false(def)):
+	!ignoreCRかつ空行時、マクロ[np]を追加するかどうか
+
+fuzzyReturn(true/false(def)):
+	call先でセーブされた後にcallに行が追加・削除されたとき、
+	call元を探すかどうか
+
+returnErrorStorage(def=""(なし)):
+	call元へ戻ることに失敗した時に、エラー終了するのではなく
+	KAGスクリプトを実行する場合にKAGスクリプトを指定。
+	なしでエラー終了
+
+multiLineTagEnabled(true/false(def)):
+	タグを複数行にわたって記述できるかどうか。trueの場合、
+	行末に \ をつけると、タグが次の行に続いているとみなされる
+
+numericMacroArgumentsEnabled(true/false(false)):
+	マクロに指定した引数を、その順番でマクロ内で %1、%2...
+	で参照可能にするかどうか。
+
+currentLocalVariables(辞書配列):
+	KAGタグ中で $var などで参照できるローカル変数の格納先。
+	[call]または[pushlocalvar]でスタックに詰まれ、[return]または
+	[poplocalvar]でスタックから戻される。
+
+lf(辞書配列):
+	currentLocalVariablesと同じ
+
+prelf(辞書配列):
+	一つ上のスタックのローカル変数
+
+pmacros(辞書配列):
+	パラメータマクロ
+
+ifLevel(整数):
+	現在の IfLevel。[if]または[while]のネストごとに+1され、
+	[endif]または[endwhile]ごとに-1される
+
+whileStackDepth(整数):
+	現在の while スタックの深さ。[while]中では+1され、
+	[endwhile]を抜けると-1される。
+
+localVariablesDepth(整数):
+	ローカル変数のスタックの深さ。[call]または[pushlocalvar]で
+	+1され、[return]または[poplocalvar]で-1される。
+
+localVariables(辞書配列の配列):
+	ローカル変数スタック全て
+
+
+メモ：
+	・syntax error だけをチェックするExtKAGParserChecker.exeを
+	　作成すべきか考える
+	・行番号指定セーブができるように、ExtKAGParserに以下の関数を
+	　実装すべきか考える
+	  void tTJSNI_KAGParser::GoToLine(const tjs_int lineno);
+	  void tTJSNI_GoToStorageAndLine(const ttstr &storage, const tjs_int lineno);
