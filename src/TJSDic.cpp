@@ -112,7 +112,7 @@ tTJSDic& tTJSDic::Assign(const tTJSVariant &srcdic)
 	if (srcdic.Type() != tvtObject)
 		TVPThrowExceptionMessage(TJS_W("tTJSDic::Assign(tTJSVariant&) is invoked with non tvtObject"));
 
-	tTJSVariant *psrc = &srcdic;
+	tTJSVariant *psrc = (tTJSVariant *)&srcdic;
 	DicAssign->FuncCall(0, NULL, NULL, NULL, 1, &psrc, GetDicNoAddRef());
 	return *this;
 }
@@ -122,7 +122,7 @@ tTJSDic& tTJSDic::Assign(const tTJSDic &srcdic)
 	if (srcdic.Type() == tvtVoid)
 		TVPThrowExceptionMessage(TJS_W("tTJSDic::Assign(tTJSDic&) is invoked with non tvtObject"));
 
-	tTJSVariant *psrc = &srcdic;
+	tTJSVariant *psrc = (tTJSVariant *)&srcdic;
 	DicAssign->FuncCall(0, NULL, NULL, NULL, 1, &psrc, GetDicNoAddRef());
 	return *this;
 }
@@ -178,7 +178,8 @@ tTJSAry tTJSDic::GetKeys()
 
 void tTJSDic::AddDic(tTJSDic &sdic)
 {
-	tTJSAry keyary(sdic.GetKeys());
+	tTJSVariant keyary_variant(sdic.GetKeys());
+	tTJSAry keyary(keyary_variant);
 	for (tjs_int i = 0; i < keyary.GetSize(); i++)
 	{
 		ttstr key(keyary.GetProp(i));

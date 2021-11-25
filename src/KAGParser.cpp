@@ -2495,7 +2495,8 @@ parse_start:
 					if (NumericMacroArgumentsEnabled) {
 						// Copy keys onto MacroArgArray
 						// FIXME: this does not show us the order of the keys
-						tTJSAry keys(d.GetKeys());
+						tTJSVariant keys_variant(d.GetKeys());
+						tTJSAry keys(keys_variant);
 						for (tjs_int i = 0; i < keys.GetSize(); i++)
 							MacroArgArray.push_back(keys[i]);
 					}
@@ -3167,7 +3168,8 @@ parse_start:
 			// for initial argument for [macro]
 			// description ex: [macro name=abc attr1=val1 attr2=val2...]
 
-			tTJSAry ary(DicObj.GetKeys());
+			tTJSVariant ary_variant(DicObj.GetKeys());
+			tTJSAry ary(ary_variant);
 			tjs_int count = ary.GetSize();
 			for (tjs_int i = 0; i < count; i++)
 			{
