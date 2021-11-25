@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 #include "tp_stub.h"
 //#include "KAGParser.h"
 
